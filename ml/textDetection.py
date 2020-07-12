@@ -20,7 +20,7 @@ def load_and_resize(path, width, height):
     (newW, newH) = (width, height)
     rW = W / float(newW)
     rH = H / float(newH)
-    print(W, H, rW, rH)
+    # print(W, H, rW, rH)
     # resize the image and grab the new image dimensions
     image = cv2.resize(image, (newW, newH))
     (H, W) = image.shape[:2]
@@ -124,6 +124,7 @@ def detectTextsArea(image, orig, confidence):
 
 # show the output image
     cv2.imshow("Text Detection", orig)
+    cv2.imwrite("images/text_area_detected.jpg", orig)
     cv2.waitKey(0)
 
 
