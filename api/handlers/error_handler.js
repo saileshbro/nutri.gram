@@ -1,3 +1,4 @@
+require("express")
 /**
  * Error Handler
  */
@@ -19,6 +20,7 @@ exports.catchErrors = fn => {
  *
  */
 exports.mongooseErrors = (err, req, res, next) => {
+
   if (!err.errors) return next(err)
   const keys = Object.keys(err.errors)
   let message = ""
@@ -26,6 +28,7 @@ exports.mongooseErrors = (err, req, res, next) => {
     message += `${err.errors[key].message}, `
   })
   message = message.substr(0, message.length - 2)
+
   return res.status(400).json({
     message,
   })
