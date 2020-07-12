@@ -38,7 +38,7 @@ def wrap_transform(image, orig):
         warped = four_point_transform(orig, screenCnt.reshape(4, 2)*ratio)
         warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
         T = cv2.adaptiveThreshold(
-            warped, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 10)
+            warped, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 13, 9)
         return T, warped
     else:
         return None, None
@@ -51,8 +51,11 @@ if __name__ == "__main__":
     if(resized is not None):
         T, warped = wrap_transform(resized, original)
         if T is not None:
-            cv2.imshow("Threshold", T)
+            cv2.imshow("Threshold", imutils.resize(T, height=500))
+            cv2.imwrite('images\\threshold_cropped.jpg', T)
             cv2.imshow("Warped", imutils.resize(warped, height=500))
+            cv2.imwrite('images\\WARPED_cropped.jpg',
+                        imutils.resize(warped, height=500))
             cv2.waitKey(0)
         else:
             print("T is none")
