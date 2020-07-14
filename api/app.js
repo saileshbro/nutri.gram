@@ -1,4 +1,8 @@
-require("dotenv").config()
+const dotenv = require("dotenv")
+
+if (process.env.NODE_ENV === "development") {
+  dotenv.config()
+}
 require("./database")
 const express = require("express")
 const path = require("path")
