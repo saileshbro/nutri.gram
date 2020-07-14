@@ -14,6 +14,7 @@ const {
 const app = express()
 app.use(logger("tiny"))
 app.use(express.json())
+
 app.use(
   express.urlencoded({
     extended: false,
@@ -22,6 +23,8 @@ app.use(
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, "public")))
 
+// routes setup
+app.use("/api/v1", require("./routes/user.router"))
 // Error handlers setup
 app.use(notFoundError)
 app.use(mongooseErrors)

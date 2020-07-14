@@ -1,13 +1,32 @@
-require("express")
+class ValidationError extends Error {
+  /**
+   *
+   * @param {Number} statusCode
+   * @param {String} error
+   */
+  constructor(statusCode, error) {
+    super()
+    this.statusCode = statusCode
+    this.error = error
+  }
+}
+
 /**
  * Error Handler
  */
 exports.catchErrors = fn => {
+
   return (req, res, next) => {
+
     fn(req, res, next).catch(err => {
       if (typeof err === "string") {
         return res.status(400).json({
-          message: err
+          error: err
+        })
+      }
+      if (err instanceof ValidationError) {
+        return res.status(err.statusCode || 500).json({
+          error: err.error
         })
       }
       return next(err)
@@ -38,11 +57,11 @@ exports.mongooseErrors = (err, req, res, next) => {
  */
 exports.developmentErrors = (err, req, res, next) => {
   const {
-    message,
+    message: error,
     status
   } = err
   const errorDetails = {
-    message,
+    error,
     status,
     stack: err.stack || ""
   }
@@ -55,6 +74,7 @@ exports.productionErrors = (err, req, res, next) => {
 }
 exports.notFoundError = (req, res) => {
   return res.status(404).json({
-    message: "Route not found"
+    error: "Route not found"
   })
 }
+exports.ValidationError = ValidationError
