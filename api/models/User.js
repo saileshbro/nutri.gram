@@ -76,5 +76,5 @@ userSchema.statics.findByCredentials = async (email, password) => {
   return user
 }
 
-
-module.exports = model("User", userSchema)
+const User = model("User", userSchema)
+module.exports = User

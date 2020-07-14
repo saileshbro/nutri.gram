@@ -3,7 +3,6 @@ const CustomError = require("./custom_error")
  * Error Handler
  */
 exports.catchErrors = fn => {
-
   return (req, res, next) => {
 
     fn(req, res, next).catch(err => {
@@ -23,8 +22,11 @@ exports.catchErrors = fn => {
 }
 
 /**
- * MongoDB Validations Error Handler
- *
+ * Mongoose Validation Error Handler
+ * @param {*} err
+ * @param {Request} req
+ * @param {Response} res
+ * @param {*} next
  */
 exports.mongooseErrors = (err, req, res, next) => {
 
@@ -42,6 +44,10 @@ exports.mongooseErrors = (err, req, res, next) => {
 }
 /**
  * Development Error Handler
+ * @param {*} err
+ * @param {Request} req
+ * @param {Response} res
+ * @param {*} next
  */
 exports.developmentErrors = (err, req, res, next) => {
   const {
@@ -55,6 +61,13 @@ exports.developmentErrors = (err, req, res, next) => {
   }
   return res.status(status || 500).json(errorDetails)
 }
+/**
+ * Production Error Handler
+ * @param {*} err
+ * @param {Request} req
+ * @param {Response} res
+ * @param {*} next
+ */
 exports.productionErrors = (err, req, res, next) => {
   return res.status(err.status || 500).json({
     error: "Internal Server Error"
