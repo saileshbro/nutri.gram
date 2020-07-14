@@ -5,6 +5,7 @@ const {
   validatePhone
 } = require("../handlers/custom_validators")
 const User = require("../models/User")
+const CustomError = require("../handlers/custom_error")
 /**
  *
  * @param {Request} req
@@ -27,7 +28,7 @@ exports.signup = async (req, res) => {
     email
   })
   if (isExist) {
-    throw new Error(`Account with email ${email} already exists`)
+    throw new CustomError(406, `Account with email ${email} already exists`)
   }
   const user = new User({
     email,

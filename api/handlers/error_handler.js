@@ -1,16 +1,4 @@
-class ValidationError extends Error {
-  /**
-   *
-   * @param {Number} statusCode
-   * @param {String} error
-   */
-  constructor(statusCode, error) {
-    super()
-    this.statusCode = statusCode
-    this.error = error
-  }
-}
-
+const CustomError = require("./custom_error")
 /**
  * Error Handler
  */
@@ -24,7 +12,7 @@ exports.catchErrors = fn => {
           error: err
         })
       }
-      if (err instanceof ValidationError) {
+      if (err instanceof CustomError) {
         return res.status(err.statusCode || 500).json({
           error: err.error
         })
@@ -77,4 +65,3 @@ exports.notFoundError = (req, res) => {
     error: "Route not found"
   })
 }
-exports.ValidationError = ValidationError

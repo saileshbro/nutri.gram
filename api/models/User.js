@@ -5,6 +5,7 @@ const {
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const moment = require("moment")
+const CustomError = require("../handlers/custom_error")
 
 const userSchema = new Schema({
   "name": {
@@ -68,9 +69,10 @@ userSchema.statics.findByCredentials = async (email, password) => {
   const user = await model("User", userSchema).findOne({
     email
   })
-  if (!user) throw new Error("Invalid email or password!")
+  if (!user) throw new CustomError(401, "Invalid email or password!")
+
   const isMatch = await bcrypt.compare(password, user.password)
-  if (!isMatch) throw new Error("Invalid email or password!")
+  if (!isMatch) throw new CustomError(401, "Invalid email or password!")
   return user
 }
 
