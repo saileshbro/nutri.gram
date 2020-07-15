@@ -5,7 +5,7 @@ const {
   catchErrors
 } = require("../handlers/error_handler")
 
-module.exports =
+const auth =
   catchErrors(
     /**
      * @param {Request} req
@@ -20,10 +20,12 @@ module.exports =
       const {
         _id
       } = jwt.verify(token, process.env.JWT_SECRET)
-      const user = await User.findOne(
+      const user = await User.findOne({
         _id
-      )
+      })
       if (!user) throw new CustomError(401, "Please authenticate.")
       req.token = token
       req.user = user
+      next()
     })
+module.exports = auth

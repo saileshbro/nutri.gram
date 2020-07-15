@@ -8,17 +8,10 @@ const moment = require("moment")
 const CustomError = require("../handlers/custom_error")
 
 const userSchema = new Schema({
-  "name": {
+  name: {
     type: String,
     required: "Name is required!",
     trim: true,
-  },
-  email: {
-    type: String,
-    required: "Email is required!",
-    trim: true,
-    lowercase: true,
-    unique: true,
   },
   password: {
     type: String,
@@ -26,8 +19,23 @@ const userSchema = new Schema({
   },
   phone: {
     type: String,
-    required: "Phone number is required!"
-  }
+    required: "Phone number is required!",
+    trim: true,
+    lowercase: true,
+    unique: true,
+  },
+  passwordResetOtp: {
+    type: String,
+    default: ""
+  },
+  otp: {
+    type: String,
+    default: ""
+  },
+  otpVerified: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true,
 })
@@ -39,9 +47,12 @@ userSchema.pre("save", async function (next) {
   }
   next()
 })
-/**
- * @returns `token`
- */
+userSchema.methods.isPassword = async function (password) {
+  const user = this
+  const isPassword = await bcrypt.compare(password, user.password)
+  return isPassword
+}
+
 userSchema.methods.generateAuthToken = async function () {
   const user = this
   const token = await jwt.sign({
@@ -49,30 +60,31 @@ userSchema.methods.generateAuthToken = async function () {
   }, process.env.JWT_SECRET)
   return token
 }
+
 userSchema.methods.toJSON = function () {
   const user = this
   const userObject = user.toObject()
   userObject.createdAt = moment(userObject.createdAt).format("ddd, d MMM YYYY")
   userObject.updatedAt = moment(userObject.updatedAt).format("ddd, d MMM YYYY")
   delete userObject.password
+  delete userObject.__v
   return userObject
 }
 /**
  *
- * @param {String} email
+ * @param {String} phone
  * @param {String} password
- * @throws `Error` if email or password invalid
+ * @throws `CustomError` if phone or password invalid
  * @returns `User`
  */
-userSchema.statics.findByCredentials = async (email, password) => {
-  // eslint-disable-next-line no-use-before-define
+userSchema.statics.findByCredentials = async (phone, password) => {
   const user = await model("User", userSchema).findOne({
-    email
+    phone
   })
-  if (!user) throw new CustomError(401, "Invalid email or password!")
+  if (!user) throw new CustomError(401, "Invalid credentials!")
 
   const isMatch = await bcrypt.compare(password, user.password)
-  if (!isMatch) throw new CustomError(401, "Invalid email or password!")
+  if (!isMatch) throw new CustomError(401, "Invalid credentials!")
   return user
 }
 

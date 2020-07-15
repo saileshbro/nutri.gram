@@ -2,17 +2,6 @@ const
   validator = require("validator").default
 const CustomError = require("./custom_error")
 /**
- *
- * @param {String} email
- * @throws `CustomError`
- */
-exports.validateEmail = (email) => {
-  if (!email || !validator.isEmail(email)) {
-    throw new CustomError(406, "Invalid email provided!")
-  }
-}
-
-/**
  * Throws `CustomError` if name is null or invalid
  * @param {String} name
  * @throws `CustomError`
@@ -42,7 +31,17 @@ exports.validatePassword = (password) => {
  * @throws `CustomError`
  */
 exports.validatePhone = (phoneNumber) => {
-  if (!phoneNumber || !validator.isMobilePhone(phoneNumber || phoneNumber.length < 10)) {
+  if (!phoneNumber || !validator.isMobilePhone(phoneNumber) || phoneNumber.length < 10) {
     throw new CustomError(406, "Invalid phone number provided!")
+  }
+}
+/**
+ * Throws `CustomError` if otp is null or invalid
+ * @param {String} phoneNumber
+ * @throws `CustomError`
+ */
+exports.validateOtp = (otp) => {
+  if (otp.length !== 4 || !validator.isNumeric(otp)) {
+    throw new CustomError(406, "Invalid OTP provided!")
   }
 }
