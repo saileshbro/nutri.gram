@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:nutrigram_app/services/counter_service.dart';
 import 'package:nutrigram_app/services/third_party_services_module.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:nutrigram_app/services/permissions_service.dart';
@@ -13,6 +14,7 @@ import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
+  g.registerLazySingleton<CounterService>(() => CounterService());
   g.registerLazySingleton<DialogService>(
       () => thirdPartyServicesModule.dialogService);
   g.registerLazySingleton<NavigationService>(

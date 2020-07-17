@@ -18,3 +18,29 @@ const Color kGapColor = Color(0xFFF2F2F2);
 const Color kColorPrice = Color(0xFFF86C35);
 const Color kDisabledLightThemeColor = Color(0xFFbbbbbb);
 const Color kDisabledDarkThemeColor = Color(0xFF444444);
+
+///Assets related
+const String loginIllustration = "assets/illustrations/login_illustration.png";
+const String registerIllustration =
+    "assets/illustrations/register_illustration.png";
+const String verificationIllustration =
+    "assets/illustrations/verification_illustration.png";
+const String onboardingAsset1 = "assets/illustrations/onboardingAsset1.png";
+const String onboardingAsset3 = "assets/illustrations/onboardingAsset2.png";
+const String onboardingAsset2 = "assets/illustrations/onboardingAsset3.png";
+
+/// Home view tiles related colors
+const Color notesColor = Color(0xFF3CC795);
+const Color videosColor = Color(0xFFF96566);
+const Color practiceColor = Color(0xFF4D9CFC);
+const Color examsColor = Color(0xFF4D9CFC);
+const Color calenderColor = Color(0xFFB364EB);
+const Color resultsColor = Color(0xFF3CC795);
+const Color notesGradientColor = Color(0xFF74E27B);
+const Color videosGradientColor = Color(0xFFEE8182);
+const Color practiceGradientColor = Color(0xFF5CC4FB);
+const Color examsGradientColor = Color(0xFF5CC4FB);
+const Color calenderGradientColor = Color(0xFFCA81FF);
+const Color resultsGradientColor = Color(0xFF74E27B);
+const Color questionsDarkColor = Color(0xFF888888);
+const Color optionDarkBorderColor = Color(0xFF666666);
