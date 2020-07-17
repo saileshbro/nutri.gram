@@ -18,11 +18,22 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.8.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+<<<<<<< HEAD
+=======
+  stacked: ^1.7.3+2
+  stacked_services: ^0.4.4+3
+  get_it: ^4.0.2
+  injectable: ^0.4.0+1
+  auto_route: ^0.6.1
+  shared_preferences: ^0.5.8
+  flutter_icons: ^1.1.0
+  pin_input_text_field: ^3.0.4
+>>>>>>> frontend
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -31,6 +42,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  lint: ^1.2.0
+  injectable_generator: ^0.4.1
+  build_runner: ^1.10.0
+  auto_route_generator: ^0.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -54,17 +69,27 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: WorkSans
+      fonts:
+        - asset: fonts/WorkSans-Thin.ttf
+          weight: 100
+        - asset: fonts/WorkSans-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/WorkSans-Light.ttf
+          weight: 300
+        - asset: fonts/WorkSans-Regular.ttf
+          weight: 400
+        - asset: fonts/WorkSans-Medium.ttf
+          weight: 500
+        - asset: fonts/WorkSans-SemiBold.ttf
+          weight: 600
+        - asset: fonts/WorkSans-Bold.ttf
+          weight: 700
+        - asset: fonts/WorkSans-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/WorkSans-Black.ttf
+          weight: 900
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
