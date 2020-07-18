@@ -26,8 +26,9 @@ const String registerIllustration =
 const String verificationIllustration =
     "assets/illustrations/verification_illustration.png";
 const String onboardingAsset1 = "assets/illustrations/onboardingAsset1.png";
-const String onboardingAsset3 = "assets/illustrations/onboardingAsset2.png";
-const String onboardingAsset2 = "assets/illustrations/onboardingAsset3.png";
+const String onboardingAsset3 = "assets/illustrations/onboardingAsset3.png";
+const String onboardingAsset2 = "assets/illustrations/onboardingAsset2.png";
+const String onboardingAsset4 = 'assets/illustrations/onboardingAsset4.png';
 
 /// Home view tiles related colors
 const Color notesColor = Color(0xFF3CC795);

@@ -9,11 +9,18 @@ const String welcome = "Welcome";
 const String register = "Register";
 const String fullName = "Full Name";
 const String alreadyHaveAnAccount = "Already have an account?";
-const String learn = "Learn";
-const String readOurBlog =
-    "Read our blogs, take our courses, succeed in quizes,\n do project work and excel.";
-const String practice = "Practice";
-const String score = "Score";
+const String curious = "Curious?";
+const String nutrientConcious =
+    "Curious about the nutrient and calorie content in your food?\n Want to start tracking calories and eating healthy?";
+const String scan = "Scan";
+const String whatToScan =
+    "Scan the back of your packaged food.\n Know about the information provided there in better way.";
+const String analyze = "Analyze";
+const String analysis =
+    "Get to know the detail analysis of nutrients and calorie present in your food.\n Understand better with graph and charts.";
+const String beHealthy = "Be Healthy";
+const String healthNote =
+    "Be healthy by choosing the right food for your body.\n This app is here to help you.";
 const String home = "Home";
 const String chooseYour = "Choose your course, ";
 const String rightAway = "right away";
