@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:nutrigram_app/common/HelperWidget/busy_button.dart';
-import '../../../common/ui/ui_helpers.dart';
-import '../../../constants/constants.dart';
-import '../../../constants/strings.dart';
+import 'package:nutrigram_app/common/ui/ui_helpers.dart';
+import 'package:nutrigram_app/constants/constants.dart';
+import 'package:nutrigram_app/constants/strings.dart';
 
 class LoginView extends StatefulWidget {
   @override

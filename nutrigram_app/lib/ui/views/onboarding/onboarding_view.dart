@@ -4,8 +4,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
-import 'package:nutrigram_app/ui/register/register_view.dart';
-import 'package:nutrigram_app/ui/views/login/login_view.dart';
+import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
+import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -106,7 +106,10 @@ class _OnboardingViewState extends State<OnboardingView> {
                   DeviceOrientation.portraitDown,
                 ]);
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => RegisterView()))
+                    .push(MaterialPageRoute(
+                        builder: (_) => VerificationView(
+                              phoneNumber: "12345",
+                            )))
                     .then((onValue) {
                   SystemChrome.setPreferredOrientations([
                     DeviceOrientation.portraitDown,
