@@ -106,3 +106,6 @@ dist
 .vscode/
 __pycache__/
 *.pb
+
+tessdata/
+*.traineddata
