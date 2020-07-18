@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:nutrigram_app/common/HelperWidget/busy_button.dart';
 import '../../../common/ui/ui_helpers.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/strings.dart';
@@ -47,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
                     width: MediaQuery.of(context).size.width,
                   ),
                 ),
-                lHeightSpan,
+                sHeightSpan,
                 Text(
                   welcome,
                   style: Theme.of(context).textTheme.headline4,
@@ -138,25 +139,26 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       mHeightSpan,
                       Container(
-                        // decoration: BoxDecoration(
-                        //   boxShadow: getBoxShadow(
-                        //     context,
-                        //     kPrimaryColor,
-                        //   ),
-                        // ),
+                        decoration: BoxDecoration(
+                          boxShadow: getBoxShadow(
+                            context,
+                            kPrimaryColor,
+                          ),
+                        ),
                         width: double.infinity,
-//                         child: BusyButton(
-// //                                color: primaryColor,
-//                           title: (login),
-//                         ),
+                        child: BusyButton(
+//                                color: primaryColor,
+                            title: (login),
+                            onPressed: () {}),
                       ),
-                      // FlatButton(
-                      //   splashColor: Colors.transparent,
-                      //   child: Text(
-                      //     dontHaveAccount,
-                      //     style: Theme.of(context).textTheme.button,
-                      //   ),
-                      // ),
+                      FlatButton(
+                        splashColor: Colors.transparent,
+                        onPressed: () {},
+                        child: Text(
+                          dontHaveAccount,
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -294,9 +296,10 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
             ),
           ),
           mHeightSpan,
-          // BusyButton(
-          //   title: changePassword,
-          // ),
+          BusyButton(
+            title: changePassword,
+            onPressed: () {},
+          ),
           mHeightSpan,
         ],
       ),
@@ -331,9 +334,10 @@ class ForgotPasswordBottomSheet extends StatelessWidget {
             ),
           ),
           mHeightSpan,
-          // BusyButton(
-          //   title: requestNewPassword,
-          // ),
+          BusyButton(
+            title: requestNewPassword,
+            onPressed: () {},
+          ),
           mHeightSpan,
         ],
       ),

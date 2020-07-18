@@ -4,7 +4,7 @@ const String password = "Password";
 const String dontHaveAccount = "Don’t have an account?";
 const String phoneNumber = "Phone Number";
 const String afterLogin =
-    "After login, start your study career and wish you progress";
+    "After login, see your nutrition track, get recommendations, and start scaning!";
 const String welcome = "Welcome";
 const String register = "Register";
 const String fullName = "Full Name";
