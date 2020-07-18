@@ -27,7 +27,7 @@ final ThemeData kDarkTheme = ThemeData(
     ),
   ),
   popupMenuTheme: PopupMenuThemeData(
-    textStyle: _darkThemeData.textTheme.subtitle,
+    textStyle: _darkThemeData.textTheme.subtitle1,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8),
     ),
@@ -42,35 +42,35 @@ final ThemeData kDarkTheme = ThemeData(
     ),
   ),
   textTheme: TextTheme(
-    display1: _darkThemeData.textTheme.display1.copyWith(
+    headline1: _darkThemeData.textTheme.headline1.copyWith(
       fontFamily: kFontFamily,
       fontSize: 96,
       fontWeight: FontWeight.w300,
     ),
-    display2: _darkThemeData.textTheme.display2.copyWith(
+    headline2: _darkThemeData.textTheme.headline2.copyWith(
       fontFamily: kFontFamily,
       fontSize: 60,
       fontWeight: FontWeight.w600,
     ),
-    display3: _darkThemeData.textTheme.display3.copyWith(
+    headline3: _darkThemeData.textTheme.headline3.copyWith(
       fontFamily: kFontFamily,
       fontSize: 20,
       fontWeight: FontWeight.w500,
       color: kTextFieldBackgroundColor,
     ),
-    display4: _darkThemeData.textTheme.display4.copyWith(
+    headline4: _darkThemeData.textTheme.headline4.copyWith(
       fontFamily: kFontFamily,
       fontSize: 34,
       fontWeight: FontWeight.w600,
       color: kTextFieldBackgroundColor,
     ),
-    body1: _darkThemeData.textTheme.body1.copyWith(
+    bodyText1: _darkThemeData.textTheme.bodyText1.copyWith(
       fontFamily: kFontFamily,
       fontSize: 18,
       fontWeight: FontWeight.normal,
       color: kPrimaryDarkTextColor,
     ),
-    body2: _darkThemeData.textTheme.body2.copyWith(
+    bodyText2: _darkThemeData.textTheme.bodyText2.copyWith(
       fontFamily: kFontFamily,
       fontSize: 14,
       fontWeight: FontWeight.normal,
@@ -88,7 +88,7 @@ final ThemeData kDarkTheme = ThemeData(
       fontWeight: FontWeight.normal,
       color: kTextFieldBackgroundColor,
     ),
-    subtitle: _darkThemeData.textTheme.subtitle.copyWith(
+    subtitle1: _darkThemeData.textTheme.subtitle1.copyWith(
       fontFamily: kFontFamily,
       fontSize: 14,
       fontWeight: FontWeight.w500,
@@ -99,7 +99,7 @@ final ThemeData kDarkTheme = ThemeData(
 final ThemeData kLightTheme = ThemeData(
   brightness: Brightness.light,
   popupMenuTheme: PopupMenuThemeData(
-    textStyle: _lightThemeData.textTheme.subtitle,
+    textStyle: _lightThemeData.textTheme.subtitle1,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8),
     ),
@@ -136,40 +136,40 @@ final ThemeData kLightTheme = ThemeData(
   ),
   buttonColor: kPrimaryColor,
   textTheme: TextTheme(
-    display1: _lightThemeData.textTheme.display1.copyWith(
+    headline1: _lightThemeData.textTheme.headline1.copyWith(
       fontFamily: kFontFamily,
       fontSize: 96,
       fontWeight: FontWeight.w300,
     ),
-    display2: _lightThemeData.textTheme.display2.copyWith(
+    headline2: _lightThemeData.textTheme.headline2.copyWith(
       fontFamily: kFontFamily,
       fontSize: 60,
       fontWeight: FontWeight.w600,
     ),
-    display3: _lightThemeData.textTheme.display3.copyWith(
+    headline3: _lightThemeData.textTheme.headline3.copyWith(
       fontFamily: kFontFamily,
       fontSize: 20,
       color: kPrimaryMediumTextColor,
       fontWeight: FontWeight.w500,
     ),
-    subtitle: _lightThemeData.textTheme.subtitle.copyWith(
+    subtitle1: _lightThemeData.textTheme.subtitle1.copyWith(
       fontFamily: kFontFamily,
       fontSize: 14,
       fontWeight: FontWeight.w500,
     ),
-    display4: _lightThemeData.textTheme.display4.copyWith(
+    headline4: _lightThemeData.textTheme.headline4.copyWith(
       fontFamily: kFontFamily,
       fontSize: 34,
       fontWeight: FontWeight.w600,
       color: kPrimaryDarkTextColor,
     ),
-    body1: _lightThemeData.textTheme.body1.copyWith(
+    bodyText1: _lightThemeData.textTheme.bodyText1.copyWith(
       fontFamily: kFontFamily,
       fontSize: 18,
       fontWeight: FontWeight.normal,
       color: kPrimaryDarkTextColor,
     ),
-    body2: _lightThemeData.textTheme.body2.copyWith(
+    bodyText2: _lightThemeData.textTheme.bodyText2.copyWith(
       fontFamily: kFontFamily,
       fontSize: 14,
       fontWeight: FontWeight.normal,

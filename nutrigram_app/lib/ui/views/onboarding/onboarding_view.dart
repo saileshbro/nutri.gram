@@ -27,12 +27,9 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   List<_OnboardingModel> onboardingItems = [
     _OnboardingModel(
-      // headLine: curious,
-      // baseLine: nutrientConcious,
-      // asset: onboardingAsset1,
-      headLine: beHealthy,
-      baseLine: healthNote,
-      asset: onboardingAsset4,
+      headLine: curious,
+      baseLine: nutrientConcious,
+      asset: onboardingAsset1,
     ),
     _OnboardingModel(
       headLine: scan,
