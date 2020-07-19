@@ -6,7 +6,9 @@ const SizedBox xsHeightSpan = SizedBox(height: 4);
 const SizedBox sHeightSpan = SizedBox(height: 10);
 const SizedBox mHeightSpan = SizedBox(height: 16);
 const SizedBox lHeightSpan = SizedBox(height: 24);
+const SizedBox llHeightSpan = SizedBox(height: 30);
 const SizedBox xlHeightSpan = SizedBox(height: 48);
+const SizedBox xxlHeightSpan = SizedBox(height: 58);
 
 // --- horizontal spacing ---
 const SizedBox xsWidthSpan = SizedBox(width: 4);
@@ -38,3 +40,19 @@ const EdgeInsets lYPadding = EdgeInsets.symmetric(vertical: 18);
 const EdgeInsets xlPadding = EdgeInsets.symmetric(horizontal: 24, vertical: 18);
 const EdgeInsets xlXPadding = EdgeInsets.symmetric(horizontal: 24);
 const EdgeInsets xlYPadding = EdgeInsets.symmetric(vertical: 24);
+
+List<BoxShadow> getBoxShadow(BuildContext context, Color color) {
+  return [
+    if (Theme.of(context).brightness == Brightness.light)
+      BoxShadow(
+        offset: Offset(0, 4),
+        blurRadius: 20,
+        color: color.withOpacity(0.37),
+      )
+    else
+      BoxShadow(
+        blurRadius: 5,
+        color: color.withOpacity(0.6),
+      ),
+  ];
+}
