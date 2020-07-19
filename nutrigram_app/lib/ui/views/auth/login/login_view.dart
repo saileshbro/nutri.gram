@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:nutrigram_app/common/HelperWidget/bottom_banner.dart';
 import 'package:nutrigram_app/common/HelperWidget/busy_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
@@ -31,7 +32,12 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: true,
+      appBar: AppBar(),
+      bottomNavigationBar: BottomBanner(
+        onPressed: () {},
+        bannerText: "Don't have an account?",
+        buttonLabel: "Register",
+      ),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: <Widget>[
@@ -146,18 +152,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ),
                         width: double.infinity,
-                        child: BusyButton(
-//                                color: primaryColor,
-                            title: (login),
-                            onPressed: () {}),
-                      ),
-                      FlatButton(
-                        splashColor: Colors.transparent,
-                        onPressed: () {},
-                        child: Text(
-                          dontHaveAccount,
-                          style: Theme.of(context).textTheme.button,
-                        ),
+                        child: BusyButton(title: login, onPressed: () {}),
                       ),
                     ],
                   ),
