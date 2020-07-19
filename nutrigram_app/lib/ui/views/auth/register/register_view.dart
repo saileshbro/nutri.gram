@@ -33,10 +33,11 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: ListView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: <Widget>[
-          Navigator.canPop(context) ? AppBar() : SizedBox.shrink(),
+          if (Navigator.canPop(context)) AppBar() else const SizedBox.shrink(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
@@ -118,17 +119,17 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                           suffixIcon: Material(
                             type: MaterialType.transparency,
-                            shape: CircleBorder(),
+                            shape: const CircleBorder(),
                             child: InkWell(
-                              customBorder: CircleBorder(),
-                              child: Icon(obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
+                              customBorder: const CircleBorder(),
                               onTap: () {
                                 setState(() {
                                   obscureText = !obscureText;
                                 });
                               },
+                              child: Icon(obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
                             ),
                           ),
                           hintText: password,
@@ -145,7 +146,7 @@ class _RegisterViewState extends State<RegisterView> {
                         width: double.infinity,
                         child: BusyButton(
                           color: kPrimaryColor,
-                          title: (register), onPressed: () {},
+                          title: register, onPressed: () {},
                           // busy: model.busy,
                           // onPressed: model.busy
                           //     ? null

@@ -5,7 +5,6 @@ import 'package:nutrigram_app/common/ui/worm_painter.dart';
 
 class CustomWormEffect extends IndicatorEffect {
   const CustomWormEffect({
-    double offset,
     double dotWidth = 16.0,
     double dotHeight = 16.0,
     double spacing = 8.0,
@@ -27,7 +26,7 @@ class CustomWormEffect extends IndicatorEffect {
         );
 
   @override
-  IndicatorPainter buildPainter(int count, double offset, bool isRTL) {
+  IndicatorPainter buildPainter({int count, double offset, bool isRTL}) {
     return WormPainter(
         count: count, offset: offset, effect: this, isRTL: isRTL);
   }

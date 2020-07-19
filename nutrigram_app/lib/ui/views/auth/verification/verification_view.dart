@@ -31,7 +31,7 @@ class _VerificationViewState extends State<VerificationView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: <Widget>[
           AppBar(
 //            brightness: Brightness.light,

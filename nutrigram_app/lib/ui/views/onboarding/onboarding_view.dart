@@ -4,7 +4,6 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
-import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -59,7 +58,7 @@ class _OnboardingViewState extends State<OnboardingView> {
           Container(
             height: MediaQuery.of(context).size.height * 0.65,
             child: PageView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               controller: _pageController,
               itemCount: onboardingItems.length,
               itemBuilder: (BuildContext context, int index) {
@@ -86,7 +85,7 @@ class _OnboardingViewState extends State<OnboardingView> {
               strokeWidth: 1.5,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Container(
             decoration: BoxDecoration(
               boxShadow: getBoxShadow(
@@ -97,7 +96,6 @@ class _OnboardingViewState extends State<OnboardingView> {
             width: 112,
             child: FlatButton(
               color: kPrimaryColor,
-              child: Icon(Entypo.arrow_long_right),
               onPressed: () {
                 SystemChrome.setPreferredOrientations([
                   DeviceOrientation.landscapeRight,
@@ -107,7 +105,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                 ]);
                 Navigator.of(context)
                     .push(MaterialPageRoute(
-                        builder: (_) => VerificationView(
+                        builder: (_) => const VerificationView(
                               phoneNumber: "12345",
                             )))
                     .then((onValue) {
@@ -117,6 +115,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                   ]);
                 });
               },
+              child: Icon(Entypo.arrow_long_right),
             ),
           ),
           xlHeightSpan

@@ -31,11 +31,12 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       // resizeToAvoidBottomInset: true,
       body: ListView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: <Widget>[
-          Navigator.canPop(context) ? AppBar() : SizedBox.shrink(),
+          if (Navigator.canPop(context)) AppBar() else const SizedBox.shrink(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
@@ -102,16 +103,16 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           suffixIcon: Material(
                             type: MaterialType.transparency,
-                            shape: CircleBorder(),
+                            shape: const CircleBorder(),
                             child: InkWell(
-                              customBorder: CircleBorder(),
-                              child: Icon(obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
+                              customBorder: const CircleBorder(),
                               onTap: () {
                                 setState(() {
                                   obscureText = !obscureText;
                                 });
+                                Icon(obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off);
                               },
                             ),
                           ),
@@ -148,7 +149,7 @@ class _LoginViewState extends State<LoginView> {
                         width: double.infinity,
                         child: BusyButton(
 //                                color: primaryColor,
-                            title: (login),
+                            title: login,
                             onPressed: () {}),
                       ),
                       FlatButton(
@@ -281,16 +282,16 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
               hintText: newPassword,
               suffixIcon: Material(
                 type: MaterialType.transparency,
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
                 child: InkWell(
-                  customBorder: CircleBorder(),
-                  child: Icon(
-                      obscureText ? Icons.visibility : Icons.visibility_off),
+                  customBorder: const CircleBorder(),
                   onTap: () {
                     setState(() {
                       obscureText = !obscureText;
                     });
                   },
+                  child: Icon(
+                      obscureText ? Icons.visibility : Icons.visibility_off),
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/src/effects/indicator_effect.dart';
+
+import 'indicator_effect.dart';
 
 abstract class IndicatorPainter extends CustomPainter {
   /// The raw offset from the [PageController].page
@@ -24,12 +25,8 @@ abstract class IndicatorPainter extends CustomPainter {
   // The Radius of all dots
   final Radius dotRadius;
 
-  IndicatorPainter(
-    this._rawOffset,
-    this.count,
-    this._effect,
-    bool _isRTL,
-  )   : assert(_isRTL != null),
+  IndicatorPainter(this._rawOffset, this.count, this._effect, bool _isRTL)
+      : assert(_isRTL != null),
         dotRadius = Radius.circular(_effect.radius),
         dotPaint = Paint()
           ..color = _effect.dotColor
@@ -44,11 +41,11 @@ abstract class IndicatorPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Paint still dots if the sub class calls super
     for (int i = 0; i < count; i++) {
-      final xPos = (i * distance);
+      final xPos = i * distance;
       final yPos = size.height / 2;
       final bounds = Rect.fromLTRB(xPos, yPos - _effect.dotHeight / 2,
           xPos + _effect.dotWidth, yPos + _effect.dotHeight / 2);
-      RRect rect = RRect.fromRectAndRadius(bounds, dotRadius);
+      final RRect rect = RRect.fromRectAndRadius(bounds, dotRadius);
       canvas.drawRRect(rect, dotPaint);
     }
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/src/effects/worm_effect.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'indicator_painter.dart';
 
@@ -24,17 +24,17 @@ class WormPainter extends IndicatorPainter {
   }
 
   RRect _calcBounds(num i, double dotOffset) {
-    final xPos = (i * distance);
+    final xPos = i * distance;
     final yPos = (effect.dotHeight) / 2;
     double left = xPos as double;
-    double right = (xPos +
+    double right = xPos +
         effect.dotWidth +
-        (dotOffset * (effect.dotWidth + effect.spacing))) as double;
+        (dotOffset * (effect.dotWidth + effect.spacing)) as double;
     if (dotOffset > 1) {
-      right = (xPos +
+      right = xPos +
           effect.dotWidth +
-          (1 * (effect.dotWidth + effect.spacing))) as double;
-      left = (xPos + ((effect.spacing + effect.dotWidth) * (dotOffset - 1)))
+          (1 * (effect.dotWidth + effect.spacing)) as double;
+      left = xPos + ((effect.spacing + effect.dotWidth) * (dotOffset - 1))
           as double;
     }
     return RRect.fromLTRBR(
