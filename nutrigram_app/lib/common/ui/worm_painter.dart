@@ -11,7 +11,7 @@ class WormPainter extends IndicatorPainter {
     @required int count,
     @required double offset,
     @required bool isRTL,
-  }) : super(offset, count, effect, isRTL);
+  }) : super(offset, count, effect, isRTL: isRTL);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -31,9 +31,8 @@ class WormPainter extends IndicatorPainter {
         effect.dotWidth +
         (dotOffset * (effect.dotWidth + effect.spacing)) as double;
     if (dotOffset > 1) {
-      right = xPos +
-          effect.dotWidth +
-          (1 * (effect.dotWidth + effect.spacing)) as double;
+      right = xPos + effect.dotWidth + (1 * (effect.dotWidth + effect.spacing))
+          as double;
       left = xPos + ((effect.spacing + effect.dotWidth) * (dotOffset - 1))
           as double;
     }

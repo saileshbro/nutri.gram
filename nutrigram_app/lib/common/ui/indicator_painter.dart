@@ -25,14 +25,15 @@ abstract class IndicatorPainter extends CustomPainter {
   // The Radius of all dots
   final Radius dotRadius;
 
-  IndicatorPainter(this._rawOffset, this.count, this._effect, bool _isRTL)
-      : assert(_isRTL != null),
+  IndicatorPainter(this._rawOffset, this.count, this._effect,
+      {@required bool isRTL})
+      : assert(isRTL != null),
         dotRadius = Radius.circular(_effect.radius),
         dotPaint = Paint()
           ..color = _effect.dotColor
           ..style = _effect.paintStyle
           ..strokeWidth = _effect.strokeWidth,
-        offset = _isRTL ? (count - 1) - _rawOffset : _rawOffset;
+        offset = isRTL ? (count - 1) - _rawOffset : _rawOffset;
 
   // The distance between dot lefts
   double get distance => _effect.dotWidth + _effect.spacing;

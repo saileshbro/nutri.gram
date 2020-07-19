@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nutrigram_app/common/HelperWidget/bottom_banner.dart';
 import 'package:nutrigram_app/common/HelperWidget/busy_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
@@ -34,6 +35,11 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      bottomNavigationBar: BottomBanner(
+        onPressed: () {},
+        bannerText: "Already have an account?",
+        buttonLabel: "Login",
+      ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: <Widget>[

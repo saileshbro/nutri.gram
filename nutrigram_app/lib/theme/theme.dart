@@ -4,6 +4,7 @@ import 'package:nutrigram_app/constants/constants.dart';
 final ThemeData _lightThemeData = ThemeData.light();
 final ThemeData _darkThemeData = ThemeData.dark();
 final ThemeData kDarkTheme = ThemeData(
+  visualDensity: VisualDensity.adaptivePlatformDensity,
   brightness: Brightness.dark,
   accentColor: kPrimaryColor,
   cursorColor: kPrimaryColor,
@@ -97,6 +98,7 @@ final ThemeData kDarkTheme = ThemeData(
   ),
 );
 final ThemeData kLightTheme = ThemeData(
+  visualDensity: VisualDensity.adaptivePlatformDensity,
   brightness: Brightness.light,
   popupMenuTheme: PopupMenuThemeData(
     textStyle: _lightThemeData.textTheme.subtitle1,

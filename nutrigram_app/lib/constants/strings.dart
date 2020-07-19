@@ -10,7 +10,7 @@ const String register = "Register";
 const String fullName = "Full Name";
 const String alreadyHaveAnAccount = "Already have an account?";
 const String curious = "Curious?";
-const String nutrientConcious =
+const String nutrientConscious =
     "Curious about the nutrient and calorie content in your food?\n Want to start tracking calories and eating healthy?";
 const String scan = "Scan";
 const String whatToScan =
