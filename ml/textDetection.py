@@ -3,7 +3,12 @@ import numpy as np
 import argparse
 import time
 import cv2
+import tesserocr
+from PIL import Image
 
+from os import path
+
+PATH = path.abspath('./tessdata')
 H = W = None
 rW = rH = None
 # Note: width and height should be multiple of 32
@@ -119,15 +124,38 @@ def detectTextsArea(image, orig, confidence):
         endX = int(endX * rW)
         endY = int(endY * rH)
 
+        # print(startX, endX)
+        # print(startY, endY)
+        box_offset_neg = -15
+        box_offset_pos = 15
+
+        text = readText(orig[startY+box_offset_neg:endY+box_offset_pos,
+                             startX+box_offset_neg:endX+box_offset_pos])
         # draw the bounding box on the image
         cv2.rectangle(orig, (startX, startY), (endX, endY), (0, 255, 0), 2)
+        print(text)
+        cv2.putText(orig, text, (startX, startY-10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, 255)
 
-# show the output image
+    # show the output image
     cv2.imshow("Text Detection", orig)
-    cv2.imwrite("images/text_area_detected.jpg", orig)
+    # cv2.imwrite("images/text_area_detected.jpg", orig)
     cv2.waitKey(0)
 
 
+def readText(roi):
+    # cv2.imshow("Area", roi)
+    # cv2.waitKey(0)
+    img = Image.fromarray(roi)
+
+    return tesserocr.image_to_text(img, path=PATH)
+
+
 if __name__ == "__main__":
-    image, orig = load_and_resize('images\\threshold_cropped.jpg', 352, 352)
+    image, orig = load_and_resize('images\\threshold_cropped.jpg', 640, 480)
     detectTextsArea(image, orig, 0.4)
+    # cv2.imshow("as", image)
+    # cv2.imshow("or", orig)
+    # cv2.waitKey(0)
+    # text = readText(image)
+    # print(text)
