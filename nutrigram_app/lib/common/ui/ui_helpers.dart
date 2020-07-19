@@ -45,7 +45,7 @@ List<BoxShadow> getBoxShadow(BuildContext context, Color color) {
   return [
     if (Theme.of(context).brightness == Brightness.light)
       BoxShadow(
-        offset: Offset(0, 4),
+        offset: const Offset(0, 4),
         blurRadius: 20,
         color: color.withOpacity(0.37),
       )

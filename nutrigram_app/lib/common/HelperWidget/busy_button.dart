@@ -8,13 +8,14 @@ class BusyButton extends StatefulWidget {
   final String title;
   final Function onPressed;
   final bool enabled;
-
+  final Color color;
+  
   const BusyButton(
       {@required this.title,
       this.busy = false,
+      this.color,
       @required this.onPressed,
-      this.enabled = true,
-      Color color});
+      this.enabled = true});
 
   @override
   _BusyButtonState createState() => _BusyButtonState();
@@ -43,7 +44,7 @@ class _BusyButtonState extends State<BusyButton> {
               : Container(
                   height: 36,
                   width: 36,
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),

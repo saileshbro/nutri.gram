@@ -103,29 +103,27 @@ class _OnboardingFront extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Image.asset(
-            onboardingModel.asset,
-            height: MediaQuery.of(context).size.width * 0.65,
-          ),
-          Column(
-            children: <Widget>[
-              xxlHeightSpan,
-              Text(onboardingModel.headLine,
-                  style: Theme.of(context).textTheme.headline4),
-              lHeightSpan,
-              Text(
-                onboardingModel.baseLine,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption,
-              ),
-            ],
-          )
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Image.asset(
+          onboardingModel.asset,
+          height: MediaQuery.of(context).size.width * 0.65,
+        ),
+        Column(
+          children: <Widget>[
+            xxlHeightSpan,
+            Text(onboardingModel.headLine,
+                style: Theme.of(context).textTheme.headline4),
+            lHeightSpan,
+            Text(
+              onboardingModel.baseLine,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ],
+        )
+      ],
     );
   }
 }

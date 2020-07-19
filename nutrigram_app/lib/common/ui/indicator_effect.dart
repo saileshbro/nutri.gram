@@ -48,7 +48,7 @@ abstract class IndicatorEffect {
             strokeWidth >= 0);
 
   // Builds a new painter every time the page offset changes
-  IndicatorPainter buildPainter(int count, double offset, bool isRTL);
+  IndicatorPainter buildPainter({int count, double offset, bool isRTL});
 
   // Calculates the size of canvas based on
   // dots count, size and spacing
