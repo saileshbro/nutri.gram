@@ -9,11 +9,11 @@ final ThemeData kDarkTheme = ThemeData(
   accentColor: kPrimaryColor,
   cursorColor: kPrimaryColor,
   cardColor: kPrimaryMediumTextColor,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     color: kPrimaryDarkTextColor,
     elevation: 0.0,
     brightness: Brightness.light,
-    iconTheme: const IconThemeData(
+    iconTheme: IconThemeData(
       color: kTextFieldBackgroundColor,
     ),
   ),

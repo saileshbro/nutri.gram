@@ -9,7 +9,7 @@ class BusyButton extends StatefulWidget {
   final Function onPressed;
   final bool enabled;
   final Color color;
-  
+
   const BusyButton(
       {@required this.title,
       this.busy = false,
