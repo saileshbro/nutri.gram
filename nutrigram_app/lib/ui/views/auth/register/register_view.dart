@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/HelperWidget/bottom_banner.dart';
-import 'package:nutrigram_app/common/HelperWidget/busy_button.dart';
+import 'package:nutrigram_app/common/ui/bottom_banner.dart';
+import 'package:nutrigram_app/common/ui/busy_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';

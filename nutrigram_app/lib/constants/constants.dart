@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 // add all constants here
-const String appName = "nutri.gram";
+const String kAppName = "nutri.gram";
+const String kBaseUrl = "https://nutrigram.herokuapp.com/api/v1";
 
 /// Theme related
 const String kFontFamily = "WorkSans";
