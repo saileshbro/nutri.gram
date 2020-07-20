@@ -45,7 +45,7 @@ class _BusyButtonState extends State<BusyButton> {
                   height: 36,
                   width: 36,
                   padding: const EdgeInsets.all(8),
-                  child: CircularProgressIndicator(
+                  child: const CircularProgressIndicator(
                     strokeWidth: 2,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),

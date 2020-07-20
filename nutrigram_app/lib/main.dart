@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: appName,
+      title: kAppName,
       debugShowCheckedModeBanner: false,
       theme: kLightTheme,
       initialRoute: Routes.startUpView,

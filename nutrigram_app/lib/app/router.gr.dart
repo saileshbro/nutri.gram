@@ -5,6 +5,7 @@
 // **************************************************************************
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_view.dart';
