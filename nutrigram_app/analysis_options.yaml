@@ -8,6 +8,8 @@ analyzer:
     sort_unnamed_constructors_first: ignore
     parameter_assignments: error
     argument_type_not_assignable: ignore
+    unnecessary_getters_setters: ignore
+    unnecessary_raw_strings: ignore
 linter:
   rules:
     parameter_assignments: true
