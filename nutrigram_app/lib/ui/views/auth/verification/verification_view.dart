@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/ui/busy_button.dart';
+import 'package:nutrigram_app/common/ui/components/d_raised_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
@@ -113,8 +113,9 @@ class _VerificationViewState extends State<VerificationView> {
                 llHeightSpan,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 43.0),
-                  child: BusyButton(
+                  child: DRaisedButton(
                     onPressed: () {},
+                    loading: false,
                     // onPressed: () {
                     //   model.verify(
                     //     code: int.tryParse(pinCodeValue, radix: 10),

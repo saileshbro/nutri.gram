@@ -11,3 +11,15 @@ String validatePassword(String value) {
   }
   return null;
 }
+
+String validatePhone(String value) {
+  try {
+    int.tryParse(value, radix: 10);
+    if (value.length < 10) {
+      return "Invalid phone number";
+    }
+    return null;
+  } catch (e) {
+    return "Invalid phone number";
+  }
+}

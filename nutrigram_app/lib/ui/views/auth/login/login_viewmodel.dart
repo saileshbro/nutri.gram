@@ -1,6 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/app/router.gr.dart';
 import 'package:nutrigram_app/common/helpers/validators.dart' as validators;
+import 'package:nutrigram_app/datamodels/authentication/login/login_request_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/login/login_response_model.dart';
+import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/repository/authentication/i_authentication_repository.dart';
 import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
@@ -11,6 +16,7 @@ class LoginViewModel extends BaseViewModel {
   final IAuthenticationRepository _authenticationRepository;
   final UserDataService _userDataService;
   final NavigationService _navigationService;
+  final DialogService _dialogService;
 
   String _phoneNo;
   String _password;
@@ -26,7 +32,7 @@ class LoginViewModel extends BaseViewModel {
   }
 
   LoginViewModel(this._authenticationRepository, this._userDataService,
-      this._navigationService);
+      this._navigationService, this._dialogService);
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
   bool get isPasswordVisible => _obscurePassword;
@@ -35,23 +41,30 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> doLogin() async {
-    if (formKey.currentState.validate()) {}
+  Future<void> login() async {
+    setBusy(true);
+    final Either<Failure, LoginResponseModel> result =
+        await _authenticationRepository.login(
+            loginRequestModel:
+                LoginRequestModel(phone: _phoneNo, password: _password));
+    result.fold((Failure failute) => _showError(failute.message),
+        (LoginResponseModel model) async {
+      await _userDataService.saveData(
+          model.token, model.user.name, model.user.phone);
+      _navigationService.navigateTo(Routes.homeView);
+    });
   }
 
-  String validatePhone(String phone) {
-    try {
-      int.tryParse(phone, radix: 10);
-      if (phone.length < 10) {
-        return "Invalid phone number";
-      }
-      return null;
-    } catch (e) {
-      return "Invalid phone number";
-    }
-  }
+  String validatePhone(String phone) => validators.validatePhone(phone);
 
-  String validatePassword(String value) {
-    return validators.validatePassword(value);
+  String validatePassword(String value) => validators.validatePassword(value);
+
+  void goToRegister() => _navigationService.navigateTo(Routes.registerView);
+  void _showError(String message) {
+    _dialogService.showDialog(
+      title: "Login Failure",
+      description: message,
+    );
+    setBusy(false);
   }
 }

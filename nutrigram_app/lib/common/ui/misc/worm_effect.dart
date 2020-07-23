@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/ui/indicator_effect.dart';
-import 'package:nutrigram_app/common/ui/indicator_painter.dart';
-import 'package:nutrigram_app/common/ui/worm_painter.dart';
+
+import 'package:nutrigram_app/common/ui/misc/indicator_effect.dart';
+import 'package:nutrigram_app/common/ui/misc/indicator_painter.dart';
+import 'package:nutrigram_app/common/ui/misc/worm_painter.dart';
 
 class CustomWormEffect extends IndicatorEffect {
   const CustomWormEffect({

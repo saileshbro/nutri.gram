@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/datamodels/authentication/login/login_response_model.dart';

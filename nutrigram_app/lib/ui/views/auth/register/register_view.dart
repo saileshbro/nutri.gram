@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/ui/bottom_banner.dart';
-import 'package:nutrigram_app/common/ui/busy_button.dart';
+import 'package:nutrigram_app/common/ui/components/bottom_banner.dart';
+import 'package:nutrigram_app/common/ui/components/d_raised_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
@@ -37,13 +37,12 @@ class _RegisterViewState extends State<RegisterView> {
       appBar: AppBar(),
       bottomNavigationBar: BottomBanner(
         onPressed: () {},
-        bannerText: "Already have an account?",
-        buttonLabel: "Login",
+        bannerText: alreadyHaveAnAccount,
+        buttonLabel: login,
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: <Widget>[
-          if (Navigator.canPop(context)) AppBar() else const SizedBox.shrink(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
@@ -150,8 +149,8 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                         ),
                         width: double.infinity,
-                        child: BusyButton(
-                          color: kPrimaryColor,
+                        child: DRaisedButton(
+                          loading: false,
                           title: register, onPressed: () {},
                           // busy: model.busy,
                           // onPressed: model.busy
@@ -163,15 +162,6 @@ class _RegisterViewState extends State<RegisterView> {
                           //           _passwordController.text,
                           //         );
                           //       },
-                        ),
-                      ),
-                      // mHeightSpan,
-                      FlatButton(
-                        onPressed: () {},
-                        splashColor: Colors.transparent,
-                        child: Text(
-                          alreadyHaveAnAccount,
-                          style: Theme.of(context).textTheme.button,
                         ),
                       ),
                     ],

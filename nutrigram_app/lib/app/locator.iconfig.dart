@@ -51,6 +51,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<IAuthenticationRepository>(),
         g<UserDataService>(),
         g<NavigationService>(),
+        g<DialogService>(),
       ));
 }
 

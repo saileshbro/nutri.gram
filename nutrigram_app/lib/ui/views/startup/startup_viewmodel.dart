@@ -20,7 +20,8 @@ class StartUpViewModel extends BaseViewModel {
       });
     } else {
       SchedulerBinding.instance.addPostFrameCallback((timestamp) {
-        _navigationService.clearStackAndShow(Routes.loginView);
+        _navigationService.clearStackAndShow(
+            _userDataService.isLoggedIn ? Routes.homeView : Routes.loginView);
       });
     }
   }

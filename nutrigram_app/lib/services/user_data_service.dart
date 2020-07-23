@@ -6,10 +6,10 @@ class UserDataService {
   String _token;
   String _name;
   String _phone;
-  bool _isLogged;
+  // ignore: unused_field
+  bool _isLoggedIn;
 
   UserDataService(this._sharedPreferencesService);
-  bool get isLogged => _isLogged;
   String get token => _token;
   String get name => _name;
 
@@ -19,7 +19,7 @@ class UserDataService {
     _name = name;
     _phone = phone;
     await _sharedPreferencesService.saveData(token, name, phone);
-    _isLogged = true;
+    _isLoggedIn = true;
     return true;
   }
 
@@ -33,7 +33,7 @@ class UserDataService {
   bool clearData() {
     _token = null;
     _name = null;
-    _isLogged = false;
+    _isLoggedIn = false;
     _sharedPreferencesService.removeToken();
     _sharedPreferencesService.removeName();
     _sharedPreferencesService.removePhone();
@@ -48,10 +48,10 @@ class UserDataService {
         _name.isNotEmpty &&
         _phone != null &&
         _phone.isNotEmpty) {
-      _isLogged = true;
+      _isLoggedIn = true;
       return true;
     }
-    _isLogged = false;
+    _isLoggedIn = false;
     return false;
   }
 }
