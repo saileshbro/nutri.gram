@@ -34,7 +34,7 @@ def load_and_resize(path, width, height):
 
 # load the pre-trained EAST text detector
 print("[INFO] loading EAST text detector...")
-net = cv2.dnn.readNet('models\\frozen_east_text_detection.pb')
+net = cv2.dnn.readNet('./models/frozen_east_text_detection.pb')
 
 
 def detectTextsArea(image, orig, confidence):
@@ -152,7 +152,7 @@ def readText(roi):
 
 
 if __name__ == "__main__":
-    image, orig = load_and_resize('images\\threshold_cropped.jpg', 640, 480)
+    image, orig = load_and_resize('./images/threshold_cropped.jpg', 640, 480)
     detectTextsArea(image, orig, 0.4)
     # cv2.imshow("as", image)
     # cv2.imshow("or", orig)
