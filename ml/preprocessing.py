@@ -46,16 +46,15 @@ def wrap_transform(image, orig):
 
 if __name__ == "__main__":
     resized, original = load_image(
-        'C:\\Users\\Dell\\Desktop\\nutri.gram\\ml\\images\\labels_2_cropped.jpg')
+        './images/labels_2_cropped.jpg')
 
     if(resized is not None):
         T, warped = wrap_transform(resized, original)
         if T is not None:
+            cv2.imwrite('./images/threshold_cropped.jpg', T)
+            cv2.imwrite('./images/WARPED_cropped.jpg',  imutils.resize(warped, height=500))
             cv2.imshow("Threshold", imutils.resize(T, height=500))
-            cv2.imwrite('images\\threshold_cropped.jpg', T)
             cv2.imshow("Warped", imutils.resize(warped, height=500))
-            cv2.imwrite('images\\WARPED_cropped.jpg',
-                        imutils.resize(warped, height=500))
             cv2.waitKey(0)
         else:
             print("T is none")
