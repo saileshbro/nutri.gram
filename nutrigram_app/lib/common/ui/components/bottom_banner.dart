@@ -7,12 +7,13 @@ class BottomBanner extends StatelessWidget {
   final String buttonLabel;
   final Function onPressed;
   final Color backgroundColor;
-
+  final bool loading;
   BottomBanner({
     @required this.onPressed,
     this.backgroundColor = Colors.white,
     this.bannerText,
     this.buttonLabel,
+    this.loading = false,
   }) : assert(bannerText != null ||
             bannerText.isNotEmpty ||
             buttonLabel != null ||
@@ -27,24 +28,36 @@ class BottomBanner extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
-            bannerText,
-            style: Theme.of(context).textTheme.button,
-          ),
-          RawMaterialButton(
-            constraints: const BoxConstraints(),
-            onPressed: onPressed,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            padding: sPadding,
-            child: Text(
-              buttonLabel,
-              style: Theme.of(context)
-                  .textTheme
-                  .button
-                  .copyWith(color: kPrimaryColor),
+          if (loading)
+            Container(
+              height: 36,
+              width: 36,
+              padding: const EdgeInsets.all(8),
+              child: const CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
+              ),
+            )
+          else ...[
+            Text(
+              bannerText,
+              style: Theme.of(context).textTheme.button,
             ),
-          )
+            RawMaterialButton(
+              constraints: const BoxConstraints(),
+              onPressed: onPressed,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              padding: sPadding,
+              child: Text(
+                buttonLabel,
+                style: Theme.of(context)
+                    .textTheme
+                    .button
+                    .copyWith(color: kPrimaryColor),
+              ),
+            )
+          ]
         ],
       ),
     );

@@ -31,111 +31,107 @@ class _RegisterViewState extends State<RegisterView> {
           buttonLabel: login,
         ),
         body: ListView(
+          padding: sXPagePadding,
           physics: const BouncingScrollPhysics(),
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Image.asset(
-                      registerIllustration,
-                      width: MediaQuery.of(context).size.width,
-                    ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: mXPagePadding,
+                  child: Image.asset(
+                    registerIllustration,
+                    width: MediaQuery.of(context).size.width,
                   ),
-                  mHeightSpan,
-                  Text(
-                    register,
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                  lHeightSpan,
-                  Form(
-                    key: model.formKey,
-                    child: Column(
-                      children: <Widget>[
-                        DTextField(
-                            textCapitalization: TextCapitalization.words,
-                            focusNode: nameFocusNode,
-                            onEditingComplete: () {
-                              FocusScope.of(context)
-                                  .requestFocus(phoneFocusNode);
-                            },
-                            validator: model.validateName,
-                            onChanged: (val) => model.name = val,
-                            hintText: fullName,
-                            prefixIcon: Icon(
-                              Icons.perm_identity,
-                            ),
-                            enabled: !model.isBusy),
-                        mHeightSpan,
-                        DTextField(
-                          focusNode: phoneFocusNode,
+                ),
+                mHeightSpan,
+                Text(
+                  register,
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                lHeightSpan,
+                Form(
+                  key: model.formKey,
+                  child: Column(
+                    children: <Widget>[
+                      DTextField(
+                          textCapitalization: TextCapitalization.words,
+                          focusNode: nameFocusNode,
                           onEditingComplete: () {
-                            FocusScope.of(context)
-                                .requestFocus(passwordFocusNode);
+                            FocusScope.of(context).requestFocus(phoneFocusNode);
                           },
-                          validator: model.validatePhone,
-                          onChanged: (val) => model.phoneNo = val,
-                          textInputType: TextInputType.number,
+                          validator: model.validateName,
+                          onChanged: (val) => model.name = val,
+                          hintText: fullName,
                           prefixIcon: Icon(
-                            Icons.phone_android,
+                            Icons.perm_identity,
                           ),
-                          enabled: !model.isBusy,
-                          hintText: phoneNumber,
+                          enabled: !model.isBusy),
+                      mHeightSpan,
+                      DTextField(
+                        focusNode: phoneFocusNode,
+                        onEditingComplete: () {
+                          FocusScope.of(context)
+                              .requestFocus(passwordFocusNode);
+                        },
+                        validator: model.validatePhone,
+                        onChanged: (val) => model.phoneNo = val,
+                        textInputType: TextInputType.number,
+                        prefixIcon: Icon(
+                          Icons.phone_android,
                         ),
-                        mHeightSpan,
-                        DTextField(
-                          focusNode: passwordFocusNode,
-                          onEditingComplete: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
+                        enabled: !model.isBusy,
+                        hintText: phoneNumber,
+                      ),
+                      mHeightSpan,
+                      DTextField(
+                        focusNode: passwordFocusNode,
+                        onEditingComplete: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        onChanged: (val) => model.password = val,
+                        validator: model.validatePassword,
+                        enabled: !model.isBusy,
+                        password: model.isPasswordVisible,
+                        prefixIcon: Icon(
+                          Icons.lock_open,
+                        ),
+                        suffixIcon: Material(
+                          type: MaterialType.transparency,
+                          shape: const CircleBorder(),
+                          child: InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: model.changePasswordVisibility,
+                            child: Icon(model.isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
+                        ),
+                        hintText: password,
+                      ),
+                      llHeightSpan,
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: getBoxShadow(
+                            context,
+                            kPrimaryColor,
+                          ),
+                        ),
+                        width: double.infinity,
+                        child: DRaisedButton(
+                          loading: model.isBusy,
+                          title: register,
+                          onPressed: () {
+                            if (model.formKey.currentState.validate()) {
+                              model.register();
+                            }
                           },
-                          onChanged: (val) => model.password = val,
-                          validator: model.validatePassword,
-                          enabled: !model.isBusy,
-                          password: model.isPasswordVisible,
-                          prefixIcon: Icon(
-                            Icons.lock_open,
-                          ),
-                          suffixIcon: Material(
-                            type: MaterialType.transparency,
-                            shape: const CircleBorder(),
-                            child: InkWell(
-                              customBorder: const CircleBorder(),
-                              onTap: model.changePasswordVisibility,
-                              child: Icon(model.isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
-                          ),
-                          hintText: password,
                         ),
-                        llHeightSpan,
-                        Container(
-                          decoration: BoxDecoration(
-                            boxShadow: getBoxShadow(
-                              context,
-                              kPrimaryColor,
-                            ),
-                          ),
-                          width: double.infinity,
-                          child: DRaisedButton(
-                            loading: model.isBusy,
-                            title: register,
-                            onPressed: () {
-                              print("hit");
-                              if (model.formKey.currentState.validate()) {
-                                model.register();
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             mHeightSpan,
           ],

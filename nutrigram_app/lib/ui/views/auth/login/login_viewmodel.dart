@@ -47,13 +47,23 @@ class LoginViewModel extends BaseViewModel {
         await _authenticationRepository.login(
             loginRequestModel:
                 LoginRequestModel(phone: _phoneNo, password: _password));
-    result.fold((Failure failute) => _showError(failute.message),
-        (LoginResponseModel model) async {
-      await _userDataService.saveData(
-          model.token, model.user.name, model.user.phone);
-      setBusy(false);
-      _navigationService.navigateTo(Routes.homeView);
-    });
+    result.fold(
+      (Failure failute) => _showError(failute.message),
+      (LoginResponseModel model) async {
+        setBusy(false);
+        if (model.user.otpVerified) {
+          await _userDataService.saveData(
+              model.token, model.user.name, model.user.phone);
+          _navigationService.navigateTo(Routes.homeView);
+        } else {
+          await _showMessage("Verification code is ${model.user.otp}");
+          _navigationService.navigateTo(
+            Routes.verificationView,
+            arguments: VerificationViewArguments(phoneNumber: model.user.phone),
+          );
+        }
+      },
+    );
   }
 
   String validatePhone(String phone) => validators.validatePhone(phone);
@@ -64,6 +74,14 @@ class LoginViewModel extends BaseViewModel {
   void _showError(String message) {
     _dialogService.showDialog(
       title: "Login Failure",
+      description: message,
+    );
+    setBusy(false);
+  }
+
+  Future<void> _showMessage(String message) async {
+    await _dialogService.showDialog(
+      title: "Verification code",
       description: message,
     );
     setBusy(false);
