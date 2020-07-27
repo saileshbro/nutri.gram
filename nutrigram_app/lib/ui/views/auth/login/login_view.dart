@@ -1,196 +1,168 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:nutrigram_app/common/ui/bottom_banner.dart';
-import 'package:nutrigram_app/common/ui/busy_button.dart';
+import 'package:nutrigram_app/app/locator.dart';
+import 'package:nutrigram_app/common/ui/components/bottom_banner.dart';
+import 'package:nutrigram_app/common/ui/components/d_raised_button.dart';
+import 'package:nutrigram_app/common/ui/components/d_text_field.dart';
+import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
+import 'package:nutrigram_app/ui/views/auth/login/login_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
-class LoginView extends StatefulWidget {
-  @override
-  _LoginViewState createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-  FocusNode phoneFocusNode;
-  FocusNode passwordFocusNode;
-  bool obscureText = true;
-
-  TextEditingController _phoneNumberController, _passwordController;
-
-  @override
-  void initState() {
-    phoneFocusNode = FocusNode();
-    passwordFocusNode = FocusNode();
-
-    _phoneNumberController = TextEditingController(text: "12345");
-    _passwordController = TextEditingController(text: "user123");
-
-    super.initState();
-  }
-
+class LoginView extends StatelessWidget {
+  final FocusNode phoneFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      // resizeToAvoidBottomInset: true,
-      bottomNavigationBar: BottomBanner(
-        onPressed: () {},
-        bannerText: "Don't have an account?",
-        buttonLabel: "Register",
-      ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: <Widget>[
-          if (Navigator.canPop(context)) AppBar() else const SizedBox.shrink(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: Image.asset(
-                    loginIllustration,
-                    width: MediaQuery.of(context).size.width,
+    return ViewModelBuilder<LoginViewModel>.reactive(
+        builder: (BuildContext context, LoginViewModel model, Widget child) =>
+            Scaffold(
+              appBar: AppBar(),
+              bottomNavigationBar: BottomBanner(
+                onPressed: model.goToRegister,
+                bannerText: dontHaveAccount,
+                buttonLabel: register,
+              ),
+              body: ListView(
+                physics: const BouncingScrollPhysics(),
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          child: Image.asset(
+                            loginIllustration,
+                            width: MediaQuery.of(context).size.width,
+                          ),
+                        ),
+                        sHeightSpan,
+                        Text(
+                          welcome,
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        sHeightSpan,
+                        Text(
+                          afterLogin,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                        lHeightSpan,
+                        Form(
+                          key: model.formKey,
+                          child: Column(
+                            children: <Widget>[
+                              DTextField(
+                                textInputType: TextInputType.number,
+                                focusNode: phoneFocusNode,
+                                onEditingComplete: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(passwordFocusNode);
+                                },
+                                validator: model.validatePhone,
+                                onChanged: (val) => model.phoneNo = val,
+                                prefixIcon: Icon(
+                                  Icons.phone_android,
+                                ),
+                                enabled: !model.isBusy,
+                                hintText: phoneNumber,
+                              ),
+                              mHeightSpan,
+                              DTextField(
+                                focusNode: passwordFocusNode,
+                                validator: model.validatePassword,
+                                password: model.isPasswordVisible,
+                                enabled: !model.isBusy,
+                                onEditingComplete: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                },
+                                onChanged: (val) => model.password = val,
+                                suffixIcon: Material(
+                                  type: MaterialType.transparency,
+                                  shape: const CircleBorder(),
+                                  child: InkWell(
+                                    customBorder: const CircleBorder(),
+                                    onTap: model.changePasswordVisibility,
+                                    child: Icon(
+                                      model.isPasswordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                  ),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.lock_open,
+                                ),
+                                hintText: password,
+                              ),
+                              mHeightSpan,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showCustomBottomSheet(context,
+                                        child: GetOTPBottomSheet());
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 3.0),
+                                    child: Text(
+                                      forgotPassword,
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              mHeightSpan,
+                              Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: getBoxShadow(
+                                    context,
+                                    kPrimaryColor,
+                                  ),
+                                ),
+                                width: double.infinity,
+                                child: DRaisedButton(
+                                    title: login,
+                                    loading: model.isBusy,
+                                    onPressed: () {
+                                      if (model.formKey.currentState
+                                          .validate()) {
+                                        model.login();
+                                      }
+                                    }),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                sHeightSpan,
-                Text(
-                  welcome,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                sHeightSpan,
-                Text(
-                  afterLogin,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                lHeightSpan,
-                Form(
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        controller: _phoneNumberController,
-                        keyboardType: TextInputType.number,
-                        focusNode: phoneFocusNode,
-                        onEditingComplete: () {
-                          FocusScope.of(context)
-                              .requestFocus(passwordFocusNode);
-                        },
-                        style: Theme.of(context).textTheme.caption,
-                        decoration: InputDecoration(
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .apply(color: kDisabledLightThemeColor),
-                          prefixIcon: Icon(
-                            Icons.phone_android,
-                          ),
-                          hintText: phoneNumber,
-                        ),
-                      ),
-                      mHeightSpan,
-                      TextFormField(
-                        controller: _passwordController,
-                        focusNode: passwordFocusNode,
-                        style: Theme.of(context).textTheme.caption,
-                        onEditingComplete: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        obscureText: obscureText,
-                        decoration: InputDecoration(
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .apply(color: kDisabledLightThemeColor),
-                          prefixIcon: Icon(
-                            Icons.lock_open,
-                          ),
-                          suffixIcon: Material(
-                            type: MaterialType.transparency,
-                            shape: const CircleBorder(),
-                            child: InkWell(
-                              customBorder: const CircleBorder(),
-                              onTap: () {
-                                setState(() {
-                                  obscureText = !obscureText;
-                                });
-                                Icon(obscureText
-                                    ? Icons.visibility
-                                    : Icons.visibility_off);
-                              },
-                            ),
-                          ),
-                          hintText: password,
-                        ),
-                      ),
-                      mHeightSpan,
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          onTap: () {
-                            // showBottomSheet(
-                            //   context,
-                            //   child: ForgotPasswordBottomSheet(),
-                            // );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 3.0),
-                            child: Text(
-                              forgotPassword,
-                              style: Theme.of(context).textTheme.button,
-                            ),
-                          ),
-                        ),
-                      ),
-                      mHeightSpan,
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: getBoxShadow(
-                            context,
-                            kPrimaryColor,
-                          ),
-                        ),
-                        width: double.infinity,
-                        child: BusyButton(
-//                                color: primaryColor,
-                            title: login,
-                            onPressed: () {}),
-                      ),
-                      FlatButton(
-                        splashColor: Colors.transparent,
-                        onPressed: () {},
-                        child: Text(
-                          dontHaveAccount,
-                          style: Theme.of(context).textTheme.button,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                  mHeightSpan,
+                ],
+              ),
             ),
-          ),
-          mHeightSpan,
-        ],
-      ),
-    );
+        viewModelBuilder: () => locator<LoginViewModel>());
   }
 }
 
-class ChangePasswordBottomSheet extends StatefulWidget {
+class ResetPasswordBottomSheet extends StatefulWidget {
   final String phone;
 
-  const ChangePasswordBottomSheet({Key key, @required this.phone})
+  const ResetPasswordBottomSheet({Key key, @required this.phone})
       : super(key: key);
 
   @override
-  _ChangePasswordBottomSheetState createState() =>
-      _ChangePasswordBottomSheetState();
+  _ResetPasswordBottomSheetState createState() =>
+      _ResetPasswordBottomSheetState();
 }
 
-class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
+class _ResetPasswordBottomSheetState extends State<ResetPasswordBottomSheet> {
   TextEditingController phoneNumbercontroller,
       codeController,
       passwordController;
@@ -303,9 +275,10 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
             ),
           ),
           mHeightSpan,
-          BusyButton(
+          DRaisedButton(
             title: changePassword,
             onPressed: () {},
+            loading: false,
           ),
           mHeightSpan,
         ],
@@ -314,13 +287,14 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
   }
 }
 
-class ForgotPasswordBottomSheet extends StatelessWidget {
+class GetOTPBottomSheet extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 42),
+      padding: const EdgeInsets.symmetric(horizontal: 42).add(
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
       child: Column(
         children: <Widget>[
           Text(
@@ -328,24 +302,20 @@ class ForgotPasswordBottomSheet extends StatelessWidget {
             style: Theme.of(context).textTheme.button,
           ),
           mHeightSpan,
-          TextFormField(
+          DTextField(
             controller: _controller,
-            keyboardType: TextInputType.number,
-            style: Theme.of(context).textTheme.caption,
-            decoration: InputDecoration(
-              hintStyle: Theme.of(context).textTheme.caption,
-              prefixIcon: Icon(
-                Icons.phone_android,
-              ),
-              hintText: phoneNumber,
+            textInputType: TextInputType.number,
+            prefixIcon: Icon(
+              Icons.phone_android,
             ),
+            hintText: phoneNumber,
           ),
           mHeightSpan,
-          BusyButton(
+          DRaisedButton(
             title: requestNewPassword,
             onPressed: () {},
+            loading: false,
           ),
-          mHeightSpan,
         ],
       ),
     );
