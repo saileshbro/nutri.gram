@@ -133,7 +133,7 @@ def detectTextsArea(image, orig, confidence):
                              startX+box_offset_neg:endX+box_offset_pos])
         # draw the bounding box on the image
         cv2.rectangle(orig, (startX, startY), (endX, endY), (0, 255, 0), 2)
-        print(text)
+       # print(text)
         cv2.putText(orig, text, (startX, startY-10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, 255)
 
@@ -154,8 +154,4 @@ def readText(roi):
 if __name__ == "__main__":
     image, orig = load_and_resize('./images/threshold_cropped.jpg', 640, 480)
     detectTextsArea(image, orig, 0.4)
-    # cv2.imshow("as", image)
-    # cv2.imshow("or", orig)
-    # cv2.waitKey(0)
-    # text = readText(image)
-    # print(text)
+    
