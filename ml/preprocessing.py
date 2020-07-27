@@ -5,16 +5,16 @@ import imutils
 from helpers.transform import four_point_transform
 
 ratio = None
-
+R_H = 400
 
 def load_image(imgPath):
     if not os.path.exists(imgPath):
         return None, None
     global ratio
     image = cv2.imread(imgPath)
-    ratio = image.shape[0]/500.0
+    ratio = image.shape[0]/R_H
     orig = image.copy()
-    image = imutils.resize(image, height=500)
+    image = imutils.resize(image, height=R_H)
     return image, orig
 
 
@@ -52,9 +52,9 @@ if __name__ == "__main__":
         T, warped = wrap_transform(resized, original)
         if T is not None:
             cv2.imwrite('./images/threshold_cropped.jpg', T)
-            cv2.imwrite('./images/WARPED_cropped.jpg',  imutils.resize(warped, height=500))
-            cv2.imshow("Threshold", imutils.resize(T, height=500))
-            cv2.imshow("Warped", imutils.resize(warped, height=500))
+            cv2.imwrite('./images/WARPED_cropped.jpg',  imutils.resize(warped, height=R_H))
+            cv2.imshow("Threshold", imutils.resize(T, height=R_H))
+            cv2.imshow("Warped", imutils.resize(warped, height=R_H))
             cv2.waitKey(0)
         else:
             print("T is none")

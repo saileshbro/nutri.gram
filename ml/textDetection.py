@@ -6,6 +6,9 @@ import cv2
 import tesserocr
 from PIL import Image
 
+import re
+from fuzzywuzzy import fuzz
+
 from os import path
 
 PATH = path.abspath('./tessdata')
@@ -40,6 +43,7 @@ net = cv2.dnn.readNet('./models/frozen_east_text_detection.pb')
 def detectTextsArea(image, orig, confidence):
     global W, H, rW, rH
 
+    readTexts = []
     # define the two output layer names for the EAST detector model that
     # we are interested -- the first is the output probabilities and the
     # second can be used to derive the bounding box coordinates of text
@@ -114,7 +118,7 @@ def detectTextsArea(image, orig, confidence):
     # apply non-maxima suppression to suppress weak, overlapping bounding
     # boxes
     boxes = non_max_suppression(np.array(rects), probs=confidences)
-
+   
     # loop over the bounding boxes
     for (startX, startY, endX, endY) in boxes:
         # scale the bounding box coordinates based on the respective
@@ -131,16 +135,15 @@ def detectTextsArea(image, orig, confidence):
 
         text = readText(orig[startY+box_offset_neg:endY+box_offset_pos,
                              startX+box_offset_neg:endX+box_offset_pos])
+        readTexts.append(text.replace('\n',''))
         # draw the bounding box on the image
         cv2.rectangle(orig, (startX, startY), (endX, endY), (0, 255, 0), 2)
        # print(text)
         cv2.putText(orig, text, (startX, startY-10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, 255)
+    
+    return readTexts
 
-    # show the output image
-    cv2.imshow("Text Detection", orig)
-    # cv2.imwrite("images/text_area_detected.jpg", orig)
-    cv2.waitKey(0)
 
 
 def readText(roi):
@@ -149,9 +152,55 @@ def readText(roi):
     img = Image.fromarray(roi)
 
     return tesserocr.image_to_text(img, path=PATH)
+def matchText(readTexts,dbTexts):
+    '''
+        Match the texts read by application to the keywords defined in database
+        readTexts: list of texts that application read
+        dbTexts: list of tags user set to track
+    '''
+
+    matchRatio = 60
+
+    print("Matching Texts")
+    for i,text in enumerate(readTexts):
+        maxRatio = 0
+        maxj = 0
+        # print(text)
+        newText = re.sub(r'^[0-9]+','',text,5)
+
+        if(len(newText)==0): continue
+
+        if(newText != text):
+            continue
+        # print(text)
+        for j,tag in enumerate(dbTexts):
+            ratio = fuzz.partial_ratio(text,tag)
+            print(text,tag,ratio)
+            if ratio > matchRatio and ratio > maxRatio:
+                maxRatio = ratio
+                maxj = j
+        if(maxRatio > 80):
+            readTexts[i] = dbTexts[maxj]
+    return readTexts
+
 
 
 if __name__ == "__main__":
-    image, orig = load_and_resize('./images/threshold_cropped.jpg', 640, 480)
-    detectTextsArea(image, orig, 0.4)
+    image, orig = load_and_resize('./images/WARPED_cropped.jpg', 704, 512)
+
+    dbTexts = [
+        'Carbohydrate', 'Calories', 'Protein', 'Fat','g', 'gram', 'Kcal','Carbs',
+        'Total Fat'
+    ]
+
+    texts = detectTextsArea(image, orig, 0.4)
+    print(orig.shape)
+    cv2.imshow("TextDetection", orig)
+    cv2.imshow("TextDetection", orig)
+    # cv2.imwrite("images/text_area_detected.jpg", orig)
+    cv2.waitKey(0)
+    print(texts)
+    texts = matchText(texts,dbTexts)
+    print("After matching")
+    print(texts)
     

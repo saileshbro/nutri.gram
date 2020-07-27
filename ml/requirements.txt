@@ -1,10 +1,12 @@
 Package               Version
 --------------------- --------
+fuzzywuzzy            0.18.0
 imutils               0.5.3
 numpy                 1.19.1
 opencv-contrib-python 4.3.0.36
 Pillow                7.2.0
 pip                   20.1.1
+python-Levenshtein    0.12.0
 setuptools            49.2.0
 tesserocr             2.5.1
 wheel                 0.34.2
