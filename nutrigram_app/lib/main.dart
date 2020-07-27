@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       initialRoute: Routes.startUpView,
       onGenerateRoute: Router().onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
-      home: LoginView(),
+      // home: LoginView(),
     );
   }
 }
