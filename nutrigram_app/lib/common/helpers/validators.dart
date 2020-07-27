@@ -23,3 +23,10 @@ String validatePhone(String value) {
     return "Invalid phone number";
   }
 }
+
+String validateName(String value) {
+  if (value.isEmpty) {
+    return "Invalid name";
+  }
+  return null;
+}

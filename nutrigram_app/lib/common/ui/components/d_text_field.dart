@@ -14,6 +14,7 @@ class DTextField extends StatelessWidget {
   final String hintText;
   final Widget prefixIcon;
   final Widget suffixIcon;
+  final TextCapitalization textCapitalization;
   const DTextField({
     this.controller,
     this.password = false,
@@ -27,6 +28,7 @@ class DTextField extends StatelessWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
+    this.textCapitalization = TextCapitalization.none,
   });
 
   @override
