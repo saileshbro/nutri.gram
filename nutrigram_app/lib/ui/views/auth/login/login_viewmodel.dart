@@ -51,6 +51,7 @@ class LoginViewModel extends BaseViewModel {
         (LoginResponseModel model) async {
       await _userDataService.saveData(
           model.token, model.user.name, model.user.phone);
+      setBusy(false);
       _navigationService.navigateTo(Routes.homeView);
     });
   }

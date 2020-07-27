@@ -1,13 +1,12 @@
-class LoginResponseModel {
+class RegisterResponseModel {
   _User user;
-  String token;
+
   String message;
 
-  LoginResponseModel({this.user, this.token, this.message});
+  RegisterResponseModel({this.user, this.message});
 
-  LoginResponseModel.fromJson(Map<String, dynamic> json) {
+  RegisterResponseModel.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? _User.fromJson(json['user']) : null;
-    token = json['token'] as String;
     message = json['message'] as String;
   }
 
@@ -16,7 +15,6 @@ class LoginResponseModel {
     if (user != null) {
       data['user'] = user.toJson();
     }
-    data['token'] = token;
     data['message'] = message;
     return data;
   }
