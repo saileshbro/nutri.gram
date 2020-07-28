@@ -7,7 +7,6 @@ import 'package:nutrigram_app/common/helpers/validators.dart' as validators;
 import 'package:nutrigram_app/datamodels/authentication/register/register_response_model.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/repository/authentication/i_authentication_repository.dart';
-import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -52,11 +51,10 @@ class RegisterViewModel extends BaseViewModel {
                 RegisterRequestModel(_name, _phoneNo, _password));
     result.fold((Failure failute) => _showError(failute.message),
         (RegisterResponseModel model) async {
-      print(model.toJson());
       await _showMessage("Verification code is ${model.user.otp}");
       setBusy(false);
-      // navigate to verification page
-      _navigationService.navigateTo(Routes.verificationView);
+      _navigationService.navigateTo(Routes.verificationView,
+          arguments: VerificationViewArguments(phoneNumber: model.user.phone));
     });
   }
 

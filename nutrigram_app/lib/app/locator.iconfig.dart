@@ -19,6 +19,7 @@ import 'package:nutrigram_app/repository/authentication/r_authentication_reposit
 import 'package:nutrigram_app/repository/authentication/i_authentication_repository.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/auth/verification/verification_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
@@ -58,6 +59,12 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<IAuthenticationRepository>(),
         g<NavigationService>(),
         g<DialogService>(),
+      ));
+  g.registerLazySingleton<VerificationViewModel>(() => VerificationViewModel(
+        g<IAuthenticationRepository>(),
+        g<DialogService>(),
+        g<UserDataService>(),
+        g<NavigationService>(),
       ));
 }
 

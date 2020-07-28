@@ -26,122 +26,119 @@ class LoginView extends StatelessWidget {
                 buttonLabel: register,
               ),
               body: ListView(
+                padding: sXPagePadding,
                 physics: const BouncingScrollPhysics(),
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                          child: Image.asset(
-                            loginIllustration,
-                            width: MediaQuery.of(context).size.width,
-                          ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: mXPagePadding,
+                        child: Image.asset(
+                          loginIllustration,
+                          width: MediaQuery.of(context).size.width,
                         ),
-                        sHeightSpan,
-                        Text(
-                          welcome,
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        sHeightSpan,
-                        Text(
-                          afterLogin,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                        lHeightSpan,
-                        Form(
-                          key: model.formKey,
-                          child: Column(
-                            children: <Widget>[
-                              DTextField(
-                                textInputType: TextInputType.number,
-                                focusNode: phoneFocusNode,
-                                onEditingComplete: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(passwordFocusNode);
+                      ),
+                      sHeightSpan,
+                      Text(
+                        welcome,
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      sHeightSpan,
+                      Text(
+                        afterLogin,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      lHeightSpan,
+                      Form(
+                        key: model.formKey,
+                        child: Column(
+                          children: <Widget>[
+                            DTextField(
+                              textInputType: TextInputType.number,
+                              focusNode: phoneFocusNode,
+                              onEditingComplete: () {
+                                FocusScope.of(context)
+                                    .requestFocus(passwordFocusNode);
+                              },
+                              validator: model.validatePhone,
+                              onChanged: (val) => model.phoneNo = val,
+                              prefixIcon: Icon(
+                                Icons.phone_android,
+                              ),
+                              enabled: !model.isBusy,
+                              hintText: phoneNumber,
+                            ),
+                            mHeightSpan,
+                            DTextField(
+                              focusNode: passwordFocusNode,
+                              validator: model.validatePassword,
+                              password: model.isPasswordVisible,
+                              enabled: !model.isBusy,
+                              onEditingComplete: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                              },
+                              onChanged: (val) => model.password = val,
+                              suffixIcon: Material(
+                                type: MaterialType.transparency,
+                                shape: const CircleBorder(),
+                                child: InkWell(
+                                  customBorder: const CircleBorder(),
+                                  onTap: model.changePasswordVisibility,
+                                  child: Icon(
+                                    model.isPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                ),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.lock_open,
+                              ),
+                              hintText: password,
+                            ),
+                            mHeightSpan,
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  showCustomBottomSheet(context,
+                                      child: GetOTPBottomSheet());
                                 },
-                                validator: model.validatePhone,
-                                onChanged: (val) => model.phoneNo = val,
-                                prefixIcon: Icon(
-                                  Icons.phone_android,
-                                ),
-                                enabled: !model.isBusy,
-                                hintText: phoneNumber,
-                              ),
-                              mHeightSpan,
-                              DTextField(
-                                focusNode: passwordFocusNode,
-                                validator: model.validatePassword,
-                                password: model.isPasswordVisible,
-                                enabled: !model.isBusy,
-                                onEditingComplete: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                },
-                                onChanged: (val) => model.password = val,
-                                suffixIcon: Material(
-                                  type: MaterialType.transparency,
-                                  shape: const CircleBorder(),
-                                  child: InkWell(
-                                    customBorder: const CircleBorder(),
-                                    onTap: model.changePasswordVisibility,
-                                    child: Icon(
-                                      model.isPasswordVisible
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                    ),
-                                  ),
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.lock_open,
-                                ),
-                                hintText: password,
-                              ),
-                              mHeightSpan,
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    showCustomBottomSheet(context,
-                                        child: GetOTPBottomSheet());
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 3.0),
-                                    child: Text(
-                                      forgotPassword,
-                                      style: Theme.of(context).textTheme.button,
-                                    ),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 3.0),
+                                  child: Text(
+                                    forgotPassword,
+                                    style: Theme.of(context).textTheme.button,
                                   ),
                                 ),
                               ),
-                              mHeightSpan,
-                              Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: getBoxShadow(
-                                    context,
-                                    kPrimaryColor,
-                                  ),
+                            ),
+                            mHeightSpan,
+                            Container(
+                              decoration: BoxDecoration(
+                                boxShadow: getBoxShadow(
+                                  context,
+                                  kPrimaryColor,
                                 ),
-                                width: double.infinity,
-                                child: DRaisedButton(
-                                    title: login,
-                                    loading: model.isBusy,
-                                    onPressed: () {
-                                      if (model.formKey.currentState
-                                          .validate()) {
-                                        model.login();
-                                      }
-                                    }),
                               ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                              width: double.infinity,
+                              child: DRaisedButton(
+                                  title: login,
+                                  loading: model.isBusy,
+                                  onPressed: () {
+                                    if (model.formKey.currentState.validate()) {
+                                      model.login();
+                                    }
+                                  }),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                   mHeightSpan,
                 ],
@@ -185,7 +182,8 @@ class _ResetPasswordBottomSheetState extends State<ResetPasswordBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 42),
+      padding: sXPagePadding.add(
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -293,7 +291,7 @@ class GetOTPBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 42).add(
+      padding: sXPagePadding.add(
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
       child: Column(
         children: <Widget>[

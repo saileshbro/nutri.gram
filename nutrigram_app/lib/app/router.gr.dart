@@ -76,7 +76,8 @@ class Router extends RouterBase {
       );
     },
     VerificationView: (RouteData data) {
-      var args = data.getArgs<VerificationViewArguments>(nullOk: false);
+      var args = data.getArgs<VerificationViewArguments>(
+          orElse: () => VerificationViewArguments());
       return MaterialPageRoute<dynamic>(
         builder: (context) =>
             VerificationView(key: args.key, phoneNumber: args.phoneNumber),
@@ -94,5 +95,5 @@ class Router extends RouterBase {
 class VerificationViewArguments {
   final Key key;
   final String phoneNumber;
-  VerificationViewArguments({this.key, @required this.phoneNumber});
+  VerificationViewArguments({this.key, this.phoneNumber});
 }

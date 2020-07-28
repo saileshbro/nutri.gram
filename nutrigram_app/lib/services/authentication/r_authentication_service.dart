@@ -4,6 +4,8 @@ import 'package:nutrigram_app/datamodels/authentication/login/login_response_mod
 import 'package:nutrigram_app/datamodels/authentication/login/login_request_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/register/register_response_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/register/register_request_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/verification/verification_response_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/verification/verification_request_model.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/services/authentication/i_authentication_service.dart';
 import 'package:nutrigram_app/services/http_service.dart';
@@ -38,6 +40,22 @@ class RAuthenticationService implements IAuthenticationService {
         throw Failure(message: err.message ?? "Unusual Exception");
       }).map((_) {
         return RegisterResponseModel.fromJson(_);
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<VerificationResponseModel> verify(
+      {VerificationRequestModel model}) async {
+    try {
+      return _httpService
+          .post(url: '/users/verify_otp', encodedJson: model.toJson())
+          .handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return VerificationResponseModel.fromJson(_);
       }).first;
     } catch (e) {
       throw Failure(message: e.toString());

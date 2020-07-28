@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/datamodels/authentication/register/register_response_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/register/register_request_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/verification/verification_response_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/verification/verification_request_model.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/datamodels/authentication/login/login_response_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/login/login_request_model.dart';
@@ -29,10 +31,20 @@ class RAuthenticationRepository implements IAuthenticationRepository {
   Future<Either<Failure, RegisterResponseModel>> register(
       {RegisterRequestModel registerRequestModel}) async {
     try {
-      print(registerRequestModel.toJson());
-
       final RegisterResponseModel model =
           await _authenticationService.register(model: registerRequestModel);
+      return right(model);
+    } on Failure catch (e) {
+      return left(e);
+    }
+  }
+
+  @override
+  Future<Either<Failure, VerificationResponseModel>> verify(
+      {VerificationRequestModel verificationRequestModel}) async {
+    try {
+      final VerificationResponseModel model =
+          await _authenticationService.verify(model: verificationRequestModel);
       return right(model);
     } on Failure catch (e) {
       return left(e);
