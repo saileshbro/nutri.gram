@@ -144,6 +144,28 @@ def detectTextsArea(image, orig, confidence):
     
     return readTexts
 
+def detectTexts(image,orig):
+    global W, H, rW, rH
+
+    texts = []
+    matched = []
+    keyval = {}
+    text = readText(orig)
+
+    texts = text.split('\n')
+    for line in texts:
+        words = line.lower().replace('total ','').replace('total','').split(' ')
+        print(words)
+        result = matchText(words,dbTexts)
+        matched.extend(result)
+        keyval[result[0]] = ' '.join(result[1:])
+
+
+    print("TExts: ",texts)
+    print("Matched: ", matched)
+    print(keyval)
+    
+    return keyval
 
 
 def readText(roi):
@@ -159,7 +181,7 @@ def matchText(readTexts,dbTexts):
         dbTexts: list of tags user set to track
     '''
 
-    matchRatio = 60
+    matchRatio = 40
 
     print("Matching Texts")
     for i,text in enumerate(readTexts):
@@ -174,33 +196,30 @@ def matchText(readTexts,dbTexts):
             continue
         # print(text)
         for j,tag in enumerate(dbTexts):
-            ratio = fuzz.partial_ratio(text,tag)
+            ratio = fuzz.ratio(text,tag)
             print(text,tag,ratio)
             if ratio > matchRatio and ratio > maxRatio:
                 maxRatio = ratio
                 maxj = j
-        if(maxRatio > 80):
+        if(maxRatio > matchRatio):
             readTexts[i] = dbTexts[maxj]
     return readTexts
 
-
-
-if __name__ == "__main__":
-    image, orig = load_and_resize('./images/WARPED_cropped.jpg', 704, 512)
-
-    dbTexts = [
-        'Carbohydrate', 'Calories', 'Protein', 'Fat','g', 'gram', 'Kcal','Carbs',
-        'Total Fat'
+dbTexts = [
+        'Carbohydrate', 'Calories', 'Protein', 'Fat', 'Carbs', 'KCal', 'g', 'gm'
     ]
 
-    texts = detectTextsArea(image, orig, 0.4)
-    print(orig.shape)
+if __name__ == "__main__":
+    image, orig = load_and_resize('./images/threshold_cropped.jpg', 640,480)
+
+    
+
+    # texts = detectTextsArea(image, orig, 0.4)
+    texts = detectTexts(image,orig)
+    # print(orig.shape)
     cv2.imshow("TextDetection", orig)
-    cv2.imshow("TextDetection", orig)
-    # cv2.imwrite("images/text_area_detected.jpg", orig)
+    cv2.imshow("TextDetection ", orig)
+
     cv2.waitKey(0)
-    print(texts)
-    texts = matchText(texts,dbTexts)
-    print("After matching")
-    print(texts)
+   
     

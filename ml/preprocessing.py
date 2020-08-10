@@ -5,7 +5,7 @@ import imutils
 from helpers.transform import four_point_transform
 
 ratio = None
-R_H = 400
+R_H = 600
 
 def load_image(imgPath):
     if not os.path.exists(imgPath):
@@ -22,6 +22,8 @@ def wrap_transform(image, orig):
     global ratio
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, (5, 5), 1)
+    gray = cv2.equalizeHist(gray)
+    bigrayl = cv2.bilateralFilter(gray,7,20,20)
     edged = cv2.Canny(gray, 75, 200)
     cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST,
                             cv2.CHAIN_APPROX_SIMPLE)
@@ -44,12 +46,14 @@ def wrap_transform(image, orig):
         return None, None
 
 
+
 if __name__ == "__main__":
     resized, original = load_image(
         './images/labels_2_cropped.jpg')
 
     if(resized is not None):
         T, warped = wrap_transform(resized, original)
+
         if T is not None:
             cv2.imwrite('./images/threshold_cropped.jpg', T)
             cv2.imwrite('./images/WARPED_cropped.jpg',  imutils.resize(warped, height=R_H))
