@@ -25,9 +25,6 @@ def upload_image():
         f = request.files['image']
         path = './uploads/'+f.filename
         f.save(path)
-        
-        
-       
         #Preprocessing tasks
         resized, original = load_image(path)
 
@@ -35,10 +32,16 @@ def upload_image():
             T, warped = wrap_transform(resized, original)
  
             if T is not None:
-                # image,T = load_and_resize(640,480,image=T)
                 keyval = detectTexts(T)
                 print(keyval)
-                return keyval
+                return dict(
+                    status='success',
+                    data=keyval,
+                    msg='success'
+                )
         else:
-            return "Image doesnot exist"
+            return dict(
+                status='failed',
+                msg="Image not found"
+            )
              
