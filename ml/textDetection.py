@@ -11,16 +11,21 @@ from fuzzywuzzy import fuzz
 
 from os import path
 
-PATH = path.abspath('./tessdata')
+tessdata_path = path.abspath('./tessdata')
 H = W = None
 rW = rH = None
 # Note: width and height should be multiple of 32
 
 
-def load_and_resize(path, width, height):
+def load_and_resize(width, height,path=None,image=None):
     global W, H, rW, rH
     # load the input image and grab the image dimensions
-    image = cv2.imread(path)
+    if path is None and image is None:
+        return Exception("Either path or image should be provided")
+
+    if path is not None and image is None:
+        image = cv2.imread(path)
+
     orig = image.copy()
     (H, W) = image.shape[:2]
     # set the new width and height and then determine the ratio in change
@@ -36,8 +41,8 @@ def load_and_resize(path, width, height):
 
 
 # load the pre-trained EAST text detector
-print("[INFO] loading EAST text detector...")
-net = cv2.dnn.readNet('./models/frozen_east_text_detection.pb')
+# print("[INFO] loading EAST text detector...")
+# net = cv2.dnn.readNet('./models/frozen_east_text_detection.pb')
 
 
 def detectTextsArea(image, orig, confidence):
@@ -144,8 +149,8 @@ def detectTextsArea(image, orig, confidence):
     
     return readTexts
 
-def detectTexts(image,orig):
-    global W, H, rW, rH
+def detectTexts(orig):
+    # global W, H, rW, rH
 
     texts = []
     matched = []
@@ -161,8 +166,8 @@ def detectTexts(image,orig):
         keyval[result[0]] = ' '.join(result[1:])
 
 
-    print("TExts: ",texts)
-    print("Matched: ", matched)
+    # print("Texts: ",texts)
+    # print("Matched: ", matched)
     print(keyval)
     
     return keyval
@@ -173,7 +178,7 @@ def readText(roi):
     # cv2.waitKey(0)
     img = Image.fromarray(roi)
 
-    return tesserocr.image_to_text(img, path=PATH)
+    return tesserocr.image_to_text(img, path=tessdata_path)
 def matchText(readTexts,dbTexts):
     '''
         Match the texts read by application to the keywords defined in database
@@ -183,7 +188,7 @@ def matchText(readTexts,dbTexts):
 
     matchRatio = 40
 
-    print("Matching Texts")
+    # print("Matching Texts")
     for i,text in enumerate(readTexts):
         maxRatio = 0
         maxj = 0
@@ -197,7 +202,7 @@ def matchText(readTexts,dbTexts):
         # print(text)
         for j,tag in enumerate(dbTexts):
             ratio = fuzz.ratio(text,tag)
-            print(text,tag,ratio)
+            # print(text,tag,ratio)
             if ratio > matchRatio and ratio > maxRatio:
                 maxRatio = ratio
                 maxj = j
@@ -210,15 +215,17 @@ dbTexts = [
     ]
 
 if __name__ == "__main__":
-    image, orig = load_and_resize('./images/threshold_cropped.jpg', 640,480)
+    image, orig = load_and_resize(1000,1000,path='./images/threshold_cropped.jpg')
 
     
 
     # texts = detectTextsArea(image, orig, 0.4)
-    texts = detectTexts(image,orig)
+    texts = detectTexts(orig)
     # print(orig.shape)
+    print(texts)
     cv2.imshow("TextDetection", orig)
-    cv2.imshow("TextDetection ", orig)
+    cv2.imshow("Thresh ", image)
+
 
     cv2.waitKey(0)
    
