@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 // routes setup
 app.use("/api/v1", require("./routes/user.router"))
+app.use("/api/v1", require("./routes/tip.router"))
 // Error handlers setup
 app.use(notFoundError)
 app.use(mongooseErrors)

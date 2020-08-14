@@ -15,3 +15,4 @@ mongoose.connection.once("open", () => {
 
 // register models here
 require("./models/User")
+require("./models/Tip")

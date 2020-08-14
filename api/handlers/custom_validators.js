@@ -45,3 +45,10 @@ exports.validateOtp = (otp) => {
     throw new CustomError(406, "Invalid OTP provided!")
   }
 }
+exports.validateURL = (url) => {
+  try {
+    const tryUrl = new URL(url)
+  } catch (error) {
+    throw new CustomError(400, "Invalid URL provided")
+  }
+}
