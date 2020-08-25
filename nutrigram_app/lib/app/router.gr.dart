@@ -76,7 +76,7 @@ class Router extends RouterBase {
       );
     },
     VerificationView: (RouteData data) {
-      var args = data.getArgs<VerificationViewArguments>(
+      final args = data.getArgs<VerificationViewArguments>(
           orElse: () => VerificationViewArguments());
       return MaterialPageRoute<dynamic>(
         builder: (context) =>
