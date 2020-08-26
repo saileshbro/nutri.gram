@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/application_wrapper.dart';
-import 'package:nutrigram_app/ui/views/Advice/advice_view.dart';
-import 'package:nutrigram_app/ui/views/History/history_view.dart';
-import 'package:nutrigram_app/ui/views/Profile/profile_view.dart';
-import 'package:nutrigram_app/ui/views/Scan/scan_view.dart';
+import 'package:nutrigram_app/ui/views/advice/advice_view.dart';
+import 'package:nutrigram_app/ui/views/history/history_view.dart';
+import 'package:nutrigram_app/ui/views/profile/profile_view.dart';
+import 'package:nutrigram_app/ui/views/scan/scan_view.dart';
 import 'package:nutrigram_app/ui/views/home/home_view.dart';
 
 class Dashboard extends StatelessWidget {

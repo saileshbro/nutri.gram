@@ -6,11 +6,13 @@ class DRaisedButton extends StatelessWidget {
   final bool loading;
   final String title;
   final Function onPressed;
+  final bool hasBoxShadow;
 
   const DRaisedButton({
     @required this.title,
     @required this.loading,
     @required this.onPressed,
+    this.hasBoxShadow = true,
   });
 
   @override
@@ -24,7 +26,8 @@ class DRaisedButton extends StatelessWidget {
           decoration: BoxDecoration(
               color: kPrimaryColor,
               borderRadius: BorderRadius.circular(8),
-              boxShadow: getBoxShadow(context, kPrimaryColor)),
+              boxShadow:
+                  hasBoxShadow ? getBoxShadow(context, kPrimaryColor) : null),
           child: !loading
               ? Text(
                   title,
