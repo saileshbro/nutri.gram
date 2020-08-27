@@ -25,7 +25,7 @@ class CustomNavBar extends StatelessWidget {
       padding: EdgeInsets.only(
         left: 2,
         top: MediaQuery.of(context).padding.top + 10,
-        right: 25,
+        right: 15,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -15,27 +15,29 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: const <Widget>[
-          CustomNavBar(
-            navBarItemTitle: "Profile",
-            blackString: "Update your ",
-            blueString: "profile",
-            isProfilePage: true,
-            backNeeded: true,
-          ),
-          llHeightSpan,
-          ProfileTop(
-            imageUrl:
-                "https://th.bing.com/th/id/OIP.t7coTbCbSZ8gixh06SwCOgHaE8?pid=Api&rs=1",
-            phoneNumber: "9860934053",
-            totalScans: '100',
-            saved: '76',
-            name: "Sarayu",
-            totalCalories: '5000 kcal',
-          ),
-          lHeightSpan,
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+        child: Column(
+          children: const <Widget>[
+            CustomNavBar(
+              navBarItemTitle: "Profile",
+              blackString: "Update your ",
+              blueString: "profile",
+              isProfilePage: true,
+            ),
+            llHeightSpan,
+            ProfileTop(
+              imageUrl:
+                  "https://th.bing.com/th/id/OIP.t7coTbCbSZ8gixh06SwCOgHaE8?pid=Api&rs=1",
+              phoneNumber: "9860934053",
+              totalScans: '100',
+              saved: '76',
+              name: "Sarayu",
+              totalCalories: '5000 kcal',
+            ),
+            lHeightSpan,
+          ],
+        ),
       ),
     );
   }
@@ -128,7 +130,7 @@ class ProfileTop extends StatelessWidget {
                   Text(
                     "Total Scans",
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: kDisabledLightThemeColor,
+                          color: kPrimaryLightTextColor,
                         ),
                   )
                 ],
@@ -143,7 +145,7 @@ class ProfileTop extends StatelessWidget {
                   Text(
                     "Saved",
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: kDisabledLightThemeColor,
+                          color: kPrimaryLightTextColor,
                         ),
                   )
                 ],
@@ -158,7 +160,7 @@ class ProfileTop extends StatelessWidget {
                   Text(
                     "Total Calories",
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: kDisabledLightThemeColor,
+                          color: kPrimaryLightTextColor,
                         ),
                   )
                 ],
