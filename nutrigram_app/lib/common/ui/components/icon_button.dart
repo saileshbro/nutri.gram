@@ -15,8 +15,8 @@ class CustomIconButton extends StatelessWidget {
     this.isBig = false,
     @required this.color,
     @required this.icon,
-    this.iconSize = 16,
-    this.radius = 20,
+    this.iconSize = 18,
+    this.radius = 22,
   }) : super(key: key);
 
   @override
