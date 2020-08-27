@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:nutrigram_app/common/ui/components/appbar_head.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
@@ -18,20 +17,22 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
       body: Column(
         children: const <Widget>[
-          NavBarItemAppBar(
+          CustomNavBar(
             navBarItemTitle: "Profile",
-            blackString: "Update your",
+            blackString: "Update your ",
             blueString: "profile",
+            isProfilePage: true,
+            backNeeded: true,
           ),
           llHeightSpan,
           ProfileTop(
             imageUrl:
-                "https://avatars0.githubusercontent.com/u/41059790?s=460&v=4",
-            phoneNumber: attemptedQuestion,
-            totalScans: '44',
+                "https://th.bing.com/th/id/OIP.t7coTbCbSZ8gixh06SwCOgHaE8?pid=Api&rs=1",
+            phoneNumber: "9860934053",
+            totalScans: '100',
             saved: '76',
             name: "Sarayu",
-            totalCalories: '50 hrs',
+            totalCalories: '5000 kcal',
           ),
           lHeightSpan,
         ],
@@ -78,7 +79,7 @@ class ProfileTop extends StatelessWidget {
                         imageUrl,
                       ),
                       backgroundColor: kPrimaryColor,
-                      maxRadius: 32.0,
+                      maxRadius: 42.0,
                     ),
                   ),
                   lWidthSpan,
@@ -94,7 +95,7 @@ class ProfileTop extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: highestRanking,
+                              text: phoneNum,
                               style: Theme.of(context).textTheme.caption,
                             ),
                             TextSpan(
@@ -111,10 +112,6 @@ class ProfileTop extends StatelessWidget {
                   ),
                 ],
               ),
-              IconButton(
-                icon: const Icon(Feather.edit),
-                onPressed: () {},
-              )
             ],
           ),
           llHeightSpan,

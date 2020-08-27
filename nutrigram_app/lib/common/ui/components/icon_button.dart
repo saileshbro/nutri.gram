@@ -5,16 +5,18 @@ class CustomIconButton extends StatelessWidget {
   final Color gradientColor;
   final Color color;
   final IconData icon;
+  final bool isBig;
   final double radius;
   final double iconSize;
 
   const CustomIconButton({
     Key key,
     @required this.gradientColor,
+    this.isBig = false,
     @required this.color,
     @required this.icon,
-    this.iconSize = 24,
-    this.radius = 28,
+    this.iconSize = 16,
+    this.radius = 20,
   }) : super(key: key);
 
   @override
