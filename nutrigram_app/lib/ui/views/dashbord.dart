@@ -18,12 +18,12 @@ class Dashboard extends StatelessWidget {
         AdviceView(),
         ProfileView(),
       ],
-      navigationMenus: [
+      navigationMenus: const [
         BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
           ),
-          title: const Text(
+          title: Text(
             "Home",
           ),
         ),
@@ -31,7 +31,7 @@ class Dashboard extends StatelessWidget {
           icon: Icon(
             Icons.history,
           ),
-          title: const Text(
+          title: Text(
             "History",
           ),
         ),
@@ -39,7 +39,7 @@ class Dashboard extends StatelessWidget {
           icon: Icon(
             Icons.photo_camera,
           ),
-          title: const Text(
+          title: Text(
             "Scan",
           ),
         ),
@@ -47,7 +47,7 @@ class Dashboard extends StatelessWidget {
           icon: Icon(
             Icons.fastfood,
           ),
-          title: const Text(
+          title: Text(
             "Advice",
           ),
         ),
@@ -55,7 +55,7 @@ class Dashboard extends StatelessWidget {
           icon: Icon(
             Icons.person,
           ),
-          title: const Text(
+          title: Text(
             "Profile",
           ),
         ),

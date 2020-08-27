@@ -63,7 +63,7 @@ class _RegisterViewState extends State<RegisterView> {
                           validator: model.validateName,
                           onChanged: (val) => model.name = val,
                           hintText: fullName,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.perm_identity,
                           ),
                           enabled: !model.isBusy),
@@ -77,7 +77,7 @@ class _RegisterViewState extends State<RegisterView> {
                         validator: model.validatePhone,
                         onChanged: (val) => model.phoneNo = val,
                         textInputType: TextInputType.number,
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.phone_android,
                         ),
                         enabled: !model.isBusy,
@@ -93,7 +93,7 @@ class _RegisterViewState extends State<RegisterView> {
                         validator: model.validatePassword,
                         enabled: !model.isBusy,
                         password: model.isPasswordVisible,
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.lock_open,
                         ),
                         suffixIcon: Material(

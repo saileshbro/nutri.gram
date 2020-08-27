@@ -17,8 +17,8 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: <Widget>[
-          const NavBarItemAppBar(
+        children: const <Widget>[
+          NavBarItemAppBar(
             navBarItemTitle: "Profile",
             blackString: "Update your",
             blueString: "profile",
@@ -112,7 +112,7 @@ class ProfileTop extends StatelessWidget {
                 ],
               ),
               IconButton(
-                icon: Icon(Feather.edit),
+                icon: const Icon(Feather.edit),
                 onPressed: () {},
               )
             ],

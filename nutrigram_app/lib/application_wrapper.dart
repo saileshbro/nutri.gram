@@ -54,7 +54,8 @@ class _ApplicationWrapperState extends State<ApplicationWrapper> {
           onTap: changeIndex,
           selectedItemColor: kPrimaryColor,
           unselectedItemColor: kDisabledLightThemeColor,
-          unselectedLabelStyle: TextStyle(color: kDisabledLightThemeColor),
+          unselectedLabelStyle:
+              const TextStyle(color: kDisabledLightThemeColor),
           items: widget.navigationMenus,
         ),
       ),

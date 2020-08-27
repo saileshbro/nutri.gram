@@ -26,7 +26,6 @@ class BottomBanner extends StatelessWidget {
       color: backgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           if (loading)
             Container(

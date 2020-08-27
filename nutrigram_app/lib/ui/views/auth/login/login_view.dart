@@ -64,7 +64,7 @@ class LoginView extends StatelessWidget {
                               },
                               validator: model.validatePhone,
                               onChanged: (val) => model.phoneNo = val,
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.phone_android,
                               ),
                               enabled: !model.isBusy,
@@ -94,7 +94,7 @@ class LoginView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock_open,
                               ),
                               hintText: password,
@@ -211,7 +211,7 @@ class _ResetPasswordBottomSheetState extends State<ResetPasswordBottomSheet> {
                   .textTheme
                   .caption
                   .apply(color: kDisabledLightThemeColor),
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.phone_android,
               ),
               hintText: phoneNumber,
@@ -231,7 +231,7 @@ class _ResetPasswordBottomSheetState extends State<ResetPasswordBottomSheet> {
                   .textTheme
                   .caption
                   .apply(color: kDisabledLightThemeColor),
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Feather.edit,
               ),
               hintText: otpCode,
@@ -252,7 +252,7 @@ class _ResetPasswordBottomSheetState extends State<ResetPasswordBottomSheet> {
                   .textTheme
                   .caption
                   .apply(color: kDisabledLightThemeColor),
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.lock_open,
               ),
               hintText: newPassword,
@@ -303,7 +303,7 @@ class GetOTPBottomSheet extends StatelessWidget {
           DTextField(
             controller: _controller,
             textInputType: TextInputType.number,
-            prefixIcon: Icon(
+            prefixIcon: const Icon(
               Icons.phone_android,
             ),
             hintText: phoneNumber,

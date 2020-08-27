@@ -30,7 +30,7 @@ class NavBarItemAppBar extends StatelessWidget {
         children: <Widget>[
           if (backNeeded)
             IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -66,7 +66,7 @@ class NavBarItemAppBar extends StatelessWidget {
             ],
           ),
           if (isProfilePage)
-            CustomIconButton(
+            const CustomIconButton(
               color: Colors.amber,
               gradientColor: Colors.blue,
               icon: Icons.exit_to_app,
