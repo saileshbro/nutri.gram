@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/common/ui/components/appbar_head.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
+import 'package:nutrigram_app/constants/constants.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -25,12 +26,15 @@ class HomeView extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MinColumnWidth,
                       ),
                     ),
                     Positioned(
                       left: 0,
-                      child: Image.asset("name"),
+                      child: Image.asset(
+                        homeIllustrationRight,
+                        width: 100,
+                        height: 100,
+                      ),
                     )
                   ],
                 ))

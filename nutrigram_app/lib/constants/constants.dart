@@ -22,8 +22,8 @@ const Color kDisabledDarkThemeColor = Color(0xFF444444);
 
 ///Assets related
 const String loginIllustration = "assets/illustrations/login_illustration.png";
-const String homeIllustrationLeft =
-    "assets/illustrations/login_illustration.png";
+const String homeIllustrationLeft = "assets/illustrations/leftHome.png";
+const String homeIllustrationRight = "assets/illustrations/rightHome.png";
 const String registerIllustration =
     "assets/illustrations/register_illustration.png";
 const String verificationIllustration =
