@@ -9,12 +9,14 @@ class CustomNavBar extends StatelessWidget {
   final String blueString;
   final bool backNeeded;
   final bool isProfilePage;
+  final bool isSecondary;
 
   const CustomNavBar({
     Key key,
     @required this.navBarItemTitle,
     @required this.blackString,
     @required this.blueString,
+    this.isSecondary = false,
     this.backNeeded = false,
     this.isProfilePage = false,
   }) : super(key: key);
@@ -51,7 +53,9 @@ class CustomNavBar extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     navBarItemTitle,
-                    style: Theme.of(context).textTheme.headline4,
+                    style: isSecondary
+                        ? Theme.of(context).textTheme.headline5
+                        : Theme.of(context).textTheme.headline4,
                   ),
                   xxsHeightSpan,
                   RichText(
