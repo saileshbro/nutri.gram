@@ -15,29 +15,34 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-        child: Column(
-          children: const <Widget>[
-            CustomNavBar(
-              navBarItemTitle: "Profile",
-              blackString: "Update your ",
-              blueString: "profile",
-              isProfilePage: true,
+      body: Column(
+        children: [
+          llHeightSpan,
+          Padding(
+            padding: lXPadding,
+            child: Column(
+              children: const <Widget>[
+                CustomNavBar(
+                  navBarItemTitle: "Profile",
+                  blackString: "Update your ",
+                  blueString: "profile",
+                  isProfilePage: true,
+                ),
+                llHeightSpan,
+                ProfileTop(
+                  imageUrl:
+                      "https://th.bing.com/th/id/OIP.t7coTbCbSZ8gixh06SwCOgHaE8?pid=Api&rs=1",
+                  phoneNumber: "9860934053",
+                  totalScans: '100',
+                  saved: '76',
+                  name: "Sarayu",
+                  totalCalories: '5000 kcal',
+                ),
+                lHeightSpan,
+              ],
             ),
-            llHeightSpan,
-            ProfileTop(
-              imageUrl:
-                  "https://th.bing.com/th/id/OIP.t7coTbCbSZ8gixh06SwCOgHaE8?pid=Api&rs=1",
-              phoneNumber: "9860934053",
-              totalScans: '100',
-              saved: '76',
-              name: "Sarayu",
-              totalCalories: '5000 kcal',
-            ),
-            lHeightSpan,
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -64,7 +69,7 @@ class ProfileTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: sXPadding,
       child: Column(
         children: <Widget>[
           Row(
@@ -124,7 +129,9 @@ class ProfileTop extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     totalScans,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                   sHeightSpan,
                   Text(
@@ -139,7 +146,9 @@ class ProfileTop extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     saved,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                   sHeightSpan,
                   Text(
@@ -154,7 +163,9 @@ class ProfileTop extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     totalCalories,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                   sHeightSpan,
                   Text(

@@ -16,12 +16,14 @@ class CustomHomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
           height: 200,
-          color: homeCardColor,
+          decoration: BoxDecoration(
+            color: homeCardColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: !hasScannedData
               ? Stack(
                   children: [
@@ -29,8 +31,11 @@ class CustomHomeCard extends StatelessWidget {
                       alignment: isAuthenticated
                           ? Alignment.bottomLeft
                           : Alignment.bottomRight,
-                      child: Padding(
+                      child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        margin: isAuthenticated
+                            ? const EdgeInsets.only(left: 8.0)
+                            : const EdgeInsets.only(right: 8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: isAuthenticated
@@ -42,10 +47,11 @@ class CustomHomeCard extends StatelessWidget {
                                 text: const TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: " Create an account",
+                                      text: "Create an account",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: kFontFamily,
                                         fontSize: 18,
                                       ),
                                     ),
@@ -54,6 +60,7 @@ class CustomHomeCard extends StatelessWidget {
                                       style: TextStyle(
                                         color: kPrimaryColor,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: kFontFamily,
                                         fontSize: 30,
                                       ),
                                     ),
@@ -64,10 +71,11 @@ class CustomHomeCard extends StatelessWidget {
                               text: const TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: " Save Scan",
+                                    text: "Save Scan",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600,
+                                      fontFamily: kFontFamily,
                                       fontSize: 18,
                                     ),
                                   ),
@@ -76,6 +84,7 @@ class CustomHomeCard extends StatelessWidget {
                                     style: TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
+                                      fontFamily: kFontFamily,
                                       fontSize: 30,
                                     ),
                                   ),
@@ -86,10 +95,11 @@ class CustomHomeCard extends StatelessWidget {
                               text: const TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: " Visualize Intake",
+                                    text: "Visualize Intake",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600,
+                                      fontFamily: kFontFamily,
                                       fontSize: 18,
                                     ),
                                   ),
@@ -98,6 +108,7 @@ class CustomHomeCard extends StatelessWidget {
                                     style: TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
+                                      fontFamily: kFontFamily,
                                       fontSize: 30,
                                     ),
                                   ),
@@ -124,7 +135,6 @@ class CustomHomeCard extends StatelessWidget {
                         child: Image.asset(
                           homeIllustrationRight,
                           height: 200,
-                          width: 200,
                         ),
                       )
                     else
@@ -134,49 +144,43 @@ class CustomHomeCard extends StatelessWidget {
                         child: Image.asset(
                           homeIllustrationLeft,
                           height: 200,
-                          width: 200,
                         ),
                       )
                   ],
                 )
-              : const Text("Graph Here"),
+              : const Center(child: Text("Graph Here")),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: isAuthenticated
-                  ? hasScannedData
-                      ? const Text(
-                          "View More",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: kPrimaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        )
-                      : const Text(
-                          "Update profile",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: kPrimaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        )
-                  : const Text(
-                      "Scan right away",
+        sHeightSpan,
+        Container(
+          child: isAuthenticated
+              ? hasScannedData
+                  ? const Text(
+                      "View More",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: kPrimaryColor,
                         decoration: TextDecoration.underline,
                       ),
-                    ),
-            ),
-          ],
+                    )
+                  : const Text(
+                      "Update profile",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor,
+                        decoration: TextDecoration.underline,
+                      ),
+                    )
+              : const Text(
+                  "Scan right away",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: kPrimaryColor,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
         ),
       ],
     );
