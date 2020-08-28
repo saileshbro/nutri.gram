@@ -7,8 +7,10 @@ class DRaisedButton extends StatelessWidget {
   final String title;
   final Function onPressed;
   final bool hasBoxShadow;
+  final bool isSmall;
 
   const DRaisedButton({
+    this.isSmall = false,
     @required this.title,
     @required this.loading,
     @required this.onPressed,
@@ -36,8 +38,8 @@ class DRaisedButton extends StatelessWidget {
                       ),
                 )
               : Container(
-                  height: 36,
-                  width: 36,
+                  height:  36,
+                  width:  36,
                   padding: const EdgeInsets.all(8),
                   child: const CircularProgressIndicator(
                     strokeWidth: 2,
