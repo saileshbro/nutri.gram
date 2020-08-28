@@ -27,6 +27,38 @@ class HomeView extends StatelessWidget {
                   blueString: "intake and health",
                   isSecondary: true,
                 ),
+                lHeightSpan,
+                Card(
+                    margin: const EdgeInsets.all(10),
+                    shadowColor: kPrimaryColor,
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/illustrations/image 14.png",
+                          height: 160,
+                          fit: BoxFit.fitWidth,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                        sHeightSpan,
+                        const Text(
+                          "How drinking coffee can ruin your health",
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                        ),
+                        sHeightSpan,
+                        const Text(
+                          "Read more",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        sHeightSpan,
+                      ],
+                    ))
               ],
             ),
           ),

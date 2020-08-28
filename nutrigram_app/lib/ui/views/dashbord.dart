@@ -12,7 +12,9 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ApplicationWrapper(
       pages: <Widget>[
-        HomeView(),
+        SingleChildScrollView(
+          child: HomeView(),
+        ),
         HistoryView(),
         ScanView(),
         AdviceView(),
