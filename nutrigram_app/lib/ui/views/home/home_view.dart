@@ -21,6 +21,12 @@ class HomeView extends StatelessWidget {
                 ),
                 lHeightSpan,
                 const CustomHomeCard(),
+                const CustomNavBar(
+                  navBarItemTitle: "Health Tips",
+                  blackString: "We care about your ",
+                  blueString: "intake and health",
+                  isSecondary: true,
+                ),
               ],
             ),
           ),

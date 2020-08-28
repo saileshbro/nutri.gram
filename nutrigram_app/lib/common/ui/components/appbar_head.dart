@@ -54,7 +54,9 @@ class CustomNavBar extends StatelessWidget {
                   Text(
                     navBarItemTitle,
                     style: isSecondary
-                        ? Theme.of(context).textTheme.headline5
+                        ? Theme.of(context).textTheme.headline5.copyWith(
+                              fontWeight: FontWeight.w500,
+                            )
                         : Theme.of(context).textTheme.headline4,
                   ),
                   xxsHeightSpan,
