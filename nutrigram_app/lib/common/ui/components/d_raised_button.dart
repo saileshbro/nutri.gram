@@ -23,7 +23,8 @@ class DRaisedButton extends StatelessWidget {
       onTap: loading ? null : onPressed,
       child: InkWell(
         child: Container(
-          height: 48,
+          height: isSmall ? 36 : 48,
+          width: isSmall ? 120 : MediaQuery.of(context).size.width,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: kPrimaryColor,
@@ -38,8 +39,8 @@ class DRaisedButton extends StatelessWidget {
                       ),
                 )
               : Container(
-                  height:  36,
-                  width:  36,
+                  height: 36,
+                  width: 36,
                   padding: const EdgeInsets.all(8),
                   child: const CircularProgressIndicator(
                     strokeWidth: 2,
