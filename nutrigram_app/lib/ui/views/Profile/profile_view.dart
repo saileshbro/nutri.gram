@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/common/ui/components/appbar_head.dart';
+import 'package:nutrigram_app/common/ui/components/icon_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
@@ -39,9 +40,40 @@ class _ProfileViewState extends State<ProfileView> {
                   totalCalories: '5000 kcal',
                 ),
                 lHeightSpan,
+                ButtonContainer()
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ButtonContainer extends StatelessWidget {
+  const ButtonContainer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(0.27, 23, 138, 232),
+            blurRadius: 4,
+            spreadRadius: 10,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const CustomIconButton(
+            color: kPrimaryColor,
+            gradientColor: Colors.blue,
+            icon: Icons.exit_to_app,
+          )
         ],
       ),
     );

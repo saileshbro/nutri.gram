@@ -41,6 +41,63 @@ class HomeView extends StatelessWidget {
               isSecondary: true,
             ),
           ),
+          sHeightSpan,
+          const HealthTipsCard()
+        ],
+      ),
+    );
+  }
+}
+
+class HealthTipsCard extends StatelessWidget {
+  const HealthTipsCard({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      shadowColor: kPrimaryColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            "assets/illustrations/image 14.png",
+            height: 160,
+            fit: BoxFit.fitWidth,
+            width: MediaQuery.of(context).size.width,
+          ),
+          sHeightSpan,
+          Container(
+            padding: const EdgeInsets.only(left: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "How drinking coffee can ruin your health",
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                sHeightSpan,
+                Text(
+                  "Read more",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          sHeightSpan,
         ],
       ),
     );
