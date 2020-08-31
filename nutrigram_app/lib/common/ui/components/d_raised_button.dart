@@ -5,7 +5,7 @@ import 'package:nutrigram_app/constants/constants.dart';
 class DRaisedButton extends StatelessWidget {
   final bool loading;
   final String title;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final bool hasBoxShadow;
   final bool isSmall;
 

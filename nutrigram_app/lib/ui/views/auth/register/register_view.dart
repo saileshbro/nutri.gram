@@ -35,7 +35,6 @@ class _RegisterViewState extends State<RegisterView> {
           physics: const BouncingScrollPhysics(),
           children: <Widget>[
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
                   padding: mXPagePadding,

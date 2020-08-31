@@ -5,7 +5,7 @@ import 'package:nutrigram_app/constants/constants.dart';
 class BottomBanner extends StatelessWidget {
   final String bannerText;
   final String buttonLabel;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final Color backgroundColor;
   final bool loading;
   BottomBanner({

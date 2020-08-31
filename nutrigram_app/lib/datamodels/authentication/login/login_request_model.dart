@@ -25,9 +25,8 @@ class LoginRequestModel {
     };
   }
 
-  static LoginRequestModel fromMap(Map<String, dynamic> map) {
+  factory LoginRequestModel.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-
     return LoginRequestModel(
       phone: map['phone'],
       password: map['password'],
@@ -36,8 +35,8 @@ class LoginRequestModel {
 
   String toJson() => json.encode(toMap());
 
-  static LoginRequestModel fromJson(String source) =>
-      fromMap(json.decode(source));
+  factory LoginRequestModel.fromJson(String source) =>
+      LoginRequestModel.fromMap(json.decode(source));
 
   @override
   String toString() => 'LoginRequestModel(phone: $phone, password: $password)';

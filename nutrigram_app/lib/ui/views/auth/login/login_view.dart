@@ -30,7 +30,6 @@ class LoginView extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 children: <Widget>[
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                         padding: mXPagePadding,

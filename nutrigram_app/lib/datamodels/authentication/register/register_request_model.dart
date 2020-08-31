@@ -15,9 +15,8 @@ class RegisterRequestModel {
     };
   }
 
-  static RegisterRequestModel fromMap(Map<String, dynamic> map) {
+  factory RegisterRequestModel.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-
     return RegisterRequestModel(
       map['name'],
       map['phone'],
@@ -27,6 +26,6 @@ class RegisterRequestModel {
 
   String toJson() => json.encode(toMap());
 
-  static RegisterRequestModel fromJson(String source) =>
-      fromMap(json.decode(source));
+  factory RegisterRequestModel.fromJson(String source) =>
+      RegisterRequestModel.fromMap(json.decode(source));
 }

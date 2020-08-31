@@ -16,7 +16,7 @@ class Dashboard extends StatelessWidget {
         HistoryView(),
         ScanView(),
         AdviceView(),
-        ProfileView(),
+        SingleChildScrollView(child: ProfileView()),
       ],
       navigationMenus: const [
         BottomNavigationBarItem(

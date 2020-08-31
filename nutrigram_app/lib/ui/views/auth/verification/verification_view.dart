@@ -34,7 +34,6 @@ class VerificationView extends StatelessWidget {
                 padding: sXPagePadding,
                 children: <Widget>[
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                         padding: mXPagePadding,
@@ -83,8 +82,6 @@ class VerificationView extends StatelessWidget {
                                     Theme.of(context).textTheme.headline3,
                                 hintText: "8888",
                               ),
-                              autoFocus: false,
-                              textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.number,
                               enabled: !model.isBusy,
                               onSubmit: (pin) {

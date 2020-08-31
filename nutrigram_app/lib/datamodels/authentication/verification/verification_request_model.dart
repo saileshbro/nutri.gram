@@ -25,7 +25,7 @@ class VerificationRequestModel {
     };
   }
 
-  static VerificationRequestModel fromMap(Map<String, dynamic> map) {
+  factory VerificationRequestModel.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return VerificationRequestModel(
@@ -36,8 +36,8 @@ class VerificationRequestModel {
 
   String toJson() => json.encode(toMap());
 
-  static VerificationRequestModel fromJson(String source) =>
-      fromMap(json.decode(source));
+  factory VerificationRequestModel.fromJson(String source) =>
+      VerificationRequestModel.fromMap(json.decode(source));
 
   @override
   String toString() => 'VerificationRequestModel(phone: $phone, otp: $otp)';

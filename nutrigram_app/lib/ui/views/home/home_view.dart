@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:nutrigram_app/common/ui/components/appbar_head.dart';
 import 'package:nutrigram_app/common/ui/components/custom_home_card.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
@@ -9,6 +10,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           llHeightSpan,
           Padding(
@@ -42,7 +44,19 @@ class HomeView extends StatelessWidget {
             ),
           ),
           sHeightSpan,
-          const HealthTipsCard()
+          Container(
+            height: 270,
+            padding: sPadding,
+            child: Swiper(
+              itemCount: 10,
+              viewportFraction: 0.8,
+              scale: 0.9,
+              fade: 0.4,
+              loop: false,
+              itemBuilder: (_, __) => const HealthTipsCard(),
+            ),
+          ),
+          // Spacer()
         ],
       ),
     );
@@ -56,12 +70,22 @@ class HealthTipsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      shadowColor: kPrimaryColor,
+    return Container(
+      margin: sPadding,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromRGBO(23, 138, 232, 0.27),
+            offset: Offset(0, 4),
+            blurRadius: 10,
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             "assets/illustrations/image 14.png",
