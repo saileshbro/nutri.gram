@@ -7,7 +7,6 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
-    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -15,12 +14,12 @@
     "express": "~4.16.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.27.0",
-    "mongoose": "^5.9.23",
+    "mongoose": "^5.10.2",
     "morgan": "~1.9.1",
     "validator": "^13.1.1"
   },
   "devDependencies": {
-    "eslint": "^7.4.0",
+    "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",

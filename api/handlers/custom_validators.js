@@ -47,6 +47,7 @@ exports.validateOtp = (otp) => {
 }
 exports.validateURL = (url) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const tryUrl = new URL(url)
   } catch (error) {
     throw new CustomError(400, "Invalid URL provided")

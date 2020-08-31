@@ -1,11 +1,9 @@
-const axios = require('axios')
 const Tip = require("../models/Tip")
 
-const CustomError = require("../handlers/custom_error");
+const CustomError = require("../handlers/custom_error")
 const {
   validateURL
-} = require("../handlers/custom_validators");
-const downloadImage = require('../helpers/download_image');
+} = require("../handlers/custom_validators")
 /**
  * @param {Request} req
  * @param {Response} res
@@ -18,20 +16,20 @@ exports.addTip = async (req, res) => {
   } = req.body
   validateURL(imageUrl)
   const isExists = await Tip.findOne({
-    title
-  });
+    title,
+  })
   if (isExists)
     throw new CustomError(400, `Tip with title '${title}' already exists`)
 
   const tip = await Tip.create({
     title,
     description,
-    imageUrl
+    imageUrl,
   })
 
   return res.json({
     message: "Created successfully!",
-    tip
+    tip,
   })
 }
 /**
@@ -39,8 +37,8 @@ exports.addTip = async (req, res) => {
  * @param {Response} res
  */
 exports.getTips = async (req, res) => {
-  const tips = await Tip.where({});
-  console.log(tips)
+  const tips = await Tip.where({})
+  console.log(tips.length)
   return res.json({
     tips
   })
