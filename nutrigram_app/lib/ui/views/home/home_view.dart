@@ -48,6 +48,7 @@ class HomeView extends StatelessWidget {
             height: 270,
             padding: sPadding,
             child: Swiper(
+              key: const PageStorageKey("HOME-PAGE-TIPS-STORAGE-KEY"),
               itemCount: 10,
               viewportFraction: 0.8,
               scale: 0.9,

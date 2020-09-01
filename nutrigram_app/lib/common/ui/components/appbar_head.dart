@@ -80,10 +80,11 @@ class CustomNavBar extends StatelessWidget {
           ],
         ),
         if (isProfilePage)
-          const CustomIconButton(
+          CustomIconButton(
             color: kPrimaryColor,
             gradientColor: Colors.blue,
             icon: Icons.exit_to_app,
+            onPressed: () {},
           )
         else
           const SizedBox.shrink(),

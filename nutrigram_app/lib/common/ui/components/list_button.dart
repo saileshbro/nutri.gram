@@ -13,40 +13,47 @@ class ListButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 13),
-        decoration: BoxDecoration(
-          color: Colors.white,
+    return Container(
+      decoration: const BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(23, 138, 232, 0.27),
+            offset: Offset(0, 4),
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        child: InkWell(
           borderRadius: BorderRadius.circular(8),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromRGBO(23, 138, 232, 0.27),
-              offset: Offset(0, 4),
-              blurRadius: 10,
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 13),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomIconButton(
-                  color: kPrimaryColor,
-                  gradientColor: Colors.blue,
-                  icon: icon,
+                Row(
+                  children: [
+                    CustomIconButton(
+                      color: kPrimaryColor,
+                      gradientColor: Colors.blue,
+                      icon: icon,
+                      hasBoxShadow: false,
+                      onPressed: null,
+                    ),
+                    sWidthSpan,
+                    Text(
+                      label,
+                      style: Theme.of(context).textTheme.button,
+                    )
+                  ],
                 ),
-                sWidthSpan,
-                Text(
-                  label,
-                  style: Theme.of(context).textTheme.button,
-                )
+                const Icon(Icons.arrow_forward_ios)
               ],
             ),
-            const Icon(Icons.arrow_forward_ios)
-          ],
+          ),
         ),
       ),
     );

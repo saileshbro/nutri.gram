@@ -3,7 +3,7 @@ import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/app/router.gr.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/theme/theme.dart';
-import 'package:nutrigram_app/ui/views/dashbord.dart';
+import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
 
 import 'package:stacked_services/stacked_services.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: Routes.startUpView,
       onGenerateRoute: Router().onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
-      home: Dashboard(),
+      home: DashboardView(),
     );
   }
 }

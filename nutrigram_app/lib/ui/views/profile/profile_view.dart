@@ -8,79 +8,80 @@ import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
 
-class ProfileView extends StatefulWidget {
-  @override
-  _ProfileViewState createState() => _ProfileViewState();
-}
-
-class _ProfileViewState extends State<ProfileView> {
+class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        llHeightSpan,
-        Padding(
-          padding: lXPadding,
-          child: Column(
-            children: <Widget>[
-              const CustomNavBar(
-                navBarItemTitle: "Profile",
-                blackString: "Update your ",
-                blueString: "profile",
-                isProfilePage: true,
-              ),
-              llHeightSpan,
-              const ProfileTop(
-                imageUrl:
-                    "https://th.bing.com/th/id/OIP.t7coTbCbSZ8gixh06SwCOgHaE8?pid=Api&rs=1",
-                phoneNumber: "9860934053",
-                totalScans: '100',
-                saved: '76',
-                name: "Sarayu",
-                totalCalories: '5000 kcal',
-              ),
-              lHeightSpan,
-              ListButton(
-                icon: Icons.edit,
-                label: "Edit Profile",
-                onPressed: () {},
-              ),
-              mHeightSpan,
-              ListButton(
-                icon: Icons.history,
-                label: "See scan history",
-                onPressed: () {},
-              ),
-            ],
+    return MediaQuery.removePadding(
+      removeTop: true,
+      context: context,
+      child: ListView(
+        physics: const BouncingScrollPhysics(),
+        key: const PageStorageKey("PROFILE-PAGE-STORAGE-KEY"),
+        children: [
+          llHeightSpan,
+          Padding(
+            padding: lXPadding,
+            child: Column(
+              children: <Widget>[
+                const CustomNavBar(
+                  navBarItemTitle: "Profile",
+                  blackString: "Update your ",
+                  blueString: "profile",
+                  isProfilePage: true,
+                ),
+                llHeightSpan,
+                const ProfileTop(
+                  imageUrl:
+                      "https://th.bing.com/th/id/OIP.t7coTbCbSZ8gixh06SwCOgHaE8?pid=Api&rs=1",
+                  phoneNumber: "9860934053",
+                  totalScans: '100',
+                  saved: '76',
+                  name: "Sarayu",
+                  totalCalories: '5000 kcal',
+                ),
+                lHeightSpan,
+                ListButton(
+                  icon: Icons.edit,
+                  label: "Edit Profile",
+                  onPressed: () {},
+                ),
+                mHeightSpan,
+                ListButton(
+                  icon: Icons.history,
+                  label: "See scan history",
+                  onPressed: () {},
+                ),
+              ],
+            ),
           ),
-        ),
-        lHeightSpan,
-        Container(
-          width: double.infinity,
-          color: kGapColor,
-          height: 10,
-        ),
-        sHeightSpan,
-        Padding(
-          padding: lXPadding,
-          child: Column(
-            children: const [
-              CustomNavBar(
-                navBarItemTitle: "Your intake till now",
-                blackString: "Visualize ",
-                blueString: "your intake",
-                isSecondary: true,
-              ),
-              lHeightSpan,
-              CustomHomeCard(
-                hasScannedData: true,
-                isAuthenticated: true,
-              ),
-            ],
+          lHeightSpan,
+          Container(
+            width: double.infinity,
+            color: kGapColor,
+            height: 10,
           ),
-        ),
-        lHeightSpan,
-      ],
+          sHeightSpan,
+          Padding(
+            padding: lXPadding,
+            child: Column(
+              children: const [
+                CustomNavBar(
+                  navBarItemTitle: "Your intake till now",
+                  blackString: "Visualize ",
+                  blueString: "your intake",
+                  isSecondary: true,
+                ),
+                lHeightSpan,
+                CustomHomeCard(
+                  hasScannedData: true,
+                  isAuthenticated: true,
+                ),
+              ],
+            ),
+          ),
+          lHeightSpan,
+        ],
+      ),
     );
   }
 }
