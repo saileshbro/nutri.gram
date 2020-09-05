@@ -1,19 +1,15 @@
-const Tip = require("../models/Tip")
+const Tip = require('../models/Tip')
 
-const CustomError = require("../handlers/custom_error")
-const {
-  validateURL
-} = require("../handlers/custom_validators")
+const CustomError = require('../handlers/custom_error')
+const { validateURL } = require('../handlers/custom_validators')
+const shuffle = require('../helpers/array_shuffle')
+
 /**
  * @param {Request} req
  * @param {Response} res
  */
 exports.addTip = async (req, res) => {
-  const {
-    title,
-    description,
-    imageUrl
-  } = req.body
+  const { title, description, imageUrl } = req.body
   validateURL(imageUrl)
   const isExists = await Tip.findOne({
     title,
@@ -28,7 +24,7 @@ exports.addTip = async (req, res) => {
   })
 
   return res.json({
-    message: "Created successfully!",
+    message: 'Created successfully!',
     tip,
   })
 }
@@ -38,8 +34,7 @@ exports.addTip = async (req, res) => {
  */
 exports.getTips = async (req, res) => {
   const tips = await Tip.where({})
-  console.log(tips.length)
   return res.json({
-    tips
+    tips: shuffle(tips),
   })
 }
