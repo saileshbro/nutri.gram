@@ -16,66 +16,78 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       builder: (BuildContext context, HomeViewModel model, Widget child) =>
           Scaffold(
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            llHeightSpan,
-            Padding(
-              padding: lXPadding,
-              child: Column(
-                children: const [
-                  CustomNavBar(
-                    navBarItemTitle: "Welcome",
-                    blackString: "Be conscious about ",
-                    blueString: "what you eat!",
-                  ),
-                  mHeightSpan,
-                  CustomHomeCard(),
-                ],
-              ),
-            ),
-            sHeightSpan,
-            Container(
-              width: double.infinity,
-              color: kGapColor,
-              height: 10,
-            ),
-            sHeightSpan,
-            const Padding(
-              padding: lXPadding,
-              child: CustomNavBar(
-                navBarItemTitle: "Health Tips",
-                blackString: "We care about your ",
-                blueString: "intake and health",
-                isSecondary: true,
-              ),
-            ),
-            sHeightSpan,
-            Container(
-              height: 270,
-              padding: sPadding,
-              child: Shimmer(
-                enabled: model.isBusy,
-                color: kGapColor,
-                duration: const Duration(seconds: 2),
-                child: Swiper(
-                  key: const PageStorageKey("HOME-PAGE-TIPS-STORAGE-KEY"),
-                  itemCount: model.healthTipList.length,
-                  index: model.healthTipList.isNotEmpty ? 1 : 0,
-                  controller: SwiperController(),
-                  viewportFraction: 0.8,
-                  scale: 0.9,
-                  fade: 0.4,
-                  loop: false,
-                  itemBuilder: (BuildContext context, int index) =>
-                      HealthTipsCard(
-                    healthTip: model.healthTipList[index],
-                  ),
+        body: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            key: const PageStorageKey("HOME-PAGE-STORAGE-KEY"),
+            children: [
+              llHeightSpan,
+              Padding(
+                padding: lXPadding,
+                child: Column(
+                  children: const [
+                    CustomNavBar(
+                      navBarItemTitle: "Welcome",
+                      blackString: "Be conscious about ",
+                      blueString: "what you eat!",
+                    ),
+                    mHeightSpan,
+                    CustomHomeCard(),
+                  ],
                 ),
               ),
-            ),
-            // Spacer()
-          ],
+              sHeightSpan,
+              Container(
+                width: double.infinity,
+                color: kGapColor,
+                height: 10,
+              ),
+              sHeightSpan,
+              const Padding(
+                padding: lXPadding,
+                child: CustomNavBar(
+                  navBarItemTitle: "Health Tips",
+                  blackString: "We care about your ",
+                  blueString: "intake and health",
+                  isSecondary: true,
+                ),
+              ),
+              sHeightSpan,
+              Container(
+                height: 270,
+                padding: model.isBusy ? lXPadding : EdgeInsets.zero,
+                child: model.isBusy
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Shimmer(
+                          enabled: model.isBusy,
+                          color: kGapColor,
+                          duration: const Duration(seconds: 2),
+                          child: Container(
+                            color: kGapColor,
+                          ),
+                        ),
+                      )
+                    : Swiper(
+                        key: const PageStorageKey("HOME-PAGE-TIPS-STORAGE-KEY"),
+                        itemCount: model.healthTipList.length,
+                        viewportFraction: 0.85,
+                        scale: 0.95,
+                        fade: 0.5,
+                        itemBuilder: (BuildContext context, int index) =>
+                            HealthTipsCard(
+                          healthTip: model.healthTipList[index],
+                        ),
+                        autoplay: true,
+                        autoplayDelay: 4000,
+                      ),
+              ),
+              mHeightSpan,
+              // Spacer()
+            ],
+          ),
         ),
       ),
       viewModelBuilder: () => locator<HomeViewModel>(),
