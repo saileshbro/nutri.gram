@@ -158,20 +158,39 @@ def detectTexts(orig):
     text = readText(orig)
 
     texts = text.split('\n')
-    for line in texts:
-        words = line.lower().replace('total ','').replace('total','').split(' ')
-        print(words)
-        result = matchText(words,dbTexts)
-        matched.extend(result)
-        keyval[result[0]] = ' '.join(result[1:])
+    keywords = findKeyword(texts)
+    print(keywords)
+    for key,value in keywords.items():
+        newKey =  matchTextV2(key,dbTexts)
+        newValues = matchText(value,dbTexts)
+        keyval[newKey] = newValues
+
+    # for line in texts:
+    #     words = line.lower().replace('total ','').replace('total','').split(' ')
+    #     print(words)
+    #     result = matchText(words,dbTexts)
+    #     matched.extend(result)
+    #     keyval[result[0]] = ' '.join(result[1:])
 
 
     # print("Texts: ",texts)
     # print("Matched: ", matched)
-    print(keyval)
     
     return keyval
 
+def findKeyword(texts):
+    print ("Keywords",texts)
+    keywords = {}
+    pattern = re.compile(r'(\d+)')
+    # pattern = re.compile(r'(\d+(\.\d{1,4})?)')
+    for text in texts:
+        if(len(text)>2):
+            patterns = re.split(pattern,text)
+            print(patterns, type(patterns))
+            if(len(patterns)>1):
+                keywords[patterns[0]] = patterns[1:]
+
+    return keywords
 
 def readText(roi):
     # cv2.imshow("Area", roi)
@@ -193,6 +212,7 @@ def matchText(readTexts,dbTexts):
         maxRatio = 0
         maxj = 0
         # print(text)
+        print("TEXT:",text)
         newText = re.sub(r'^[0-9]+','',text,5)
 
         if(len(newText)==0): continue
@@ -210,19 +230,50 @@ def matchText(readTexts,dbTexts):
             readTexts[i] = dbTexts[maxj]
     return readTexts
 
+def matchTextV2(text,dbTexts):
+    '''
+        Match the texts read by application to the keywords defined in database
+        text: text that application read
+        dbTexts: list of tags user set to track
+    '''
+
+    matchRatio = 40
+
+    # print("Matching Texts")
+
+    maxRatio = 0
+    maxj = 0
+    # print(text)
+    newText = re.sub(r'^[0-9]+','',text,5)
+
+    if(len(newText)==0): return text
+
+    if(newText != text):
+        return text
+    # print(text)
+    for j,tag in enumerate(dbTexts):
+        ratio = fuzz.ratio(text,tag)
+        # print(text,tag,ratio)
+        if ratio > matchRatio and ratio > maxRatio:
+            maxRatio = ratio
+            maxj = j
+    if(maxRatio > matchRatio):
+        text = dbTexts[maxj]
+    return text
+
 dbTexts = [
         'Carbohydrate', 'Calories', 'Protein', 'Fat', 'Carbs', 'KCal', 'g', 'gm'
     ]
 
 if __name__ == "__main__":
-    image, orig = load_and_resize(1000,1000,path='./images/threshold_cropped.jpg')
+    image, orig = load_and_resize(640,480,path='./images/threshold_cropped.jpg')
 
     
 
     # texts = detectTextsArea(image, orig, 0.4)
     texts = detectTexts(orig)
     # print(orig.shape)
-    print(texts)
+    print("Final",texts)
     cv2.imshow("TextDetection", orig)
     cv2.imshow("Thresh ", image)
 

@@ -39,6 +39,15 @@ def upload_image():
                     data=keyval,
                     msg='success'
                 )
+            else:
+                keyval = detectTexts(resized)
+                print(keyval)
+                return dict(
+                    status='success',
+                    data=keyval,
+                    msg='success'
+                )
+            
         else:
             return dict(
                 status='failed',
