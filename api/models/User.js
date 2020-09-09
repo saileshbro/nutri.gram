@@ -1,44 +1,53 @@
-const {
-  Schema,
-  model
-} = require("mongoose")
+const assert = require("assert")
+const { Schema, model } = require("mongoose")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const moment = require("moment")
 const CustomError = require("../handlers/custom_error")
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    required: "Name is required!",
-    trim: true,
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: "Name is required!",
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: "Password is required!",
+    },
+    phone: {
+      type: String,
+      required: "Phone number is required!",
+      trim: true,
+      lowercase: true,
+      unique: true,
+    },
+    passwordResetOtp: {
+      type: String,
+      default: "",
+    },
+    otp: {
+      type: String,
+      default: "",
+    },
+    otpVerified: {
+      type: Boolean,
+      default: false,
+    },
+    totalSaved: {
+      type: Number,
+      default: 0,
+    },
+    totalCalories: {
+      type: Number,
+      default: 0,
+    },
   },
-  password: {
-    type: String,
-    required: "Password is required!",
-  },
-  phone: {
-    type: String,
-    required: "Phone number is required!",
-    trim: true,
-    lowercase: true,
-    unique: true,
-  },
-  passwordResetOtp: {
-    type: String,
-    default: ""
-  },
-  otp: {
-    type: String,
-    default: ""
-  },
-  otpVerified: {
-    type: Boolean,
-    default: false,
-  },
-}, {
-  timestamps: true,
-})
+  {
+    timestamps: true,
+  }
+)
 
 userSchema.pre("save", async function (next) {
   const user = this
@@ -55,9 +64,12 @@ userSchema.methods.isPassword = async function (password) {
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this
-  const token = await jwt.sign({
-    _id: user._id.toString(),
-  }, process.env.JWT_SECRET)
+  const token = await jwt.sign(
+    {
+      _id: user._id.toString(),
+    },
+    process.env.JWT_SECRET
+  )
   return token
 }
 
@@ -71,6 +83,21 @@ userSchema.methods.toJSON = function () {
   return userObject
 }
 /**
+ * Increments the saved count for the user
+ */
+userSchema.methods.incrementSaved = function () {
+  const user = this
+  user.totalSaved += 1
+}
+/**
+ * added calories to the user, raises assertion error if negative or zero
+ * @param {number} calories
+ */
+userSchema.methods.addCalories = function (calories) {
+  assert.equal(calories && calories > 0, true, Error("Calories value cannot be negative"))
+  this.totalCalories += calories
+}
+/**
  *
  * @param {String} phone
  * @param {String} password
@@ -79,7 +106,7 @@ userSchema.methods.toJSON = function () {
  */
 userSchema.statics.findByCredentials = async (phone, password) => {
   const user = await model("User", userSchema).findOne({
-    phone
+    phone,
   })
   if (!user) throw new CustomError(401, "Invalid credentials!")
 
@@ -87,6 +114,11 @@ userSchema.statics.findByCredentials = async (phone, password) => {
   if (!isMatch) throw new CustomError(401, "Invalid credentials!")
   return user
 }
-
+userSchema.statics.findByPhone = async (phone) => {
+  const user = await model("User", userSchema).findOne({
+    phone,
+  })
+  return user
+}
 const User = model("User", userSchema)
 module.exports = User

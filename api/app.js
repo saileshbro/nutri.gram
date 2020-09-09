@@ -8,12 +8,7 @@ const express = require("express")
 const path = require("path")
 const cookieParser = require("cookie-parser")
 const logger = require("morgan")
-const {
-  developmentErrors,
-  productionErrors,
-  notFoundError,
-  mongooseErrors
-} = require("./handlers/error_handler")
+const { developmentErrors, productionErrors, notFoundError, mongooseErrors } = require("./handlers/error_handler")
 
 const app = express()
 app.use(logger("tiny"))

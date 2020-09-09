@@ -2,18 +2,17 @@ const CustomError = require("./custom_error")
 /**
  * Error Handler
  */
-exports.catchErrors = fn => {
+exports.catchErrors = (fn) => {
   return (req, res, next) => {
-
-    fn(req, res, next).catch(err => {
+    fn(req, res, next).catch((err) => {
       if (typeof err === "string") {
         return res.status(400).json({
-          error: err
+          error: err,
         })
       }
       if (err instanceof CustomError) {
         return res.status(err.statusCode || 500).json({
-          error: err.error
+          error: err.error,
         })
       }
       return next(err)
@@ -29,7 +28,6 @@ exports.catchErrors = fn => {
  * @param {*} next
  */
 exports.mongooseErrors = (err, req, res, next) => {
-
   if (!err.errors) return next(err)
   const keys = Object.keys(err.errors)
   let message = ""
@@ -50,14 +48,11 @@ exports.mongooseErrors = (err, req, res, next) => {
  * @param {*} next
  */
 exports.developmentErrors = (err, req, res, next) => {
-  const {
-    message: error,
-    status
-  } = err
+  const { message: error, status } = err
   const errorDetails = {
     error,
     status,
-    stack: err.stack || ""
+    stack: err.stack || "",
   }
   return res.status(status || 500).json(errorDetails)
 }
@@ -70,11 +65,11 @@ exports.developmentErrors = (err, req, res, next) => {
  */
 exports.productionErrors = (err, req, res, next) => {
   return res.status(err.status || 500).json({
-    error: "Internal Server Error"
+    error: "Internal Server Error",
   })
 }
 exports.notFoundError = (req, res) => {
   return res.status(404).json({
-    error: "Route not found"
+    error: "Route not found",
   })
 }

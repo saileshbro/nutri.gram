@@ -21,6 +21,7 @@ module.exports = {
     quotes: ["error", "double"],
     semi: ["error", "never"],
     "func-names": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-plusplus": "off",
   },
 }

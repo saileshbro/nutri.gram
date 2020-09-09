@@ -1,8 +1,8 @@
-const Tip = require('../models/Tip')
+const Tip = require("../models/Tip")
 
-const CustomError = require('../handlers/custom_error')
-const { validateURL } = require('../handlers/custom_validators')
-const shuffle = require('../helpers/array_shuffle')
+const CustomError = require("../handlers/custom_error")
+const { validateURL } = require("../handlers/custom_validators")
+const shuffle = require("../helpers/array_shuffle")
 
 /**
  * @param {Request} req
@@ -14,8 +14,7 @@ exports.addTip = async (req, res) => {
   const isExists = await Tip.findOne({
     title,
   })
-  if (isExists)
-    throw new CustomError(400, `Tip with title '${title}' already exists`)
+  if (isExists) throw new CustomError(400, `Tip with title '${title}' already exists`)
 
   const tip = await Tip.create({
     title,
@@ -24,7 +23,7 @@ exports.addTip = async (req, res) => {
   })
 
   return res.json({
-    message: 'Created successfully!',
+    message: "Created successfully!",
     tip,
   })
 }

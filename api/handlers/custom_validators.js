@@ -1,5 +1,4 @@
-const
-  validator = require("validator").default
+const validator = require("validator").default
 const CustomError = require("./custom_error")
 /**
  * Throws `CustomError` if name is null or invalid
@@ -21,8 +20,11 @@ exports.validateName = (name) => {
 exports.validatePassword = (password) => {
   const regName = /^(?:(?=.*[a-z])(?:(?=.*[A-Z])(?=.*[\d\W])|(?=.*\W)(?=.*\d))|(?=.*\W)(?=.*[A-Z])(?=.*\d)).{8,}$/
   if (!password || !regName.test(password)) {
-    throw new CustomError(406, `Invalid Password.
-    Required: Minimum eight characters, at least one letter, one number and one special character.`)
+    throw new CustomError(
+      406,
+      `Invalid Password.
+    Required: Minimum eight characters, at least one letter, one number and one special character.`
+    )
   }
 }
 /**
