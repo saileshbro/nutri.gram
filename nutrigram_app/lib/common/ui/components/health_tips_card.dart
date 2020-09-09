@@ -7,18 +7,26 @@ import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
 
 class HealthTipsCard extends StatelessWidget {
   final HealthTip healthTip;
+  final Function onBottomSheetClosed;
+  final Function onPressed;
   const HealthTipsCard({
     Key key,
     @required this.healthTip,
+    this.onBottomSheetClosed,
+    this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => showCustomBottomSheet(
-        context,
-        child: _HealthTipsExpanded(healthTip: healthTip),
-      ),
+      onTap: () {
+        onPressed();
+        showCustomBottomSheet(
+          context,
+          child: _HealthTipsExpanded(healthTip: healthTip),
+          onDismiss: onBottomSheetClosed,
+        );
+      },
       child: Container(
         margin: sPadding,
         decoration: BoxDecoration(

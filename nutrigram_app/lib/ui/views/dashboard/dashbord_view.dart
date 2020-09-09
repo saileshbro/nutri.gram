@@ -89,17 +89,19 @@ class DashboardView extends StatelessWidget {
               child: child,
             );
           },
-          child: getViewForIndex(model.currentIndex),
+          child: getViewForIndex(model),
         ),
       ),
       viewModelBuilder: () => locator<DashboardViewModel>(),
     );
   }
 
-  Widget getViewForIndex(int index) {
-    switch (index) {
+  Widget getViewForIndex(DashboardViewModel model) {
+    switch (model.currentIndex) {
       case 0:
-        return HomeView();
+        return HomeView(
+          goToScanPage: () => model.setIndex(2),
+        );
       case 1:
         return HistoryView();
       case 2:
@@ -109,7 +111,9 @@ class DashboardView extends StatelessWidget {
       case 4:
         return ProfileView();
       default:
-        return HomeView();
+        return HomeView(
+          goToScanPage: () => model.setIndex(2),
+        );
     }
   }
 }

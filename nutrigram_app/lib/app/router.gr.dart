@@ -11,7 +11,7 @@ import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_view.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
-import 'package:nutrigram_app/ui/views/home/home_view.dart';
+import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
 
 class Routes {
@@ -19,14 +19,14 @@ class Routes {
   static const String loginView = '/login-view';
   static const String registerView = '/register-view';
   static const String onboardingView = '/onboarding-view';
-  static const String homeView = '/home-view';
+  static const String dashboardView = '/dashboard-view';
   static const String verificationView = '/verification-view';
   static const all = <String>{
     startUpView,
     loginView,
     registerView,
     onboardingView,
-    homeView,
+    dashboardView,
     verificationView,
   };
 }
@@ -39,7 +39,7 @@ class Router extends RouterBase {
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.registerView, page: RegisterView),
     RouteDef(Routes.onboardingView, page: OnboardingView),
-    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.dashboardView, page: DashboardView),
     RouteDef(Routes.verificationView, page: VerificationView),
   ];
   @override
@@ -69,9 +69,9 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    HomeView: (RouteData data) {
+    DashboardView: (RouteData data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => HomeView(),
+        builder: (context) => DashboardView(),
         settings: data,
       );
     },

@@ -11,9 +11,12 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
+  final Function goToScanPage;
+  const HomeView({Key key, this.goToScanPage}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
+      fireOnModelReadyOnce: true,
       builder: (BuildContext context, HomeViewModel model, Widget child) =>
           Scaffold(
         body: MediaQuery.removePadding(
@@ -27,8 +30,8 @@ class HomeView extends StatelessWidget {
               Padding(
                 padding: lXPadding,
                 child: Column(
-                  children: const [
-                    CustomNavBar(
+                  children: [
+                    const CustomNavBar(
                       navBarItemTitle: "Welcome",
                       blackString: "Be conscious about ",
                       blueString: "what you eat!",
@@ -79,8 +82,10 @@ class HomeView extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) =>
                             HealthTipsCard(
                           healthTip: model.healthTipList[index],
+                          onBottomSheetClosed: model.resumeSlider,
+                          onPressed: model.pauseSlider,
                         ),
-                        autoplay: true,
+                        autoplay: model.tipsSliderAutoplay,
                         autoplayDelay: 4000,
                       ),
               ),
@@ -91,7 +96,10 @@ class HomeView extends StatelessWidget {
         ),
       ),
       viewModelBuilder: () => locator<HomeViewModel>(),
-      onModelReady: (model) => model.init(),
+      onModelReady: (model) {
+        model.onScanPressed = goToScanPage;
+        model.init();
+      },
       disposeViewModel: false,
     );
   }

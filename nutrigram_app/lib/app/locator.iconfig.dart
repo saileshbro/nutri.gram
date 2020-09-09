@@ -57,8 +57,11 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<SharedPreferencesService>(),
         g<UserDataService>(),
       ));
-  g.registerLazySingleton<HomeViewModel>(
-      () => HomeViewModel(g<IHomeRepository>()));
+  g.registerLazySingleton<HomeViewModel>(() => HomeViewModel(
+        g<IHomeRepository>(),
+        g<UserDataService>(),
+        g<NavigationService>(),
+      ));
   g.registerLazySingleton<IAuthenticationRepository>(
       () => RAuthenticationRepository(g<IAuthenticationService>()));
   g.registerLazySingleton<LoginViewModel>(() => LoginViewModel(

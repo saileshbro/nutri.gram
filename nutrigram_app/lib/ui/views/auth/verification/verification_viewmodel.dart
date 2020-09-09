@@ -38,7 +38,7 @@ class VerificationViewModel extends BaseViewModel {
         if (model.user.otpVerified) {
           await _userDataService.saveData(
               model.token, model.user.name, model.user.phone);
-          _navigationService.clearStackAndShow(Routes.homeView);
+          _navigationService.clearStackAndShow(Routes.dashboardView);
         }
       },
     );

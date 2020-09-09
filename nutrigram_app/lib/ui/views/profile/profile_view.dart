@@ -64,18 +64,15 @@ class ProfileView extends StatelessWidget {
           Padding(
             padding: lXPadding,
             child: Column(
-              children: const [
-                CustomNavBar(
+              children: [
+                const CustomNavBar(
                   navBarItemTitle: "Your intake till now",
                   blackString: "Visualize ",
                   blueString: "your intake",
                   isSecondary: true,
                 ),
                 lHeightSpan,
-                CustomHomeCard(
-                  hasScannedData: true,
-                  isAuthenticated: true,
-                ),
+                CustomHomeCard(),
               ],
             ),
           ),
