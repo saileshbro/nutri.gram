@@ -12,7 +12,9 @@ import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   final Function goToScanPage;
-  const HomeView({Key key, this.goToScanPage}) : super(key: key);
+  final Function goToProfilePage;
+  const HomeView({Key key, this.goToScanPage, this.goToProfilePage})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
@@ -98,6 +100,7 @@ class HomeView extends StatelessWidget {
       viewModelBuilder: () => locator<HomeViewModel>(),
       onModelReady: (model) {
         model.onScanPressed = goToScanPage;
+        model.onGotoProfilePressed = goToProfilePage;
         model.init();
       },
       disposeViewModel: false,

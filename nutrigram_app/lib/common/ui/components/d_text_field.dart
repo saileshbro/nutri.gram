@@ -6,6 +6,7 @@ class DTextField extends StatelessWidget {
   final bool password;
   final TextInputType textInputType;
   final int lines;
+  final String label;
   final bool enabled;
   final FocusNode focusNode;
   final VoidCallback onEditingComplete;
@@ -29,32 +30,43 @@ class DTextField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.textCapitalization = TextCapitalization.none,
+    this.label,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      focusNode: focusNode,
-      onEditingComplete: onEditingComplete,
-      validator: validator,
-      onChanged: onChanged,
-      controller: controller,
-      style: Theme.of(context).textTheme.caption,
-      obscureText: password,
-      keyboardType: textInputType,
-      enabled: enabled,
-      maxLines: lines,
-      minLines: lines,
-      decoration: InputDecoration(
-        hintStyle: Theme.of(context)
-            .textTheme
-            .caption
-            .apply(color: kDisabledLightThemeColor),
-        prefixIcon: prefixIcon,
-        hintText: hintText,
-        enabled: enabled,
-        suffixIcon: suffixIcon,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (label != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(label, style: Theme.of(context).textTheme.caption),
+          ),
+        TextFormField(
+          focusNode: focusNode,
+          onEditingComplete: onEditingComplete,
+          validator: validator,
+          onChanged: onChanged,
+          controller: controller,
+          style: Theme.of(context).textTheme.caption,
+          obscureText: password,
+          keyboardType: textInputType,
+          enabled: enabled,
+          maxLines: lines,
+          minLines: lines,
+          decoration: InputDecoration(
+            hintStyle: Theme.of(context)
+                .textTheme
+                .caption
+                .apply(color: kDisabledLightThemeColor),
+            prefixIcon: prefixIcon,
+            hintText: hintText,
+            enabled: enabled,
+            suffixIcon: suffixIcon,
+          ),
+        ),
+      ],
     );
   }
 }

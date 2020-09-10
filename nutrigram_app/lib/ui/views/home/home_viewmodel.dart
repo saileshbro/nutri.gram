@@ -14,6 +14,7 @@ class HomeViewModel extends BaseViewModel {
   final IHomeRepository _homeRepository;
   final UserDataService userDataService;
   Function _onScanPressed;
+  Function _onGotoProfilePressed;
   bool _tipsSliderAutoplay = true;
   bool get tipsSliderAutoplay => _tipsSliderAutoplay;
   final NavigationService _navigationService;
@@ -26,6 +27,11 @@ class HomeViewModel extends BaseViewModel {
   // ignore: avoid_setters_without_getters
   set onScanPressed(Function f) {
     _onScanPressed = f;
+  }
+
+  // ignore: avoid_setters_without_getters
+  set onGotoProfilePressed(Function f) {
+    _onGotoProfilePressed = f;
   }
 
   void resumeSlider() {
@@ -53,5 +59,11 @@ class HomeViewModel extends BaseViewModel {
     if (!userDataService.isLoggedIn) {
       _navigationService.navigateTo(Routes.loginView);
     }
+  }
+
+  void goToGraph() {}
+
+  void goToProfile() {
+    _onGotoProfilePressed();
   }
 }
