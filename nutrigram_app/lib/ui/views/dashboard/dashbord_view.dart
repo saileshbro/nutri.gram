@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
-import 'package:nutrigram_app/ui/views/advice/advice_view.dart';
 import 'package:nutrigram_app/ui/views/dashboard/dashboard_viewmodel.dart';
-import 'package:nutrigram_app/ui/views/history/history_view.dart';
 import 'package:nutrigram_app/ui/views/home/home_view.dart';
 import 'package:nutrigram_app/ui/views/profile/profile_view.dart';
-import 'package:nutrigram_app/ui/views/scan/scan_view.dart';
 import 'package:stacked/stacked.dart';
 
 class DashboardView extends StatelessWidget {
