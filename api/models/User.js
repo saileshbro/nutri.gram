@@ -27,6 +27,10 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    phoneChangeOtp: {
+      type: String,
+      default: "",
+    },
     otp: {
       type: String,
       default: "",

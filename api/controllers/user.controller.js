@@ -86,6 +86,7 @@ exports.verifyOtp = async (req, res) => {
     throw new CustomError(404, "Invalid OTP provided.")
   }
   user.otpVerified = true
+  user.otp = generateOTP()
   await user.save()
   const token = await user.generateAuthToken()
 
@@ -187,15 +188,13 @@ exports.updateProfile = async (req, res) => {
   const { name, phone, newPassword } = req.body
   validateName(name)
   validatePhone(phone)
-  if (req.user.otpVerified && req.user.phone !== phone) {
+  if (req.user.phone !== phone) {
     console.log("phone number changed, send a new verification token")
     const user = await User.findByPhone(phone)
     if (user) {
       throw new CustomError(400, `User with phone ${phone} already exists`)
     }
-    req.user.phone = phone
-    req.user.otp = generateOTP()
-    req.user.otpVerified = false
+    req.user.phoneChangeOtp = generateOTP()
   }
   req.user.name = name
   if (newPassword) {
@@ -204,6 +203,33 @@ exports.updateProfile = async (req, res) => {
   await req.user.save()
   return res.json({
     user: req.user,
+    otp: req.user.phoneChangeOtp,
     message: "Profile updated successfully!",
   })
+}
+/**
+ * Update phone number
+ * @param {Request} req
+ * @param {Response} res
+ */
+exports.updatePhone = async (req, res) => {
+  const { phone, otp } = req.body
+  validateOtp(otp)
+  validatePhone(phone)
+  if (req.user.phone !== phone) {
+    const user = await User.findByPhone(phone)
+    if (user) {
+      throw new CustomError(400, `User with phone ${phone} already exists`)
+    }
+    if (req.user.phoneChangeOtp === otp) {
+      req.user.phone = phone
+      await req.user.save()
+      return res.json({
+        user: req.user,
+        message: "Phone changed successfully!",
+      })
+    }
+    throw new CustomError(400, "OTP verification failure! Cannot change phone number!")
+  }
+  return res.json()
 }

@@ -9,6 +9,7 @@ const {
   generateNewPasswordWithOtp,
   changePassword,
   updateProfile,
+  updatePhone,
 } = require("../controllers/user.controller")
 const { catchErrors } = require("../handlers/error_handler")
 const auth = require("../middleware/auth")
@@ -21,4 +22,5 @@ router.post("/users/forgot_password/get_otp", catchErrors(generateForgotPassword
 router.post("/users/forgot_password/reset_password", catchErrors(generateNewPasswordWithOtp))
 router.post("/users/change_password", auth, catchErrors(changePassword))
 router.post("/users/update_profile", auth, catchErrors(updateProfile))
+router.post("/users/update_phone", auth, catchErrors(updatePhone))
 module.exports = router
