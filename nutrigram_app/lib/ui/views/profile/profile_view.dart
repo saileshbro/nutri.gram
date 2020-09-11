@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nutrigram_app/common/ui/components/appbar_head.dart';
+import 'package:nutrigram_app/common/ui/components/change_image.dart';
 import 'package:nutrigram_app/common/ui/components/d_raised_button.dart';
 import 'package:nutrigram_app/common/ui/components/d_text_field.dart';
+import 'package:nutrigram_app/common/ui/components/icon_button.dart';
 import 'package:nutrigram_app/common/ui/components/list_button.dart';
 import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
@@ -161,6 +163,17 @@ class _ProfileTop extends StatelessWidget {
                   ),
                 ],
               ),
+              CustomIconButton(
+                color: kPrimaryColor,
+                gradientColor: Colors.blue,
+                icon: Icons.add_photo_alternate,
+                iconSize: 25,
+                radius: 27,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ModifyImage()));
+                },
+              )
             ],
           ),
           llHeightSpan,
