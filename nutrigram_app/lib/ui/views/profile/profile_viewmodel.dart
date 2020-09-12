@@ -66,6 +66,7 @@ class ProfileViewModel extends BaseViewModel {
       await _showError(l.message);
     }, (ProfileResponseModel r) async {
       await _userDataService.savePhone(r.user.phone);
+      _navigationService.popRepeated(2);
     });
     setBusy(false);
   }
