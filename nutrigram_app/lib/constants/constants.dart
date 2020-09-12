@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 // add all constants here
-const String appName = "nutri.gram";
+const String kAppName = "nutri.gram";
+const String kBaseUrl = "https://nutrigram.herokuapp.com/api/v1";
 
 /// Theme related
 const String kFontFamily = "WorkSans";
@@ -21,6 +22,8 @@ const Color kDisabledDarkThemeColor = Color(0xFF444444);
 
 ///Assets related
 const String loginIllustration = "assets/illustrations/login_illustration.png";
+const String homeIllustrationLeft = "assets/illustrations/leftHome.png";
+const String homeIllustrationRight = "assets/illustrations/rightHome.png";
 const String registerIllustration =
     "assets/illustrations/register_illustration.png";
 const String verificationIllustration =
@@ -29,9 +32,12 @@ const String onboardingAsset1 = "assets/illustrations/onboardingAsset1.png";
 const String onboardingAsset3 = "assets/illustrations/onboardingAsset3.png";
 const String onboardingAsset2 = "assets/illustrations/onboardingAsset2.png";
 const String onboardingAsset4 = 'assets/illustrations/onboardingAsset4.png';
+const String photo = 'assets/icons/photo.png';
+const String upload = 'assets/icons/upload.png';
 
 /// Home view tiles related colors
 const Color notesColor = Color(0xFF3CC795);
+const Color homeCardColor = Color(0xffFFF9C4);
 const Color videosColor = Color(0xFFF96566);
 const Color practiceColor = Color(0xFF4D9CFC);
 const Color examsColor = Color(0xFF4D9CFC);

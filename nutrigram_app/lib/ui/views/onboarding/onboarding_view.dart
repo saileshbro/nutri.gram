@@ -62,7 +62,7 @@ class OnboardingView extends StatelessWidget {
                   SmoothPageIndicator(
                     controller: _pageController,
                     count: onboardingItems.length,
-                    effect: WormEffect(
+                    effect: const WormEffect(
                       activeDotColor: kPrimaryColor,
                       dotColor: kPrimaryColor,
                       paintStyle: PaintingStyle.stroke,
@@ -84,7 +84,7 @@ class OnboardingView extends StatelessWidget {
                     child: FlatButton(
                       color: kPrimaryColor,
                       onPressed: model.onButtonPressed,
-                      child: Icon(Entypo.arrow_long_right),
+                      child: const Icon(Entypo.arrow_long_right),
                     ),
                   ),
                   xlHeightSpan

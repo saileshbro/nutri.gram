@@ -9,11 +9,11 @@ final ThemeData kDarkTheme = ThemeData(
   accentColor: kPrimaryColor,
   cursorColor: kPrimaryColor,
   cardColor: kPrimaryMediumTextColor,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     color: kPrimaryDarkTextColor,
     elevation: 0.0,
     brightness: Brightness.light,
-    iconTheme: const IconThemeData(
+    iconTheme: IconThemeData(
       color: kTextFieldBackgroundColor,
     ),
   ),
@@ -109,7 +109,7 @@ final ThemeData kLightTheme = ThemeData(
   cardColor: kTextFieldBackgroundColor,
   accentColor: kPrimaryColor,
   cursorColor: kPrimaryColor,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     color: kScaffoldBackgroundColor,
     elevation: 0.0,
     brightness: Brightness.dark,
@@ -117,7 +117,7 @@ final ThemeData kLightTheme = ThemeData(
   scaffoldBackgroundColor: kScaffoldBackgroundColor,
   primaryColor: kPrimaryColor,
   fontFamily: kFontFamily,
-  primaryIconTheme: IconThemeData(
+  primaryIconTheme: const IconThemeData(
     color: kDisabledLightThemeColor,
   ),
   inputDecorationTheme: InputDecorationTheme(

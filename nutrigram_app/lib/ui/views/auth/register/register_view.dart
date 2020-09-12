@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/HelperWidget/bottom_banner.dart';
-import 'package:nutrigram_app/common/HelperWidget/busy_button.dart';
+import 'package:nutrigram_app/app/locator.dart';
+import 'package:nutrigram_app/common/ui/components/bottom_banner.dart';
+import 'package:nutrigram_app/common/ui/components/d_raised_button.dart';
+import 'package:nutrigram_app/common/ui/components/d_text_field.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
+import 'package:nutrigram_app/ui/views/auth/register/register_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
 class RegisterView extends StatefulWidget {
   @override
@@ -11,46 +15,29 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  bool obscureText = true;
-
-  FocusNode nameFocusNode;
-  FocusNode phoneFocusNode;
-  FocusNode passwordFocusNode;
-
-  TextEditingController _phoneController, _nameController, _passwordController;
-
-  @override
-  void initState() {
-    super.initState();
-    nameFocusNode = FocusNode();
-    phoneFocusNode = FocusNode();
-    passwordFocusNode = FocusNode();
-
-    _phoneController = TextEditingController();
-    _nameController = TextEditingController();
-    _passwordController = TextEditingController();
-  }
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode phoneFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      bottomNavigationBar: BottomBanner(
-        onPressed: () {},
-        bannerText: "Already have an account?",
-        buttonLabel: "Login",
-      ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: <Widget>[
-          if (Navigator.canPop(context)) AppBar() else const SizedBox.shrink(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+    return ViewModelBuilder.reactive(
+      builder: (BuildContext context, RegisterViewModel model, Widget child) =>
+          Scaffold(
+        appBar: AppBar(),
+        bottomNavigationBar: BottomBanner(
+          onPressed: model.onLoginPressed,
+          bannerText: alreadyHaveAnAccount,
+          buttonLabel: login,
+        ),
+        body: ListView(
+          padding: sXPagePadding,
+          physics: const BouncingScrollPhysics(),
+          children: <Widget>[
+            Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  padding: mXPagePadding,
                   child: Image.asset(
                     registerIllustration,
                     width: MediaQuery.of(context).size.width,
@@ -63,83 +50,63 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 lHeightSpan,
                 Form(
+                  key: model.formKey,
                   child: Column(
                     children: <Widget>[
-                      TextFormField(
-                        controller: _nameController,
-                        style: Theme.of(context).textTheme.caption,
-                        textCapitalization: TextCapitalization.words,
-                        keyboardType: TextInputType.text,
-                        focusNode: nameFocusNode,
-                        onEditingComplete: () {
-                          FocusScope.of(context).requestFocus(phoneFocusNode);
-                        },
-                        decoration: InputDecoration(
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .apply(color: kDisabledLightThemeColor),
-                          prefixIcon: Icon(
+                      DTextField(
+                          textCapitalization: TextCapitalization.words,
+                          focusNode: nameFocusNode,
+                          onEditingComplete: () {
+                            FocusScope.of(context).requestFocus(phoneFocusNode);
+                          },
+                          validator: model.validateName,
+                          onChanged: (val) => model.name = val,
+                          hintText: fullName,
+                          prefixIcon: const Icon(
                             Icons.perm_identity,
                           ),
-                          hintText: fullName,
-                        ),
-                      ),
+                          enabled: !model.isBusy),
                       mHeightSpan,
-                      TextFormField(
-                        controller: _phoneController,
-                        style: Theme.of(context).textTheme.caption,
+                      DTextField(
                         focusNode: phoneFocusNode,
                         onEditingComplete: () {
                           FocusScope.of(context)
                               .requestFocus(passwordFocusNode);
                         },
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .apply(color: kDisabledLightThemeColor),
-                          prefixIcon: Icon(
-                            Icons.phone_android,
-                          ),
-                          hintText: phoneNumber,
+                        validator: model.validatePhone,
+                        onChanged: (val) => model.phoneNo = val,
+                        textInputType: TextInputType.number,
+                        prefixIcon: const Icon(
+                          Icons.phone_android,
                         ),
+                        enabled: !model.isBusy,
+                        hintText: phoneNumber,
                       ),
                       mHeightSpan,
-                      TextFormField(
-                        controller: _passwordController,
-                        style: Theme.of(context).textTheme.caption,
+                      DTextField(
                         focusNode: passwordFocusNode,
                         onEditingComplete: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
-                        obscureText: obscureText,
-                        decoration: InputDecoration(
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .apply(color: kDisabledLightThemeColor),
-                          prefixIcon: Icon(
-                            Icons.lock_open,
-                          ),
-                          suffixIcon: Material(
-                            type: MaterialType.transparency,
-                            shape: const CircleBorder(),
-                            child: InkWell(
-                              customBorder: const CircleBorder(),
-                              onTap: () {
-                                setState(() {
-                                  obscureText = !obscureText;
-                                });
-                              },
-                              child: Icon(obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
-                          ),
-                          hintText: password,
+                        onChanged: (val) => model.password = val,
+                        validator: model.validatePassword,
+                        enabled: !model.isBusy,
+                        password: model.isPasswordVisible,
+                        prefixIcon: const Icon(
+                          Icons.lock_open,
                         ),
+                        suffixIcon: Material(
+                          type: MaterialType.transparency,
+                          shape: const CircleBorder(),
+                          child: InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: model.changePasswordVisibility,
+                            child: Icon(model.isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
+                        ),
+                        hintText: password,
                       ),
                       llHeightSpan,
                       Container(
@@ -150,28 +117,14 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                         ),
                         width: double.infinity,
-                        child: BusyButton(
-                          color: kPrimaryColor,
-                          title: register, onPressed: () {},
-                          // busy: model.busy,
-                          // onPressed: model.busy
-                          //     ? null
-                          //     : () {
-                          //         model.register(
-                          //           _nameController.text,
-                          //           _phoneController.text,
-                          //           _passwordController.text,
-                          //         );
-                          //       },
-                        ),
-                      ),
-                      // mHeightSpan,
-                      FlatButton(
-                        onPressed: () {},
-                        splashColor: Colors.transparent,
-                        child: Text(
-                          alreadyHaveAnAccount,
-                          style: Theme.of(context).textTheme.button,
+                        child: DRaisedButton(
+                          loading: model.isBusy,
+                          title: register,
+                          onPressed: () {
+                            if (model.formKey.currentState.validate()) {
+                              model.register();
+                            }
+                          },
                         ),
                       ),
                     ],
@@ -179,10 +132,12 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ],
             ),
-          ),
-          mHeightSpan,
-        ],
+            mHeightSpan,
+          ],
+        ),
       ),
+      viewModelBuilder: () => locator<RegisterViewModel>(),
+      disposeViewModel: false,
     );
   }
 }
