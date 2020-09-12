@@ -42,7 +42,6 @@ class RApiService implements IApiService {
 
   @override
   Future<ProfileResponseModel> updateProfile(UpdateProfileRequestModel model) {
-    print(model.toJson());
     try {
       return _httpService
           .post(url: 'users/update_profile', encodedJson: model.toJson())
