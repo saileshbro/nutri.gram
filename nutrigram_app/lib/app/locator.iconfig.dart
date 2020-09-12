@@ -19,6 +19,7 @@ import 'package:nutrigram_app/services/authentication/i_authentication_service.d
 import 'package:nutrigram_app/repository/home/r_home_repository.dart';
 import 'package:nutrigram_app/repository/home/i_home_repository.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/profile/profile_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/home/home_viewmodel.dart';
 import 'package:nutrigram_app/repository/authentication/r_authentication_repository.dart';
@@ -52,6 +53,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => RHomeRepository(g<IApiService>()));
   g.registerLazySingleton<OnboardingViewModel>(() => OnboardingViewModel(
       g<NavigationService>(), g<SharedPreferencesService>()));
+  g.registerLazySingleton<ProfileViewModel>(
+      () => ProfileViewModel(g<UserDataService>()));
   g.registerLazySingleton<StartUpViewModel>(() => StartUpViewModel(
         g<NavigationService>(),
         g<SharedPreferencesService>(),

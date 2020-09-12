@@ -26,6 +26,7 @@ void showCustomBottomSheet(
             padding: const EdgeInsets.only(top: 16, bottom: 32),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(
                   width: 72,
@@ -34,7 +35,7 @@ void showCustomBottomSheet(
                       color: barColor, borderRadius: BorderRadius.circular(5)),
                 ),
                 lHeightSpan,
-                child,
+                child
               ],
             ),
           ),

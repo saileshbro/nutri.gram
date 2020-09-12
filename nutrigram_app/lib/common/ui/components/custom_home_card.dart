@@ -152,31 +152,40 @@ class CustomHomeCard extends ViewModelWidget<HomeViewModel> {
         Container(
           child: model.userDataService.isLoggedIn
               ? model.hasScannedData
-                  ? const Text(
-                      "View More",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
-                        decoration: TextDecoration.underline,
+                  ? GestureDetector(
+                      onTap: model.goToGraph,
+                      child: const Text(
+                        "View More",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     )
-                  : const Text(
-                      "Update profile",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
-                        decoration: TextDecoration.underline,
+                  : GestureDetector(
+                      onTap: model.goToProfile,
+                      child: const Text(
+                        "Update profile",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     )
-              : const Text(
-                  "Scan right away",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: kPrimaryColor,
-                    decoration: TextDecoration.underline,
+              : GestureDetector(
+                  onTap: model.goToScan,
+                  child: const Text(
+                    "Scan right away",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
         ),

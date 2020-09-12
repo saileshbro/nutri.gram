@@ -98,6 +98,7 @@ class DashboardView extends StatelessWidget {
       case 0:
         return HomeView(
           goToScanPage: () => model.setIndex(2),
+          goToProfilePage: () => model.setIndex(4),
         );
       case 1:
         return HistoryView();
@@ -110,6 +111,7 @@ class DashboardView extends StatelessWidget {
       default:
         return HomeView(
           goToScanPage: () => model.setIndex(2),
+          goToProfilePage: () => model.setIndex(4),
         );
     }
   }

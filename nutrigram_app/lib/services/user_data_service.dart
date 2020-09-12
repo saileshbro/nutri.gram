@@ -12,7 +12,7 @@ class UserDataService {
   UserDataService(this._sharedPreferencesService);
   String get token => _token;
   String get name => _name;
-
+  String get phone => _phone;
   final SharedPreferencesService _sharedPreferencesService;
   Future<bool> saveData(String token, String name, String phone) async {
     _token = token;
@@ -33,6 +33,7 @@ class UserDataService {
   bool clearData() {
     _token = null;
     _name = null;
+    _phone = null;
     _isLoggedIn = false;
     _sharedPreferencesService.removeToken();
     _sharedPreferencesService.removeName();
