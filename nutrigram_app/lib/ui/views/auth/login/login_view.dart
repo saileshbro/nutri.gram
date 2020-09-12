@@ -143,6 +143,7 @@ class LoginView extends StatelessWidget {
                 ],
               ),
             ),
+        disposeViewModel: false,
         viewModelBuilder: () => locator<LoginViewModel>());
   }
 }
@@ -317,14 +318,4 @@ class GetOTPBottomSheet extends StatelessWidget {
       ),
     );
   }
-
-  //change password
-  // _changePassword(context) {
-  //   return showBottomSheet(
-  //     context,
-  //     child: ChangePasswordBottomSheet(
-  //       phone: _controller.text,
-  //     ),
-  //   );
-  // }
 }

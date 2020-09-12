@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/ui/components/appbar_head.dart';
+import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 
 class HistoryView extends StatelessWidget {

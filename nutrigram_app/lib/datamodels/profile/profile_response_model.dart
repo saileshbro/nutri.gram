@@ -1,14 +1,17 @@
 import 'package:nutrigram_app/datamodels/user.dart';
 
-class RegisterResponseModel {
+class ProfileResponseModel {
   User user;
-
+  String otp;
   String message;
 
-  RegisterResponseModel({this.user, this.message});
+  ProfileResponseModel({this.user, this.otp, this.message});
 
-  RegisterResponseModel.fromJson(Map<String, dynamic> json) {
+  ProfileResponseModel.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? User.fromJson(json['user']) : null;
+    if (json['otp'] != null) {
+      otp = json['otp'] as String;
+    }
     message = json['message'] as String;
   }
 
@@ -17,6 +20,7 @@ class RegisterResponseModel {
     if (user != null) {
       data['user'] = user.toJson();
     }
+    data['otp'] = otp;
     data['message'] = message;
     return data;
   }

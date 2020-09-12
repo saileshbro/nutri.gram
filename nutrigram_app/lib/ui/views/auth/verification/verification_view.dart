@@ -77,10 +77,11 @@ class VerificationView extends StatelessWidget {
                               pinLength: 4,
                               onChanged: (String value) => model.otp = value,
                               decoration: UnderlineDecoration(
-                                color: kPrimaryColor,
+                                colorBuilder:
+                                    const FixedColorBuilder(kPrimaryColor),
                                 textStyle:
                                     Theme.of(context).textTheme.headline3,
-                                hintText: "8888",
+                                hintText: "0000",
                               ),
                               keyboardType: TextInputType.number,
                               enabled: !model.isBusy,

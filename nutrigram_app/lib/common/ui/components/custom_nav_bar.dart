@@ -10,6 +10,7 @@ class CustomNavBar extends StatelessWidget {
   final bool backNeeded;
   final bool isProfilePage;
   final bool isSecondary;
+  final Function onActionPressed;
 
   const CustomNavBar({
     Key key,
@@ -19,6 +20,7 @@ class CustomNavBar extends StatelessWidget {
     this.isSecondary = false,
     this.backNeeded = false,
     this.isProfilePage = false,
+    this.onActionPressed,
   }) : super(key: key);
 
   @override
@@ -84,7 +86,7 @@ class CustomNavBar extends StatelessWidget {
             color: kPrimaryColor,
             gradientColor: Colors.blue,
             icon: Icons.exit_to_app,
-            onPressed: () {},
+            onPressed: onActionPressed,
           )
         else
           const SizedBox.shrink(),

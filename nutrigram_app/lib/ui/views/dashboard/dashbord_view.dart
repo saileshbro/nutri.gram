@@ -93,6 +93,7 @@ class DashboardView extends StatelessWidget {
         ),
       ),
       viewModelBuilder: () => locator<DashboardViewModel>(),
+      disposeViewModel: false,
     );
   }
 

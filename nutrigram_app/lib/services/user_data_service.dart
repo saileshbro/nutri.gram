@@ -10,9 +10,9 @@ class UserDataService {
   bool _isLoggedIn;
 
   UserDataService(this._sharedPreferencesService);
-  String get token => _token;
-  String get name => _name;
-  String get phone => _phone;
+  String get token => _token ?? "";
+  String get name => _name ?? "";
+  String get phone => _phone ?? "";
   final SharedPreferencesService _sharedPreferencesService;
   Future<bool> saveData(String token, String name, String phone) async {
     _token = token;
@@ -23,6 +23,18 @@ class UserDataService {
     return true;
   }
 
+  Future<bool> saveName(String name) async {
+    _name = name;
+    await _sharedPreferencesService.saveName(name);
+    return true;
+  }
+
+  Future<bool> savePhone(String phone) async {
+    _phone = phone;
+    await _sharedPreferencesService.savePhone(phone);
+    return true;
+  }
+
   bool getData() {
     _token = _sharedPreferencesService.token;
     _name = _sharedPreferencesService.name;
@@ -30,14 +42,16 @@ class UserDataService {
     return true;
   }
 
-  bool clearData() {
+  Future<bool> clearData() async {
     _token = null;
     _name = null;
     _phone = null;
     _isLoggedIn = false;
-    _sharedPreferencesService.removeToken();
-    _sharedPreferencesService.removeName();
-    _sharedPreferencesService.removePhone();
+    await Future.wait([
+      _sharedPreferencesService.removeToken(),
+      _sharedPreferencesService.removeName(),
+      _sharedPreferencesService.removePhone(),
+    ]);
     return true;
   }
 

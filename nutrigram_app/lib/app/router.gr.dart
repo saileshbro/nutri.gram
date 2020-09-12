@@ -4,15 +4,16 @@
 // AutoRouteGenerator
 // **************************************************************************
 
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: public_member_api_docs
+
 import 'package:auto_route/auto_route.dart';
-import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
+import 'package:flutter/material.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_view.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
-import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
-import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
+import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
+import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
+import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startUpView = '/';
@@ -45,53 +46,56 @@ class Router extends RouterBase {
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
-    StartUpView: (RouteData data) {
+    StartUpView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => StartUpView(),
         settings: data,
       );
     },
-    LoginView: (RouteData data) {
+    LoginView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => LoginView(),
         settings: data,
       );
     },
-    RegisterView: (RouteData data) {
+    RegisterView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => RegisterView(),
         settings: data,
       );
     },
-    OnboardingView: (RouteData data) {
+    OnboardingView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => OnboardingView(),
         settings: data,
       );
     },
-    DashboardView: (RouteData data) {
+    DashboardView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => DashboardView(),
         settings: data,
       );
     },
-    VerificationView: (RouteData data) {
-      var args = data.getArgs<VerificationViewArguments>(
-          orElse: () => VerificationViewArguments());
+    VerificationView: (data) {
+      final args = data.getArgs<VerificationViewArguments>(
+        orElse: () => VerificationViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) =>
-            VerificationView(key: args.key, phoneNumber: args.phoneNumber),
+        builder: (context) => VerificationView(
+          key: args.key,
+          phoneNumber: args.phoneNumber,
+        ),
         settings: data,
       );
     },
   };
 }
 
-// *************************************************************************
-// Arguments holder classes
-// **************************************************************************
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
 
-//VerificationView arguments holder class
+/// VerificationView arguments holder class
 class VerificationViewArguments {
   final Key key;
   final String phoneNumber;

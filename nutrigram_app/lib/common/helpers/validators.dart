@@ -30,3 +30,15 @@ String validateName(String value) {
   }
   return null;
 }
+
+String validateOtp(String value) {
+  try {
+    int.tryParse(value, radix: 10);
+    if (value.length < 4) {
+      return "Invalid OTP";
+    }
+    return null;
+  } catch (e) {
+    return "Invalid OTP";
+  }
+}

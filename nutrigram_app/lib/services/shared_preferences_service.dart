@@ -23,16 +23,26 @@ class SharedPreferencesService {
     return;
   }
 
-  void removeToken() {
-    _preferences.remove(_tokenKey);
+  Future<void> saveName(String name) async {
+    await _preferences.setString(_nameKey, name);
+    return;
   }
 
-  void removeName() {
-    _preferences.remove(_nameKey);
+  Future<void> savePhone(String phone) async {
+    await _preferences.setString(_phoneKey, phone);
+    return;
   }
 
-  void removePhone() {
-    _preferences.remove(_phoneKey);
+  Future<void> removeToken() async {
+    await _preferences.remove(_tokenKey);
+  }
+
+  Future<void> removeName() async {
+    await _preferences.remove(_nameKey);
+  }
+
+  Future<void> removePhone() async {
+    await _preferences.remove(_phoneKey);
   }
 
   Future<void> setOnboardingVisited() async {

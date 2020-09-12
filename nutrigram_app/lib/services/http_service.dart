@@ -50,12 +50,14 @@ class HttpService {
   /// Return type: [Stream]
   ///
   Stream post({@required String url, @required String encodedJson}) {
+    print('$_baseUrl/$url');
     return Stream.fromFuture(http.post(
       '$_baseUrl/$url',
       headers: _defaultHeader,
       body: encodedJson,
     )).flatMap((data) {
       if (data.statusCode >= 400) {
+        print(data);
         throw Failure(
           statusCode: data.statusCode,
           message: jsonDecode(data.body)["error"],

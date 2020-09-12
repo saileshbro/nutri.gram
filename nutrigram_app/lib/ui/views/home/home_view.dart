@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:nutrigram_app/app/locator.dart';
-import 'package:nutrigram_app/common/ui/components/appbar_head.dart';
+import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
 import 'package:nutrigram_app/common/ui/components/custom_home_card.dart';
 import 'package:nutrigram_app/common/ui/components/health_tips_card.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
