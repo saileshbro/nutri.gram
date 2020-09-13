@@ -59,4 +59,5 @@ typings/
 
 # next.js build output
 .next
-public/uploads/*
+public/uploads/images/*.png
+
