@@ -1,9 +1,12 @@
+import 'package:nutrigram_app/constants/constants.dart';
+
 class User {
   String passwordResetOtp;
   String phoneChangeOtp;
   String otp;
   bool otpVerified;
   int totalSaved;
+  String imageUrl;
   int totalCalories;
   String sId;
   String name;
@@ -22,11 +25,13 @@ class User {
       this.name,
       this.phone,
       this.createdAt,
+      this.imageUrl,
       this.updatedAt});
 
   User.fromJson(Map<String, dynamic> json) {
     passwordResetOtp = json['passwordResetOtp'] as String;
     phoneChangeOtp = json['phoneChangeOtp'] as String;
+    imageUrl = kBaseUrl + (json['imageUrl'] as String);
     otp = json['otp'] as String;
     otpVerified = json['otpVerified'] as bool;
     totalSaved = json['totalSaved'] as int;
@@ -42,6 +47,7 @@ class User {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['passwordResetOtp'] = passwordResetOtp;
     data['phoneChangeOtp'] = phoneChangeOtp;
+    data['imageUrl'] = imageUrl;
     data['otp'] = otp;
     data['otpVerified'] = otpVerified;
     data['totalSaved'] = totalSaved;

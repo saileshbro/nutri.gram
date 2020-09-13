@@ -1,9 +1,11 @@
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String _tokenKey = "TOKENKEY";
 const String _nameKey = "NAMEKEY";
 const String _phoneKey = "PHONEKEY";
+const String _imageUrlKey = "IMAGEURLKEY";
 const String _oboardingKey = "ONBOARDINGKEY";
 
 @lazySingleton
@@ -13,12 +15,16 @@ class SharedPreferencesService {
   String get token => _preferences.getString(_tokenKey) ?? "";
   String get name => _preferences.getString(_nameKey) ?? "";
   String get phone => _preferences.getString(_phoneKey) ?? "";
+  String get imageUrl =>
+      _preferences.getString(_imageUrlKey) ?? "${kBaseUrl}public/profile.png";
 
-  Future<void> saveData(String token, String name, String phone) async {
+  Future<void> saveData(
+      String token, String name, String phone, String imageUrl) async {
     await Future.wait([
       _preferences.setString(_tokenKey, token),
       _preferences.setString(_nameKey, name),
       _preferences.setString(_phoneKey, phone),
+      _preferences.setString(_imageUrlKey, imageUrl),
     ]);
     return;
   }
@@ -30,6 +36,11 @@ class SharedPreferencesService {
 
   Future<void> savePhone(String phone) async {
     await _preferences.setString(_phoneKey, phone);
+    return;
+  }
+
+  Future<void> saveImage(String imageUrl) async {
+    await _preferences.setString(_imageUrlKey, imageUrl);
     return;
   }
 

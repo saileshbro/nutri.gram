@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:nutrigram_app/ui/views/profile/change_image/change_image_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -29,8 +30,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nutrigram_app/services/shared_preferences_service.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_viewmodel.dart';
 import 'package:nutrigram_app/services/third_party_services_module.dart';
+import 'package:nutrigram_app/ui/views/profile/update_profile_form/update_profile_form_viewmodel.dart';
+import 'package:nutrigram_app/services/profile/update_profile_service.dart';
 import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/profile/verify_phone_change/verify_phone_change_viewmodel.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -42,6 +46,7 @@ Future<GetIt> $initGetIt(
 }) async {
   final gh = GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
+  gh.factory<ChangeImageViewModel>(() => ChangeImageViewModel());
   gh.lazySingleton<DashboardViewModel>(() => DashboardViewModel());
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
   gh.lazySingleton<NavigationService>(
@@ -53,6 +58,7 @@ Future<GetIt> $initGetIt(
       () => SharedPreferencesService(get<SharedPreferences>()));
   gh.lazySingleton<SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
+  gh.lazySingleton<UpdateProfileService>(() => UpdateProfileService());
   gh.lazySingleton<UserDataService>(
       () => UserDataService(get<SharedPreferencesService>()));
   gh.lazySingleton<HttpService>(() => HttpService(get<UserDataService>()));
@@ -64,15 +70,24 @@ Future<GetIt> $initGetIt(
       () => RProfileRepository(get<IApiService>()));
   gh.lazySingleton<OnboardingViewModel>(() => OnboardingViewModel(
       get<NavigationService>(), get<SharedPreferencesService>()));
-  gh.lazySingleton<ProfileViewModel>(() => ProfileViewModel(
-        get<UserDataService>(),
-        get<IProfileRepository>(),
-        get<DialogService>(),
-        get<NavigationService>(),
-      ));
+  gh.lazySingleton<ProfileViewModel>(
+      () => ProfileViewModel(get<UserDataService>()));
   gh.lazySingleton<StartUpViewModel>(() => StartUpViewModel(
         get<NavigationService>(),
         get<SharedPreferencesService>(),
+        get<UserDataService>(),
+      ));
+  gh.factory<UpdateProfileFormViewModel>(() => UpdateProfileFormViewModel(
+        get<UserDataService>(),
+        get<IProfileRepository>(),
+        get<DialogService>(),
+        get<UpdateProfileService>(),
+      ));
+  gh.factory<VerifyPhoneViewModel>(() => VerifyPhoneViewModel(
+        get<IProfileRepository>(),
+        get<DialogService>(),
+        get<NavigationService>(),
+        get<UpdateProfileService>(),
         get<UserDataService>(),
       ));
   gh.lazySingleton<HomeViewModel>(() => HomeViewModel(

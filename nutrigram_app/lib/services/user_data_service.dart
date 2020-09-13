@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/services/shared_preferences_service.dart';
 
 @lazySingleton
@@ -6,6 +7,7 @@ class UserDataService {
   String _token;
   String _name;
   String _phone;
+  String _imageUrl;
   // ignore: unused_field
   bool _isLoggedIn;
 
@@ -13,12 +15,15 @@ class UserDataService {
   String get token => _token ?? "";
   String get name => _name ?? "";
   String get phone => _phone ?? "";
+  String get imageUrl => _imageUrl ?? "${kBaseUrl}public/profile.png";
   final SharedPreferencesService _sharedPreferencesService;
-  Future<bool> saveData(String token, String name, String phone) async {
+  Future<bool> saveData(
+      String token, String name, String phone, String imageUrl) async {
     _token = token;
     _name = name;
     _phone = phone;
-    await _sharedPreferencesService.saveData(token, name, phone);
+    _imageUrl = imageUrl;
+    await _sharedPreferencesService.saveData(token, name, phone, imageUrl);
     _isLoggedIn = true;
     return true;
   }

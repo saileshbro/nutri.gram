@@ -10,7 +10,7 @@ import 'package:rxdart/rxdart.dart';
 
 @lazySingleton
 class HttpService {
-  final String _baseUrl = kBaseUrl;
+  final String _baseUrl = "${kBaseUrl}api/v1";
   final UserDataService _userDataService;
   HttpService(this._userDataService);
 
@@ -50,6 +50,8 @@ class HttpService {
   /// Return type: [Stream]
   ///
   Stream post({@required String url, @required String encodedJson}) {
+    print('$_baseUrl/$url');
+    print(encodedJson);
     return Stream.fromFuture(http.post(
       '$_baseUrl/$url',
       headers: _defaultHeader,
