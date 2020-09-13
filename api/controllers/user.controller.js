@@ -233,3 +233,19 @@ exports.updatePhone = async (req, res) => {
   }
   return res.json()
 }
+/**
+ * Update user avatar
+ * @param {Request} req
+ * @param {Response} res
+ */
+exports.updateAvatar = async (req, res) => {
+  if (!req.file) {
+    throw new CustomError(400, "Please provide an image!")
+  }
+  req.user.imageUrl = req.file.path.replace(/\\/g, "/")
+  await req.user.save()
+  return res.json({
+    user: req.user,
+    message: "Avatar changed successfully!",
+  })
+}

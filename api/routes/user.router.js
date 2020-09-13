@@ -10,8 +10,10 @@ const {
   changePassword,
   updateProfile,
   updatePhone,
+  updateAvatar,
 } = require("../controllers/user.controller")
 const { catchErrors } = require("../handlers/error_handler")
+const { uploadImage } = require("../helpers/file_upload")
 const auth = require("../middleware/auth")
 
 router.post("/users/login", catchErrors(login))
@@ -23,4 +25,5 @@ router.post("/users/forgot_password/reset_password", catchErrors(generateNewPass
 router.post("/users/change_password", auth, catchErrors(changePassword))
 router.post("/users/update_profile", auth, catchErrors(updateProfile))
 router.post("/users/update_phone", auth, catchErrors(updatePhone))
+router.post("/users/update_avatar", auth, uploadImage("avatar"), catchErrors(updateAvatar))
 module.exports = router

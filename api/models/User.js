@@ -12,6 +12,10 @@ const userSchema = new Schema(
       required: "Name is required!",
       trim: true,
     },
+    imageUrl: {
+      type: String,
+      default: "public/profile.png",
+    },
     password: {
       type: String,
       required: "Password is required!",
