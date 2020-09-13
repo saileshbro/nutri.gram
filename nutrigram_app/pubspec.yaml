@@ -54,6 +54,7 @@ dependencies:
   stacked_hooks: ^0.1.3
   image_picker: ^0.6.7+7
   image_cropper: ^1.3.1
+  camera: ^0.5.8+5
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
   assets:
     - assets/illustrations/
     - assets/icons/
+    - assets/overlay/
 
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
