@@ -249,3 +249,11 @@ exports.updateAvatar = async (req, res) => {
     message: "Avatar changed successfully!",
   })
 }
+/**
+ * Get auth user profile
+ * @param {Request} req
+ * @param {Response} res
+ */
+exports.getMyProfile = async (req, res) => {
+  return res.json(req.user)
+}
