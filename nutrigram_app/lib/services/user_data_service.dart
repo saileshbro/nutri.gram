@@ -41,8 +41,8 @@ class UserDataService {
   }
 
   Future<bool> saveImage(String image) async {
-    _imageUrl = imageUrl;
-    await _sharedPreferencesService.saveImage(imageUrl);
+    _imageUrl = image;
+    await _sharedPreferencesService.saveImage(image);
     return true;
   }
 
@@ -50,6 +50,7 @@ class UserDataService {
     _token = _sharedPreferencesService.token;
     _name = _sharedPreferencesService.name;
     _phone = _sharedPreferencesService.phone;
+    _imageUrl = _sharedPreferencesService.imageUrl;
     return true;
   }
 
@@ -57,11 +58,13 @@ class UserDataService {
     _token = null;
     _name = null;
     _phone = null;
+    _imageUrl = null;
     _isLoggedIn = false;
     await Future.wait([
       _sharedPreferencesService.removeToken(),
       _sharedPreferencesService.removeName(),
       _sharedPreferencesService.removePhone(),
+      _sharedPreferencesService.removeImageUrl(),
     ]);
     return true;
   }
@@ -72,6 +75,8 @@ class UserDataService {
         _token.isNotEmpty &&
         _name != null &&
         _name.isNotEmpty &&
+        _imageUrl != null &&
+        _imageUrl.isNotEmpty &&
         _phone != null &&
         _phone.isNotEmpty) {
       _isLoggedIn = true;

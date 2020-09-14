@@ -69,8 +69,11 @@ Future<GetIt> $initGetIt(
       () => RProfileRepository(get<IApiService>()));
   gh.lazySingleton<OnboardingViewModel>(() => OnboardingViewModel(
       get<NavigationService>(), get<SharedPreferencesService>()));
-  gh.lazySingleton<ProfileViewModel>(
-      () => ProfileViewModel(get<UserDataService>(), get<NavigationService>()));
+  gh.lazySingleton<ProfileViewModel>(() => ProfileViewModel(
+        get<UserDataService>(),
+        get<NavigationService>(),
+        get<IProfileRepository>(),
+      ));
   gh.lazySingleton<StartUpViewModel>(() => StartUpViewModel(
         get<NavigationService>(),
         get<SharedPreferencesService>(),

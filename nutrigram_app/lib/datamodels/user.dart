@@ -59,4 +59,9 @@ class User {
     data['updatedAt'] = updatedAt;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'User(passwordResetOtp: $passwordResetOtp, phoneChangeOtp: $phoneChangeOtp, otp: $otp, otpVerified: $otpVerified, totalSaved: $totalSaved, imageUrl: $imageUrl, totalCalories: $totalCalories, sId: $sId, name: $name, phone: $phone, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
 }

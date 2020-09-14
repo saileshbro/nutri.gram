@@ -11,12 +11,11 @@ class ScanView extends StatelessWidget {
     return Stack(
       children: [
         // camera in bottom level
-        Container(color: Colors.red[100]),
+        Container(color: Colors.red),
         Container(
           decoration: ShapeDecoration(
             shape: ScanOverlayShape(
               overlayColor: Colors.white.withOpacity(.85),
-              cutOutSize: MediaQuery.of(context).size.width * .90,
             ),
           ),
         ),
@@ -42,8 +41,8 @@ class ScanView extends StatelessWidget {
         ),
         Positioned(
           bottom: 16,
-          right: 24,
-          left: 52,
+          right: 20,
+          left: 20,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

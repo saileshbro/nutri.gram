@@ -67,4 +67,8 @@ class SharedPreferencesService {
       return false;
     }
   }
+
+  Future<void> removeImageUrl() async {
+    await _preferences.remove(_imageUrlKey);
+  }
 }

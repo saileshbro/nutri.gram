@@ -135,19 +135,26 @@ class HttpService {
       {@required String url,
       @required File file,
       @required String fieldName}) async {
-    final postUri = Uri.parse('$_baseUrl/$url');
-    final http.MultipartRequest request =
-        http.MultipartRequest('POST', postUri);
+    try {
+      final postUri = Uri.parse('$_baseUrl/$url');
+      final http.MultipartRequest request =
+          http.MultipartRequest('POST', postUri);
 
-    request.headers.addEntries([
-      MapEntry(
-          HttpHeaders.authorizationHeader, "Bearer ${_userDataService.token}")
-    ]);
+      request.headers.addEntries([
+        MapEntry(
+            HttpHeaders.authorizationHeader, "Bearer ${_userDataService.token}")
+      ]);
 
-    final http.MultipartFile multipartFile =
-        await http.MultipartFile.fromPath(fieldName, file.path);
+      final http.MultipartFile multipartFile =
+          await http.MultipartFile.fromPath(fieldName, file.path);
 
-    request.files.add(multipartFile);
-    return request.send();
+      request.files.add(multipartFile);
+      return request.send();
+    } catch (e) {
+      throw Failure(
+        message: e.toString(),
+        statusCode: 500,
+      );
+    }
   }
 }

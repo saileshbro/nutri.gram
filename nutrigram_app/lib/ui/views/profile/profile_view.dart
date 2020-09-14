@@ -19,6 +19,8 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => locator<ProfileViewModel>(),
       disposeViewModel: false,
+      fireOnModelReadyOnce: true,
+      onModelReady: (model) => model.getMyProfile(),
       builder: (BuildContext ctx, ProfileViewModel model, Widget child) =>
           MediaQuery.removePadding(
         removeTop: true,

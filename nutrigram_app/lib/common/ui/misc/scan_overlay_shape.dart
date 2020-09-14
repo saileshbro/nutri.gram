@@ -4,14 +4,10 @@ import 'package:flutter/material.dart';
 
 class ScanOverlayShape extends ShapeBorder {
   const ScanOverlayShape({
-    this.borderWidth = 3.0,
     this.overlayColor = const Color.fromRGBO(255, 255, 255, 85),
-    this.cutOutSize = 250,
   });
 
-  final double borderWidth;
   final Color overlayColor;
-  final double cutOutSize;
 
   @override
   EdgeInsetsGeometry get dimensions => const EdgeInsets.all(10);
@@ -51,10 +47,6 @@ class ScanOverlayShape extends ShapeBorder {
   void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {
     final width = rect.width;
     final height = rect.height;
-    final borderOffset = borderWidth / 2;
-    final _cutOutSize = cutOutSize != null && cutOutSize < width
-        ? cutOutSize
-        : width - borderOffset;
 
     final backgroundPaint = Paint()
       ..color = overlayColor
@@ -66,10 +58,10 @@ class ScanOverlayShape extends ShapeBorder {
       ..blendMode = BlendMode.dstOut;
 
     final cutOutRect = Rect.fromLTWH(
-      rect.left + width / 2 - _cutOutSize / 2 + borderOffset,
-      rect.top + height / 6,
-      _cutOutSize - borderOffset * 2,
-      _cutOutSize * 1.45,
+      rect.left + 16,
+      rect.top + 96,
+      width - 2 * 16,
+      height * 0.75,
     );
 
     canvas
@@ -94,7 +86,6 @@ class ScanOverlayShape extends ShapeBorder {
   @override
   ShapeBorder scale(double t) {
     return ScanOverlayShape(
-      borderWidth: borderWidth,
       overlayColor: overlayColor,
     );
   }

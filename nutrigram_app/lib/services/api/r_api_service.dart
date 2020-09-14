@@ -74,7 +74,7 @@ class RApiService implements IApiService {
       return _httpService.get(url: 'users/me').handleError((err) {
         throw Failure(message: err.message ?? "Unusual Exception");
       }).map((_) {
-        return ProfileResponseModel.fromJson(_);
+        return ProfileResponseModel.fromJson({"user": _});
       }).first;
     } catch (e) {
       throw Failure(message: e.toString());

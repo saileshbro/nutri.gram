@@ -43,12 +43,14 @@ class ChangeImageViewModel extends BaseViewModel {
     if (isSuccess) {
       final Either<Failure, ProfileResponseModel> response =
           await _profileRepository.getMyProfile();
+
       response.fold((Failure l) async {}, (ProfileResponseModel r) async {
         await Future.wait([
           _userDataService.saveName(r.user.name),
           _userDataService.saveImage(r.user.imageUrl),
           _userDataService.savePhone(r.user.phone),
         ]);
+        notifyListeners();
       });
     }
     setBusy(false);
