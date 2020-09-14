@@ -70,7 +70,7 @@ Future<GetIt> $initGetIt(
   gh.lazySingleton<OnboardingViewModel>(() => OnboardingViewModel(
       get<NavigationService>(), get<SharedPreferencesService>()));
   gh.lazySingleton<ProfileViewModel>(
-      () => ProfileViewModel(get<UserDataService>()));
+      () => ProfileViewModel(get<UserDataService>(), get<NavigationService>()));
   gh.lazySingleton<StartUpViewModel>(() => StartUpViewModel(
         get<NavigationService>(),
         get<SharedPreferencesService>(),
@@ -89,8 +89,11 @@ Future<GetIt> $initGetIt(
         get<UpdateProfileService>(),
         get<UserDataService>(),
       ));
-  gh.factory<ChangeImageViewModel>(
-      () => ChangeImageViewModel(get<IApiService>()));
+  gh.factory<ChangeImageViewModel>(() => ChangeImageViewModel(
+        get<IApiService>(),
+        get<IProfileRepository>(),
+        get<UserDataService>(),
+      ));
   gh.lazySingleton<HomeViewModel>(() => HomeViewModel(
         get<IHomeRepository>(),
         get<UserDataService>(),

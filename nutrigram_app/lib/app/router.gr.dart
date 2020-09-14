@@ -13,6 +13,7 @@ import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
 import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
+import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
 
 class Routes {
@@ -22,6 +23,7 @@ class Routes {
   static const String onboardingView = '/onboarding-view';
   static const String dashboardView = '/dashboard-view';
   static const String verificationView = '/verification-view';
+  static const String changeImageView = '/change-image-view';
   static const all = <String>{
     startUpView,
     loginView,
@@ -29,6 +31,7 @@ class Routes {
     onboardingView,
     dashboardView,
     verificationView,
+    changeImageView,
   };
 }
 
@@ -42,6 +45,7 @@ class Router extends RouterBase {
     RouteDef(Routes.onboardingView, page: OnboardingView),
     RouteDef(Routes.dashboardView, page: DashboardView),
     RouteDef(Routes.verificationView, page: VerificationView),
+    RouteDef(Routes.changeImageView, page: ChangeImageView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -85,6 +89,12 @@ class Router extends RouterBase {
           key: args.key,
           phoneNumber: args.phoneNumber,
         ),
+        settings: data,
+      );
+    },
+    ChangeImageView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ChangeImageView(),
         settings: data,
       );
     },

@@ -1,16 +1,23 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/datamodels/failure.dart';
+import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
+import 'package:nutrigram_app/repository/profile/i_profile_repository.dart';
 import 'package:nutrigram_app/services/api/i_api_service.dart';
+import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
 
 @injectable
 class ChangeImageViewModel extends BaseViewModel {
   File _image;
-
-  ChangeImageViewModel(this._iApiService);
+  final IProfileRepository _profileRepository;
+  final UserDataService _userDataService;
+  ChangeImageViewModel(
+      this._iApiService, this._profileRepository, this._userDataService);
   File get image => _image;
   final IApiService _iApiService;
 
@@ -32,7 +39,18 @@ class ChangeImageViewModel extends BaseViewModel {
 
   Future<void> updateImage() async {
     setBusy(true);
-    await _iApiService.updateAvatar(image, "avatar");
+    final bool isSuccess = await _iApiService.updateAvatar(image, "avatar");
+    if (isSuccess) {
+      final Either<Failure, ProfileResponseModel> response =
+          await _profileRepository.getMyProfile();
+      response.fold((Failure l) async {}, (ProfileResponseModel r) async {
+        await Future.wait([
+          _userDataService.saveName(r.user.name),
+          _userDataService.saveImage(r.user.imageUrl),
+          _userDataService.savePhone(r.user.phone),
+        ]);
+      });
+    }
     setBusy(false);
   }
 }

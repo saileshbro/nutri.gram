@@ -69,8 +69,15 @@ class RApiService implements IApiService {
   }
 
   @override
-  Future<ProfileResponseModel> getProfile() {
-    // TODO: implement getProfile
-    throw UnimplementedError();
+  Future<ProfileResponseModel> getMyProfile() {
+    try {
+      return _httpService.get(url: 'users/me').handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return ProfileResponseModel.fromJson(_);
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
   }
 }

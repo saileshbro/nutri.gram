@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
-import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
 import 'package:nutrigram_app/common/ui/components/icon_button.dart';
 import 'package:nutrigram_app/common/ui/components/list_button.dart';
 import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
@@ -152,12 +151,7 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
                 icon: Icons.add_photo_alternate,
                 iconSize: 25,
                 radius: 27,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChangeImageView()));
-                },
+                onPressed: model.goToImagePicker,
               )
             ],
           ),

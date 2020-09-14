@@ -4,6 +4,7 @@ import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
 import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
+import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
 
 @MaterialAutoRouter(
@@ -14,6 +15,7 @@ import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
     MaterialRoute(page: OnboardingView),
     MaterialRoute(page: DashboardView),
     MaterialRoute(page: VerificationView),
+    MaterialRoute(page: ChangeImageView),
   ],
   preferRelativeImports: false,
 )

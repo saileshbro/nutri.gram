@@ -9,6 +9,6 @@ abstract class IApiService {
   Future<HealthTipsResponseModel> getHealthTips();
   Future<ProfileResponseModel> updateProfile(UpdateProfileRequestModel model);
   Future<ProfileResponseModel> updatePhone(UpdatePhoneRequestModel model);
-  Future<ProfileResponseModel> getProfile();
+  Future<ProfileResponseModel> getMyProfile();
   Future<bool> updateAvatar(File image, String fieldName);
 }

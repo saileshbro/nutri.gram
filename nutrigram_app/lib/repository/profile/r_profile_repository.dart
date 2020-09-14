@@ -35,4 +35,14 @@ class RProfileRepository implements IProfileRepository {
       return left(e);
     }
   }
+
+  @override
+  Future<Either<Failure, ProfileResponseModel>> getMyProfile() async {
+    try {
+      final ProfileResponseModel respModel = await _apiService.getMyProfile();
+      return right(respModel);
+    } on Failure catch (e) {
+      return left(e);
+    }
+  }
 }

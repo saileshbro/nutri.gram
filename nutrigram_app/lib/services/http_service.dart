@@ -148,7 +148,6 @@ class HttpService {
         await http.MultipartFile.fromPath(fieldName, file.path);
 
     request.files.add(multipartFile);
-    // return Stream.fromFuture(request.send());
     return request.send();
   }
 }

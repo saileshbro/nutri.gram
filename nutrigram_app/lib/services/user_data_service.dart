@@ -40,6 +40,12 @@ class UserDataService {
     return true;
   }
 
+  Future<bool> saveImage(String image) async {
+    _imageUrl = imageUrl;
+    await _sharedPreferencesService.saveImage(imageUrl);
+    return true;
+  }
+
   bool getData() {
     _token = _sharedPreferencesService.token;
     _name = _sharedPreferencesService.name;

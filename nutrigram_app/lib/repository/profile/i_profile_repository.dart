@@ -7,6 +7,7 @@ import 'package:nutrigram_app/datamodels/profile/update_profile_request_model.da
 abstract class IProfileRepository {
   Future<Either<Failure, ProfileResponseModel>> updateProfile(
       UpdateProfileRequestModel model);
+  Future<Either<Failure, ProfileResponseModel>> getMyProfile();
   Future<Either<Failure, ProfileResponseModel>> updatePhone(
       UpdatePhoneRequestModel model);
 }
