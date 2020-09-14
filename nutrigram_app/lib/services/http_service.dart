@@ -50,8 +50,6 @@ class HttpService {
   /// Return type: [Stream]
   ///
   Stream post({@required String url, @required String encodedJson}) {
-    print('$_baseUrl/$url');
-    print(encodedJson);
     return Stream.fromFuture(http.post(
       '$_baseUrl/$url',
       headers: _defaultHeader,
@@ -133,7 +131,10 @@ class HttpService {
     }).map((_) => jsonDecode(_.body));
   }
 
-  Future<bool> uploadFile({@required String url, @required File file}) async {
+  Future<http.StreamedResponse> uploadFile(
+      {@required String url,
+      @required File file,
+      @required String fieldName}) async {
     final postUri = Uri.parse('$_baseUrl/$url');
     final http.MultipartRequest request =
         http.MultipartRequest('POST', postUri);
@@ -144,20 +145,10 @@ class HttpService {
     ]);
 
     final http.MultipartFile multipartFile =
-        await http.MultipartFile.fromPath('file', file.path);
+        await http.MultipartFile.fromPath(fieldName, file.path);
 
     request.files.add(multipartFile);
-
-    try {
-      final response = await request.send();
-
-      if (response.statusCode == 200) {
-        return true;
-      }
-
-      return false;
-    } catch (e) {
-      throw Failure(message: e.toString());
-    }
+    // return Stream.fromFuture(request.send());
+    return request.send();
   }
 }

@@ -61,7 +61,7 @@ final ThemeData kDarkTheme = ThemeData(
     ),
     headline4: _darkThemeData.textTheme.headline4.copyWith(
       fontFamily: kFontFamily,
-      fontSize: 34,
+      fontSize: 30,
       fontWeight: FontWeight.w600,
       color: kTextFieldBackgroundColor,
     ),
@@ -161,7 +161,7 @@ final ThemeData kLightTheme = ThemeData(
     ),
     headline4: _lightThemeData.textTheme.headline4.copyWith(
       fontFamily: kFontFamily,
-      fontSize: 34,
+      fontSize: 30,
       fontWeight: FontWeight.w600,
       color: kPrimaryDarkTextColor,
     ),

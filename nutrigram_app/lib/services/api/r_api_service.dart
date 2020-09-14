@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
@@ -53,5 +55,22 @@ class RApiService implements IApiService {
     } catch (e) {
       throw Failure(message: e.toString());
     }
+  }
+
+  @override
+  Future<bool> updateAvatar(File image, String fieldName) async {
+    try {
+      await _httpService.uploadFile(
+          url: 'users/update_avatar', fieldName: fieldName, file: image);
+      return true;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<ProfileResponseModel> getProfile() {
+    // TODO: implement getProfile
+    throw UnimplementedError();
   }
 }

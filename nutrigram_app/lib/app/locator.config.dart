@@ -46,7 +46,6 @@ Future<GetIt> $initGetIt(
 }) async {
   final gh = GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
-  gh.factory<ChangeImageViewModel>(() => ChangeImageViewModel());
   gh.lazySingleton<DashboardViewModel>(() => DashboardViewModel());
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
   gh.lazySingleton<NavigationService>(
@@ -90,6 +89,8 @@ Future<GetIt> $initGetIt(
         get<UpdateProfileService>(),
         get<UserDataService>(),
       ));
+  gh.factory<ChangeImageViewModel>(
+      () => ChangeImageViewModel(get<IApiService>()));
   gh.lazySingleton<HomeViewModel>(() => HomeViewModel(
         get<IHomeRepository>(),
         get<UserDataService>(),

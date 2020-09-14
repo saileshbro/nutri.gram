@@ -51,6 +51,7 @@ class VerifyPhoneViewModel extends BaseViewModel {
     setBusy(false);
   }
 
+  // ignore: unused_element
   Future<void> _showMessage(String message) async {
     await _dialogService.showDialog(
       title: "Verification code",

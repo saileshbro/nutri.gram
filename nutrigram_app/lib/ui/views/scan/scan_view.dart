@@ -28,8 +28,8 @@ class ScanView extends StatelessWidget {
                 padding: lXPadding,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CustomNavBar(
+                  children: const [
+                    CustomNavBar(
                       navBarItemTitle: "Scan",
                       blackString: "Scan to know about ",
                       blueString: "nutrition and calories",

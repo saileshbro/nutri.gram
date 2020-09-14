@@ -83,11 +83,12 @@ class ChangeImageView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          DRaisedButton(
-                            loading: false,
-                            onPressed: () {},
-                            title: "Update Avatar",
-                          )
+                          if (model.hasImage)
+                            DRaisedButton(
+                              loading: model.isBusy,
+                              onPressed: model.updateImage,
+                              title: "Update Avatar",
+                            )
                         ],
                       ),
                     ),
