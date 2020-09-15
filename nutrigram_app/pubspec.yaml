@@ -45,7 +45,6 @@ dependencies:
   http: ^0.12.2
   rxdart: ^0.24.1
   dartz: ^0.9.1
-
   cached_network_image: ^2.3.2+1
   flutter_swiper: ^1.1.6
   animations: ^1.1.2
@@ -54,7 +53,10 @@ dependencies:
   stacked_hooks: ^0.1.3
   image_picker: ^0.6.7+7
   image_cropper: ^1.3.1
-  camera: ^0.5.8+5
+  flutter_better_camera: ^0.6.1
+  path_provider: ^1.6.14
+  simple_edge_detection:
+    path: "../../flutter-simple-edge-detection"
 
 dev_dependencies:
   flutter_test:

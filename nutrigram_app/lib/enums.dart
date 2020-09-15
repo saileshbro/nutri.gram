@@ -1,0 +1,1 @@
+enum ImageCropFormat { png, jpg }

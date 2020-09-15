@@ -5,6 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: public_member_api_docs
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart'
 import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
 import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
+import 'package:nutrigram_app/ui/views/scan/scan_preview/scan_preview_view.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
 
 class Routes {
@@ -21,17 +23,19 @@ class Routes {
   static const String loginView = '/login-view';
   static const String registerView = '/register-view';
   static const String onboardingView = '/onboarding-view';
-  static const String dashboardView = '/dashboard-view';
   static const String verificationView = '/verification-view';
   static const String changeImageView = '/change-image-view';
+  static const String scanPreviewView = '/scan-preview-view';
+  static const String dashboardView = '/dashboard-view';
   static const all = <String>{
     startUpView,
     loginView,
     registerView,
     onboardingView,
-    dashboardView,
     verificationView,
     changeImageView,
+    scanPreviewView,
+    dashboardView,
   };
 }
 
@@ -43,9 +47,10 @@ class Router extends RouterBase {
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.registerView, page: RegisterView),
     RouteDef(Routes.onboardingView, page: OnboardingView),
-    RouteDef(Routes.dashboardView, page: DashboardView),
     RouteDef(Routes.verificationView, page: VerificationView),
     RouteDef(Routes.changeImageView, page: ChangeImageView),
+    RouteDef(Routes.scanPreviewView, page: ScanPreviewView),
+    RouteDef(Routes.dashboardView, page: DashboardView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -74,12 +79,6 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    DashboardView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => DashboardView(),
-        settings: data,
-      );
-    },
     VerificationView: (data) {
       final args = data.getArgs<VerificationViewArguments>(
         orElse: () => VerificationViewArguments(),
@@ -98,6 +97,28 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    ScanPreviewView: (data) {
+      final args = data.getArgs<ScanPreviewViewArguments>(
+        orElse: () => ScanPreviewViewArguments(),
+      );
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            ScanPreviewView(
+          key: args.key,
+          image: args.image,
+        ),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
+    DashboardView: (data) {
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            DashboardView(),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
   };
 }
 
@@ -110,4 +131,11 @@ class VerificationViewArguments {
   final Key key;
   final String phoneNumber;
   VerificationViewArguments({this.key, this.phoneNumber});
+}
+
+/// ScanPreviewView arguments holder class
+class ScanPreviewViewArguments {
+  final Key key;
+  final File image;
+  ScanPreviewViewArguments({this.key, this.image});
 }

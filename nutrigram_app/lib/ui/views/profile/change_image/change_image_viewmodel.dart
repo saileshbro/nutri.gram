@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
+import 'package:nutrigram_app/enums.dart';
 import 'package:nutrigram_app/repository/profile/i_profile_repository.dart';
 import 'package:nutrigram_app/services/api/i_api_service.dart';
+import 'package:nutrigram_app/services/media_service.dart';
 import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
 
@@ -15,25 +15,19 @@ import 'package:stacked/stacked.dart';
 class ChangeImageViewModel extends BaseViewModel {
   File _image;
   final IProfileRepository _profileRepository;
+  final MediaService _mediaService;
   final UserDataService _userDataService;
-  ChangeImageViewModel(
-      this._iApiService, this._profileRepository, this._userDataService);
+  ChangeImageViewModel(this._iApiService, this._profileRepository,
+      this._userDataService, this._mediaService);
   File get image => _image;
   final IApiService _iApiService;
-
-  final ImagePicker _imagePicker = ImagePicker();
 
   bool get hasImage => _image != null;
   Future getNewImage() async {
     setBusy(true);
-    final image = await _imagePicker.getImage(source: ImageSource.gallery);
-    final File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image.path,
-      maxWidth: 512,
-      maxHeight: 512,
-      compressFormat: ImageCompressFormat.png,
-    );
-    _image = croppedFile;
+    File image = await _mediaService.getImage(fromGallery: true);
+    image = await _mediaService.cropImage(image, ImageCropFormat.png);
+    _image = image;
     setBusy(false);
   }
 
@@ -50,8 +44,8 @@ class ChangeImageViewModel extends BaseViewModel {
           _userDataService.saveImage(r.user.imageUrl),
           _userDataService.savePhone(r.user.phone),
         ]);
-        notifyListeners();
       });
+      notifyListeners();
     }
     setBusy(false);
   }

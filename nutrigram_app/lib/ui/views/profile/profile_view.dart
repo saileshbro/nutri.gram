@@ -72,16 +72,15 @@ class ProfileView extends StatelessWidget {
             Padding(
               padding: lXPadding,
               child: Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const CustomNavBar(
+                children: const [
+                  CustomNavBar(
                     navBarItemTitle: "Your intake till now",
                     blackString: "Visualize ",
                     blueString: "your intake",
                     isSecondary: true,
                   ),
                   lHeightSpan,
-                  const Center(child: Text("Graph Here")),
+                  Center(child: Text("Graph Here")),
                 ],
               ),
             ),

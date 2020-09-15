@@ -4,8 +4,10 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:nutrigram_app/services/camera_service.dart';
 import 'package:nutrigram_app/ui/views/profile/change_image/change_image_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/dashboard/dashboard_viewmodel.dart';
+import 'package:nutrigram_app/services/edge_detection_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/ui/views/home/home_viewmodel.dart';
@@ -16,6 +18,7 @@ import 'package:nutrigram_app/services/authentication/i_authentication_service.d
 import 'package:nutrigram_app/repository/home/i_home_repository.dart';
 import 'package:nutrigram_app/repository/profile/i_profile_repository.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_viewmodel.dart';
+import 'package:nutrigram_app/services/media_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_viewmodel.dart';
 import 'package:nutrigram_app/services/permissions_service.dart';
@@ -26,6 +29,8 @@ import 'package:nutrigram_app/services/authentication/r_authentication_service.d
 import 'package:nutrigram_app/repository/home/r_home_repository.dart';
 import 'package:nutrigram_app/repository/profile/r_profile_repository.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/scan/scan_preview/scan_preview_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/scan/scan_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nutrigram_app/services/shared_preferences_service.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_viewmodel.dart';
@@ -46,11 +51,22 @@ Future<GetIt> $initGetIt(
 }) async {
   final gh = GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
-  gh.lazySingleton<DashboardViewModel>(() => DashboardViewModel());
+  gh.lazySingleton<CameraService>(() => CameraService());
+  gh.lazySingleton<DashboardViewModel>(
+      () => DashboardViewModel(get<CameraService>()));
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
+  gh.lazySingleton<EdgeDetectionService>(() => EdgeDetectionService());
+  gh.lazySingleton<MediaService>(() => MediaService());
   gh.lazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
   gh.lazySingleton<PermissionsService>(() => PermissionsService());
+  gh.factory<ScanPreviewViewModel>(() => ScanPreviewViewModel(
+      get<NavigationService>(), get<EdgeDetectionService>()));
+  gh.lazySingleton<ScanViewModel>(() => ScanViewModel(
+        get<CameraService>(),
+        get<NavigationService>(),
+        get<MediaService>(),
+      ));
   final sharedPreferences = await thirdPartyServicesModule.prefs;
   gh.factory<SharedPreferences>(() => sharedPreferences);
   gh.lazySingleton<SharedPreferencesService>(
@@ -78,6 +94,7 @@ Future<GetIt> $initGetIt(
         get<NavigationService>(),
         get<SharedPreferencesService>(),
         get<UserDataService>(),
+        get<IProfileRepository>(),
       ));
   gh.factory<UpdateProfileFormViewModel>(() => UpdateProfileFormViewModel(
         get<UserDataService>(),
@@ -96,6 +113,7 @@ Future<GetIt> $initGetIt(
         get<IApiService>(),
         get<IProfileRepository>(),
         get<UserDataService>(),
+        get<MediaService>(),
       ));
   gh.lazySingleton<HomeViewModel>(() => HomeViewModel(
         get<IHomeRepository>(),

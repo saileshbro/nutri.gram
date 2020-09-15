@@ -53,15 +53,15 @@ class ScanOverlayShape extends ShapeBorder {
       ..style = PaintingStyle.fill;
 
     final boxPaint = Paint()
-      ..color = overlayColor
+      ..color = overlayColor.withOpacity(1)
       ..style = PaintingStyle.fill
       ..blendMode = BlendMode.dstOut;
 
     final cutOutRect = Rect.fromLTWH(
       rect.left + 16,
-      rect.top + 96,
+      rect.top + 90,
       width - 2 * 16,
-      height * 0.75,
+      height * 0.76,
     );
 
     canvas

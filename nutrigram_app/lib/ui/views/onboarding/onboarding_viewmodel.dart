@@ -11,6 +11,6 @@ class OnboardingViewModel extends IndexTrackingViewModel {
   OnboardingViewModel(this._navigationService, this._sharedPreferencesService);
   Future<void> onButtonPressed() async {
     await _sharedPreferencesService.setOnboardingVisited();
-    _navigationService.clearStackAndShow(Routes.loginView);
+    _navigationService.clearStackAndShow(Routes.dashboardView);
   }
 }
