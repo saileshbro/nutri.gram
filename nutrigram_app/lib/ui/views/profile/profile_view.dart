@@ -38,27 +38,11 @@ class ProfileView extends StatelessWidget {
                     navBarItemTitle: "Profile",
                     blackString: "Update your ",
                     blueString: "profile",
-                    isProfilePage: true,
-                    onActionPressed: model.logout,
+                    isProfilePage: model.isLoggedIn && true,
+                    onActionPressed: model.isLoggedIn ? model.logout : null,
                   ),
                   llHeightSpan,
-                  _ProfileTop(),
-                  lHeightSpan,
-                  ListButton(
-                    icon: Icons.edit,
-                    label: "Edit Profile",
-                    onPressed: () => showCustomBottomSheet(
-                      ctx,
-                      child: UpdateProfileFormView(),
-                      onDismiss: model.notifyListeners,
-                    ),
-                  ),
-                  mHeightSpan,
-                  ListButton(
-                    icon: Icons.history,
-                    label: "See scan history",
-                    onPressed: () {},
-                  ),
+                  if (model.isLoggedIn) _ProfileTop(),
                 ],
               ),
             ),
@@ -95,126 +79,146 @@ class ProfileView extends StatelessWidget {
 class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
   @override
   Widget build(BuildContext context, ProfileViewModel model) {
-    return Padding(
-      padding: sXPadding,
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      children: [
+        Padding(
+          padding: sXPadding,
+          child: Column(
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: getBoxShadow(context, kPrimaryColor)),
-                    child: CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(
-                        model.imageUrl,
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: getBoxShadow(context, kPrimaryColor)),
+                        child: CircleAvatar(
+                          backgroundImage: CachedNetworkImageProvider(
+                            model.imageUrl,
+                          ),
+                          backgroundColor: kPrimaryColor,
+                          maxRadius: 42.0,
+                        ),
                       ),
-                      backgroundColor: kPrimaryColor,
-                      maxRadius: 42.0,
-                    ),
+                      lWidthSpan,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            model.namme,
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                          xsHeightSpan,
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: phoneNum,
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                                TextSpan(
+                                  text: model.phone,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .copyWith(color: kPrimaryColor),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  lWidthSpan,
+                  CustomIconButton(
+                    color: kPrimaryColor,
+                    gradientColor: Colors.blue,
+                    icon: Icons.add_photo_alternate,
+                    iconSize: 25,
+                    radius: 27,
+                    onPressed: model.goToImagePicker,
+                  )
+                ],
+              ),
+              llHeightSpan,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        model.namme,
-                        style: Theme.of(context).textTheme.button,
+                        model.totalScans,
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
-                      xsHeightSpan,
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: phoneNum,
-                              style: Theme.of(context).textTheme.caption,
+                      sHeightSpan,
+                      Text(
+                        "Total Scans",
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              color: kPrimaryLightTextColor,
                             ),
-                            TextSpan(
-                              text: model.phone,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .copyWith(color: kPrimaryColor),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        model.totalSaved,
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              fontWeight: FontWeight.w600,
                             ),
-                          ],
-                        ),
+                      ),
+                      sHeightSpan,
+                      Text(
+                        "Saved",
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              color: kPrimaryLightTextColor,
+                            ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        model.totalCalories,
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      sHeightSpan,
+                      Text(
+                        "Total Calories",
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              color: kPrimaryLightTextColor,
+                            ),
                       )
                     ],
                   ),
                 ],
-              ),
-              CustomIconButton(
-                color: kPrimaryColor,
-                gradientColor: Colors.blue,
-                icon: Icons.add_photo_alternate,
-                iconSize: 25,
-                radius: 27,
-                onPressed: model.goToImagePicker,
               )
             ],
           ),
-          llHeightSpan,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(
-                    model.totalScans,
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  sHeightSpan,
-                  Text(
-                    "Total Scans",
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: kPrimaryLightTextColor,
-                        ),
-                  )
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Text(
-                    model.totalSaved,
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  sHeightSpan,
-                  Text(
-                    "Saved",
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: kPrimaryLightTextColor,
-                        ),
-                  )
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Text(
-                    model.totalCalories,
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  sHeightSpan,
-                  Text(
-                    "Total Calories",
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: kPrimaryLightTextColor,
-                        ),
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
-      ),
+        ),
+        lHeightSpan,
+        ListButton(
+          icon: Icons.edit,
+          label: "Edit Profile",
+          onPressed: () => showCustomBottomSheet(
+            context,
+            child: UpdateProfileFormView(),
+            onDismiss: model.notifyListeners,
+          ),
+        ),
+        mHeightSpan,
+        ListButton(
+          icon: Icons.history,
+          label: "See scan history",
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

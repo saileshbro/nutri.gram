@@ -11,6 +11,7 @@ analyzer:
     unnecessary_getters_setters: ignore
     unnecessary_raw_strings: ignore
     prefer_constructors_over_static_methods: ignore
+    sort_pub_dependencies: error
 
   exclude:
     - lib/app/locator.iconfig.dart

@@ -78,6 +78,7 @@ class ScanView extends StatelessWidget {
             ),
         disposeViewModel: false,
         onModelReady: (model) => model.init(),
+        createNewModelOnInsert: true,
         viewModelBuilder: () => locator<ScanViewModel>());
   }
 }

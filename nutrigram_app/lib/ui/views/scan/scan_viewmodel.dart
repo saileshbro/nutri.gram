@@ -8,7 +8,7 @@ import 'package:nutrigram_app/services/media_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-@lazySingleton
+@injectable
 class ScanViewModel extends BaseViewModel {
   File _image;
   final CameraService _cameraService;
@@ -43,7 +43,7 @@ class ScanViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    controller?.dispose();
+    _cameraService?.dispose();
     super.dispose();
   }
 }

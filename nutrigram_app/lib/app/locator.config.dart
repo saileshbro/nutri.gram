@@ -62,7 +62,7 @@ Future<GetIt> $initGetIt(
   gh.lazySingleton<PermissionsService>(() => PermissionsService());
   gh.factory<ScanPreviewViewModel>(() => ScanPreviewViewModel(
       get<NavigationService>(), get<EdgeDetectionService>()));
-  gh.lazySingleton<ScanViewModel>(() => ScanViewModel(
+  gh.factory<ScanViewModel>(() => ScanViewModel(
         get<CameraService>(),
         get<NavigationService>(),
         get<MediaService>(),

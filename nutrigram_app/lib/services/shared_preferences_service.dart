@@ -1,74 +1,87 @@
-import 'package:injectable/injectable.dart';
-import 'package:nutrigram_app/constants/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-const String _tokenKey = "TOKENKEY";
-const String _nameKey = "NAMEKEY";
-const String _phoneKey = "PHONEKEY";
-const String _imageUrlKey = "IMAGEURLKEY";
-const String _oboardingKey = "ONBOARDINGKEY";
+import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/app/logger.dart';
+import 'package:nutrigram_app/datamodels/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
 class SharedPreferencesService {
+  final _logger = getLogger("SharedPreferencesService");
+  static const String userKey = "USERKEY";
+  static const String onboardingKey = "ONBOARDINGKEY";
+  static const String tokenKey = "TOKENKEY";
   final SharedPreferences _preferences;
+
   SharedPreferencesService(this._preferences);
-  String get token => _preferences.getString(_tokenKey) ?? "";
-  String get name => _preferences.getString(_nameKey) ?? "";
-  String get phone => _preferences.getString(_phoneKey) ?? "";
-  String get imageUrl =>
-      _preferences.getString(_imageUrlKey) ?? "${kBaseUrl}public/profile.png";
 
-  Future<void> saveData(
-      String token, String name, String phone, String imageUrl) async {
-    await Future.wait([
-      _preferences.setString(_tokenKey, token),
-      _preferences.setString(_nameKey, name),
-      _preferences.setString(_phoneKey, phone),
-      _preferences.setString(_imageUrlKey, imageUrl),
-    ]);
-    return;
+  User get user {
+    final userJson = _getFromDisk(userKey);
+    if (userJson == null) {
+      return null;
+    }
+    return User.fromJson(jsonDecode(userJson));
   }
 
-  Future<void> saveName(String name) async {
-    await _preferences.setString(_nameKey, name);
-    return;
+  Future<void> setUser(User userToSave) async {
+    await _saveToDisk(userKey, json.encode(userToSave.toJson()));
   }
 
-  Future<void> savePhone(String phone) async {
-    await _preferences.setString(_phoneKey, phone);
-    return;
+  String get token {
+    final String tokenVal = _getFromDisk(tokenKey) as String;
+    if (tokenVal == null || tokenVal.isEmpty) {
+      return null;
+    }
+    return tokenVal;
   }
 
-  Future<void> saveImage(String imageUrl) async {
-    await _preferences.setString(_imageUrlKey, imageUrl);
-    return;
+  Future<void> setToken(String token) async {
+    await _saveToDisk(tokenKey, token);
   }
 
-  Future<void> removeToken() async {
-    await _preferences.remove(_tokenKey);
-  }
-
-  Future<void> removeName() async {
-    await _preferences.remove(_nameKey);
-  }
-
-  Future<void> removePhone() async {
-    await _preferences.remove(_phoneKey);
+  bool get onboardingVisited {
+    final visited = _getFromDisk(onboardingKey);
+    if (visited != null) {
+      return visited as bool && true;
+    }
+    return false;
   }
 
   Future<void> setOnboardingVisited() async {
-    await _preferences.setBool(_oboardingKey, true);
+    await _saveToDisk(onboardingKey, true);
   }
 
-  bool isOnboardingVisited() {
-    try {
-      return _preferences.getBool(_oboardingKey) ?? false;
-    } catch (e) {
-      return false;
+  dynamic _getFromDisk(String key) => _preferences.get(key);
+
+  Future<void> _saveToDisk<T>(String key, T content) async {
+    _logger.d('_saveStringToDisk called key: $key returned value: $content');
+
+    if (content is String) {
+      await _preferences.setString(key, content);
+    }
+    if (content is bool) {
+      await _preferences.setBool(key, content);
+    }
+    if (content is int) {
+      await _preferences.setInt(key, content);
+    }
+    if (content is double) {
+      await _preferences.setDouble(key, content);
+    }
+    if (content is List<String>) {
+      await _preferences.setStringList(key, content);
     }
   }
 
-  Future<void> removeImageUrl() async {
-    await _preferences.remove(_imageUrlKey);
+  Future<void> removeUser() async {
+    _logger.d("removeUser called");
+    await _preferences.remove(userKey);
+    _logger.d("User removed");
+  }
+
+  Future<void> removeToken() async {
+    _logger.d("removeToken called");
+    await _preferences.remove(tokenKey);
+    _logger.d("Token removed");
   }
 }

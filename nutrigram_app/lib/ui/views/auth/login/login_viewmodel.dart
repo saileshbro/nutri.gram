@@ -52,8 +52,7 @@ class LoginViewModel extends BaseViewModel {
       (LoginResponseModel model) async {
         setBusy(false);
         if (model.user.otpVerified) {
-          await _userDataService.saveData(model.token, model.user.name,
-              model.user.phone, model.user.imageUrl);
+          await _userDataService.saveData(model.token, model.user);
           _navigationService.navigateTo(Routes.dashboardView);
         } else {
           await _showMessage("Verification code is ${model.user.otp}");

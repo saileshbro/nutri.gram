@@ -13,9 +13,10 @@ class ProfileViewModel extends BaseViewModel {
   final UserDataService _userDataService;
   final NavigationService _navigationService;
   final IProfileRepository _profileRepository;
-  String get imageUrl => _userDataService.imageUrl;
-  String get namme => _userDataService.name;
-  String get phone => _userDataService.phone;
+  String get imageUrl => _userDataService.user.imageUrl;
+  bool get isLoggedIn => _userDataService.isLoggedIn;
+  String get namme => _userDataService.user.name;
+  String get phone => _userDataService.user.phone;
   ProfileViewModel(
     this._userDataService,
     this._navigationService,
@@ -36,15 +37,14 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   Future<void> getMyProfile() async {
+    if (!isLoggedIn) {
+      return;
+    }
     final Either<Failure, ProfileResponseModel> response =
         await _profileRepository.getMyProfile();
 
     response.fold((Failure l) {}, (ProfileResponseModel r) async {
-      await Future.wait([
-        _userDataService.saveName(r.user.name),
-        _userDataService.saveImage(r.user.imageUrl),
-        _userDataService.savePhone(r.user.phone),
-      ]);
+      await _userDataService.saveUser(r.user);
       notifyListeners();
     });
     notifyListeners();

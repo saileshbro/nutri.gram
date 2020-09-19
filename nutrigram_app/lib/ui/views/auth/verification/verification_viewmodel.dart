@@ -36,8 +36,7 @@ class VerificationViewModel extends BaseViewModel {
       (VerificationResponseModel model) async {
         setBusy(false);
         if (model.user.otpVerified) {
-          await _userDataService.saveData(model.token, model.user.name,
-              model.user.phone, model.user.imageUrl);
+          await _userDataService.saveData(model.token, model.user);
           _navigationService.clearStackAndShow(Routes.dashboardView);
         }
       },

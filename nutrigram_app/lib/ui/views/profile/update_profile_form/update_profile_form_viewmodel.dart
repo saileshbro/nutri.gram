@@ -18,11 +18,11 @@ class UpdateProfileFormViewModel extends BaseViewModel {
   final UpdateProfileService _updateProfileService;
   UpdateProfileFormViewModel(this._userDataService, this._profileRepository,
       this._dialogService, this._updateProfileService) {
-    _newName = _userDataService.name;
-    _newPhone = _userDataService.phone;
+    _newName = _userDataService.user.name;
+    _newPhone = _userDataService.user.phone;
   }
-  String get name => _userDataService.name;
-  String get phone => _userDataService.phone;
+  String get name => _userDataService.user.name;
+  String get phone => _userDataService.user.phone;
 
   Future<bool> updateProfile() async {
     setBusy(true);
@@ -39,7 +39,7 @@ class UpdateProfileFormViewModel extends BaseViewModel {
       return false;
     }, (ProfileResponseModel r) async {
       setBusy(false);
-      await _userDataService.saveName(r.user.name);
+      await _userDataService.saveUser(r.user);
       notifyListeners();
       if (phone != _newPhone && r.otp.isNotEmpty) {
         _updateProfileService.tempPhone = _newPhone;

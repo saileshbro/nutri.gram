@@ -26,11 +26,9 @@ class _ImagePreviewState extends State<ImagePreview> {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image.file(
-            File(widget.imagePath),
-            fit: BoxFit.contain,
-            key: imageWidgetKey,
-          ),
+          const Center(child: Text('Loading ...')),
+          Image.file(File(widget.imagePath),
+              fit: BoxFit.contain, key: imageWidgetKey),
           FutureBuilder<ui.Image>(
               future: loadUiImage(widget.imagePath),
               builder:

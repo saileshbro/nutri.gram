@@ -19,7 +19,7 @@ class StartUpViewModel extends BaseViewModel {
   StartUpViewModel(this._navigationService, this._sharedPreferencesService,
       this._userDataService, this._profileRepository);
   Future<void> handleStartupViewLogic() async {
-    if (!_sharedPreferencesService.isOnboardingVisited()) {
+    if (!_sharedPreferencesService.onboardingVisited) {
       SchedulerBinding.instance.addPostFrameCallback((timestamp) {
         _navigationService.clearStackAndShow(Routes.onboardingView);
       });
@@ -38,11 +38,7 @@ class StartUpViewModel extends BaseViewModel {
     final Either<Failure, ProfileResponseModel> response =
         await _profileRepository.getMyProfile();
     response.fold((Failure l) {}, (ProfileResponseModel r) async {
-      await Future.wait([
-        _userDataService.saveName(r.user.name),
-        _userDataService.saveImage(r.user.imageUrl),
-        _userDataService.savePhone(r.user.phone),
-      ]);
+      await _userDataService.saveUser(r.user);
     });
     return;
   }

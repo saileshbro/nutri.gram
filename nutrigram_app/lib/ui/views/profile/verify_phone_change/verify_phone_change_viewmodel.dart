@@ -37,7 +37,7 @@ class VerifyPhoneViewModel extends BaseViewModel {
     response.fold((Failure l) async {
       await _showError(l.message);
     }, (ProfileResponseModel r) async {
-      await _userDataService.savePhone(r.user.phone);
+      await _userDataService.saveUser(r.user);
       _navigationService.popRepeated(2);
     });
     setBusy(false);
