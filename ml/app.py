@@ -37,20 +37,32 @@ def upload_image():
                 return dict(
                     status='success',
                     data=keyval,
-                    msg='success'
+                    msg='success',
+                    code='200'
                 )
             else:
                 keyval = detectTexts(resized)
                 print(keyval)
-                return dict(
-                    status='success',
-                    data=keyval,
-                    msg='success'
-                )
+                if(bool(keyval)):
+                    return dict(
+                        status='success',
+                        data=keyval,
+                        msg='success',
+                        code='200'
+                    )
+                else:
+                    return dict(
+                        status='failed',
+                        data=keyval,
+                        msg='failed',
+                        code='400'
+                    )
             
         else:
             return dict(
                 status='failed',
-                msg="Image not found"
+                msg="Image not found",
+                code='400',
+                data={}
             )
              

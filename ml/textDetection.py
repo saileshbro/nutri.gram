@@ -154,16 +154,31 @@ def detectTexts(orig):
 
     texts = []
     matched = []
-    keyval = {}
+    # keyval = {}
+    result = []
     text = readText(orig)
 
     texts = text.split('\n')
     keywords = findKeyword(texts)
-    print(keywords)
+    print('KEYWORSDS:',keywords)
     for key,value in keywords.items():
         newKey =  matchTextV2(key,dbTexts)
         newValues = matchText(value,dbTexts)
-        keyval[newKey] = newValues
+        try:
+            result.append(dict(
+                type=newKey.lower(),
+                value=newValues[0],
+                unit=newValues[1],
+                fullResult = newValues
+            ))
+        except:
+            result.append(dict(
+                type=newKey.lower(),
+                value=newValues[0],
+                unit='',
+                fullResult = newValues
+            ))
+        # keyval[newKey] = newValues
 
     # for line in texts:
     #     words = line.lower().replace('total ','').replace('total','').split(' ')
@@ -176,7 +191,7 @@ def detectTexts(orig):
     # print("Texts: ",texts)
     # print("Matched: ", matched)
     
-    return keyval
+    return result
 
 def findKeyword(texts):
     print ("Keywords",texts)
@@ -262,8 +277,7 @@ def matchTextV2(text,dbTexts):
     return text
 
 dbTexts = [
-        'Carbohydrate', 'Calories', 'Protein', 'Fat', 'Carbs', 'KCal', 'g', 'gm'
-    ]
+        'Carbohydrate', 'Calories', 'Protein', 'Fat', 'Carbs', 'KCal', 'g', 'gm']
 
 if __name__ == "__main__":
     image, orig = load_and_resize(640,480,path='./images/threshold_cropped.jpg')
