@@ -6,6 +6,7 @@ import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_profile_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_phone_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
+import 'package:nutrigram_app/datamodels/search/search_response_model.dart';
 import 'package:nutrigram_app/services/api/i_api_service.dart';
 
 import 'package:nutrigram_app/services/http_service.dart';
@@ -75,6 +76,19 @@ class RApiService implements IApiService {
         throw Failure(message: err.message ?? "Unusual Exception");
       }).map((_) {
         return ProfileResponseModel.fromJson({"user": _});
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<SearchResponseModel> getSearchResults(String query) {
+    try {
+      return _httpService.get(url: 'search?q=$query').handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return SearchResponseModel.fromJson(_);
       }).first;
     } catch (e) {
       throw Failure(message: e.toString());
