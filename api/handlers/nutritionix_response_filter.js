@@ -4,51 +4,63 @@ const nutritionixDataMapper = (nutritionixFoodObject) => {
   response.foodName = nutritionixFoodObject.food_name
   data.push(
     {
-      total: Math.ceil(nutritionixFoodObject.serving_weight_grams),
+      type: "Total",
+      value: Math.ceil(nutritionixFoodObject.serving_weight_grams),
       unit: "g",
     },
     {
-      calories: Math.ceil(nutritionixFoodObject.nf_calories),
+      type: "Calories",
+      value: Math.ceil(nutritionixFoodObject.nf_calories),
       unit: "kcal",
     },
     {
-      fat: nutritionixFoodObject.nf_total_fat,
+      type: "Fat",
+      value: nutritionixFoodObject.nf_total_fat,
       unit: "g",
     },
     {
-      saturatedFat: nutritionixFoodObject.nf_saturated_fat,
+      type: "Saturated Fat",
+      value: nutritionixFoodObject.nf_saturated_fat,
       unit: "g",
     },
     {
-      cholesterol: nutritionixFoodObject.nf_cholesterol,
+      type: "Cholesterol",
+      value: nutritionixFoodObject.nf_cholesterol,
       unit: "mg",
     },
     {
-      sodium: nutritionixFoodObject.nf_sodium,
+      type: "Sodium",
+      value: nutritionixFoodObject.nf_sodium,
       unit: "mg",
     },
     {
-      carbohydrate: nutritionixFoodObject.nf_total_carbohydrate,
+      type: "Carbohydrate",
+      value: nutritionixFoodObject.nf_total_carbohydrate,
       unit: "g",
     },
     {
-      dietaryFiber: nutritionixFoodObject.nf_dietary_fiber,
+      type: "Dietary Fiber",
+      value: nutritionixFoodObject.nf_dietary_fiber,
       unit: "g",
     },
     {
-      sugar: nutritionixFoodObject.nf_sugars,
+      type: "Sugar",
+      value: nutritionixFoodObject.nf_sugars,
       unit: "g",
     },
     {
-      protein: nutritionixFoodObject.nf_protein,
+      type: "Protein",
+      value: nutritionixFoodObject.nf_protein,
       unit: "g",
     },
     {
-      potassium: nutritionixFoodObject.nf_potassium,
+      type: "Potassium",
+      value: nutritionixFoodObject.nf_potassium,
       unit: "mg",
     },
     {
-      phosphorous: nutritionixFoodObject.nf_p,
+      type: "Phosphorous",
+      value: nutritionixFoodObject.nf_p,
       unit: "mg",
     }
   )
