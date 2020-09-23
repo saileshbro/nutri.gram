@@ -9,10 +9,12 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:nutrigram_app/datamodels/nutrient.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_view.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
 import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
+import 'package:nutrigram_app/ui/views/nutrient_info_display/nutrient_info_display_view.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
 import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
 import 'package:nutrigram_app/ui/views/scan/scan_preview/scan_preview_view.dart';
@@ -25,6 +27,7 @@ class Routes {
   static const String onboardingView = '/onboarding-view';
   static const String verificationView = '/verification-view';
   static const String changeImageView = '/change-image-view';
+  static const String nutrientInfoDisplayView = '/nutrient-info-display-view';
   static const String scanPreviewView = '/scan-preview-view';
   static const String dashboardView = '/dashboard-view';
   static const all = <String>{
@@ -34,6 +37,7 @@ class Routes {
     onboardingView,
     verificationView,
     changeImageView,
+    nutrientInfoDisplayView,
     scanPreviewView,
     dashboardView,
   };
@@ -49,6 +53,7 @@ class Router extends RouterBase {
     RouteDef(Routes.onboardingView, page: OnboardingView),
     RouteDef(Routes.verificationView, page: VerificationView),
     RouteDef(Routes.changeImageView, page: ChangeImageView),
+    RouteDef(Routes.nutrientInfoDisplayView, page: NutrientInfoDisplayView),
     RouteDef(Routes.scanPreviewView, page: ScanPreviewView),
     RouteDef(Routes.dashboardView, page: DashboardView),
   ];
@@ -97,6 +102,19 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    NutrientInfoDisplayView: (data) {
+      final args =
+          data.getArgs<NutrientInfoDisplayViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => NutrientInfoDisplayView(
+          key: args.key,
+          nutrients: args.nutrients,
+          name: args.name,
+          dateTime: args.dateTime,
+        ),
+        settings: data,
+      );
+    },
     ScanPreviewView: (data) {
       final args = data.getArgs<ScanPreviewViewArguments>(
         orElse: () => ScanPreviewViewArguments(),
@@ -131,6 +149,19 @@ class VerificationViewArguments {
   final Key key;
   final String phoneNumber;
   VerificationViewArguments({this.key, this.phoneNumber});
+}
+
+/// NutrientInfoDisplayView arguments holder class
+class NutrientInfoDisplayViewArguments {
+  final Key key;
+  final List<Nutrient> nutrients;
+  final String name;
+  final DateTime dateTime;
+  NutrientInfoDisplayViewArguments(
+      {this.key,
+      @required this.nutrients,
+      this.name = "Package Name",
+      this.dateTime});
 }
 
 /// ScanPreviewView arguments holder class

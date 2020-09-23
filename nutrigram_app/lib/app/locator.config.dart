@@ -17,6 +17,7 @@ import 'package:nutrigram_app/repository/authentication/i_authentication_reposit
 import 'package:nutrigram_app/services/authentication/i_authentication_service.dart';
 import 'package:nutrigram_app/repository/home/i_home_repository.dart';
 import 'package:nutrigram_app/repository/profile/i_profile_repository.dart';
+import 'package:nutrigram_app/repository/search/i_search_repository.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_viewmodel.dart';
 import 'package:nutrigram_app/services/media_service.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -28,9 +29,11 @@ import 'package:nutrigram_app/repository/authentication/r_authentication_reposit
 import 'package:nutrigram_app/services/authentication/r_authentication_service.dart';
 import 'package:nutrigram_app/repository/home/r_home_repository.dart';
 import 'package:nutrigram_app/repository/profile/r_profile_repository.dart';
+import 'package:nutrigram_app/repository/search/r_search_repository.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/scan/scan_preview/scan_preview_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/scan/scan_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/search/search_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nutrigram_app/services/shared_preferences_service.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_viewmodel.dart';
@@ -83,12 +86,19 @@ Future<GetIt> $initGetIt(
   gh.lazySingleton<IHomeRepository>(() => RHomeRepository(get<IApiService>()));
   gh.lazySingleton<IProfileRepository>(
       () => RProfileRepository(get<IApiService>()));
+  gh.lazySingleton<ISearchRepository>(
+      () => RSearchRepository(get<IApiService>()));
   gh.lazySingleton<OnboardingViewModel>(() => OnboardingViewModel(
       get<NavigationService>(), get<SharedPreferencesService>()));
   gh.lazySingleton<ProfileViewModel>(() => ProfileViewModel(
         get<UserDataService>(),
         get<NavigationService>(),
         get<IProfileRepository>(),
+      ));
+  gh.lazySingleton<SearchViewModel>(() => SearchViewModel(
+        get<ISearchRepository>(),
+        get<DialogService>(),
+        get<NavigationService>(),
       ));
   gh.lazySingleton<StartUpViewModel>(() => StartUpViewModel(
         get<NavigationService>(),

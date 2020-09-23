@@ -4,6 +4,7 @@ import 'package:nutrigram_app/ui/views/auth/login/login_view.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
 import 'package:nutrigram_app/ui/views/dashboard/dashbord_view.dart';
+import 'package:nutrigram_app/ui/views/nutrient_info_display/nutrient_info_display_view.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
 import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
 import 'package:nutrigram_app/ui/views/scan/scan_preview/scan_preview_view.dart';
@@ -17,6 +18,7 @@ import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
     MaterialRoute(page: OnboardingView),
     MaterialRoute(page: VerificationView),
     MaterialRoute(page: ChangeImageView),
+    MaterialRoute(page: NutrientInfoDisplayView),
     CustomRoute<bool>(
         page: ScanPreviewView, transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute<bool>(
