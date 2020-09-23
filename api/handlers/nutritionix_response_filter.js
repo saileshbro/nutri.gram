@@ -2,6 +2,7 @@ const nutritionixDataMapper = (nutritionixFoodObject) => {
   const response = {}
   const data = []
   response.foodName = nutritionixFoodObject.food_name
+  response.imageUrl = nutritionixFoodObject.photo.highres
   data.push(
     {
       type: "Total",
