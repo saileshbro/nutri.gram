@@ -23,8 +23,13 @@ app.use(cookieParser())
 app.use("/public", express.static(path.join(__dirname, "public")))
 
 // routes setup
-app.use("/api/v1", require("./routes/user.router"))
-app.use("/api/v1", require("./routes/tip.router"))
+app.use(
+  "/api/v1",
+  require("./routes/user.router"),
+  require("./routes/tip.router"),
+  require("./routes/scan.router"),
+  require("./routes/search.router")
+)
 // Error handlers setup
 app.use(notFoundError)
 app.use(mongooseErrors)

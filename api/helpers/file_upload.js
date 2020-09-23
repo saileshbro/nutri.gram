@@ -31,4 +31,20 @@ const uploadImage = (imageName) =>
       return callback(null, true)
     },
   }).single(imageName)
-module.exports = { uploadImage }
+/**
+ * Takes the form name for the single scan image
+ * @param {String} imageName
+ */
+const uploadScan = (imageName) =>
+  multer({
+    fileFilter(req, file, callback) {
+      const ext = path.extname(file.originalname.toLowerCase())
+      if (ext !== ".png" && ext !== ".jpg" && ext !== ".jpeg") {
+        return callback({
+          error: "Only images are allowed",
+        })
+      }
+      return callback(null, true)
+    },
+  }).single(imageName)
+module.exports = { uploadImage, uploadScan }
