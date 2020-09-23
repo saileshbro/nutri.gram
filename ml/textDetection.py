@@ -165,17 +165,20 @@ def detectTexts(orig):
         newValues = matchText(value,dbTexts)
         try:
             keyval = dict(
+                type=newKey,
                 unit=newValues[1],
+                value=float(newValues[0]),
                 fullResult = newValues
             )
-            keyval[newKey] = float(newValues[0])
+            
             result.append(keyval)
         except:
             keyval = dict(
                 unit='',
+                type=newKey,
+                value=float(newValues[0]),
                 fullResult = newValues
             )
-            keyval[newKey] = float(newValues[0])
             result.append(keyval)
         # keyval[newKey] = newValues
 
