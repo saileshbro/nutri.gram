@@ -154,7 +154,6 @@ def detectTexts(orig):
 
     texts = []
     matched = []
-    # keyval = {}
     result = []
     text = readText(orig)
 
@@ -162,22 +161,22 @@ def detectTexts(orig):
     keywords = findKeyword(texts)
     print('KEYWORSDS:',keywords)
     for key,value in keywords.items():
-        newKey =  matchTextV2(key,dbTexts)
+        newKey =  matchTextV2(key,dbTexts).lower()
         newValues = matchText(value,dbTexts)
         try:
-            result.append(dict(
-                type=newKey.lower(),
-                value=newValues[0],
+            keyval = dict(
                 unit=newValues[1],
                 fullResult = newValues
-            ))
+            )
+            keyval[newKey] = float(newValues[0])
+            result.append(keyval)
         except:
-            result.append(dict(
-                type=newKey.lower(),
-                value=newValues[0],
+            keyval = dict(
                 unit='',
                 fullResult = newValues
-            ))
+            )
+            keyval[newKey] = float(newValues[0])
+            result.append(keyval)
         # keyval[newKey] = newValues
 
     # for line in texts:
