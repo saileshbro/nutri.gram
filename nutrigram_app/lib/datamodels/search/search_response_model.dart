@@ -1,3 +1,4 @@
+import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/datamodels/nutrient.dart';
 
 class SearchResponseModel {
@@ -12,8 +13,8 @@ class SearchResponseModel {
     imageUrl = json['imageUrl'] as String;
     if (json['data'] != null) {
       data = <Nutrient>[];
-      json['data'].forEach((v) {
-        data.add(Nutrient.fromJson(v));
+      json['data'].asMap().forEach((index, value) {
+        data.add(Nutrient.fromJson(value)..color = progressBarColors[index]);
       });
     }
   }
