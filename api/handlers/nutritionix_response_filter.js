@@ -1,71 +1,76 @@
 const nutritionixDataMapper = (nutritionixFoodObject) => {
   const response = {}
-  const data = []
   response.foodName = nutritionixFoodObject.food_name
   response.imageUrl = nutritionixFoodObject.photo.highres
-  data.push(
+  const mgData = [
     {
-      type: "Total",
-      value: Math.ceil(nutritionixFoodObject.serving_weight_grams),
+      type: "Cholesterol",
+      value: nutritionixFoodObject.nf_cholesterol ?? 0,
+      unit: "mg",
+    },
+    {
+      type: "Sodium",
+      value: nutritionixFoodObject.nf_sodium ?? 0,
+      unit: "mg",
+    },
+
+    {
+      type: "Potassium",
+      value: nutritionixFoodObject.nf_potassium ?? 0,
+      unit: "mg",
+    },
+    {
+      type: "Phosphorous",
+      value: nutritionixFoodObject.nf_p ?? 0,
+      unit: "mg",
+    },
+  ]
+  const gData = [
+    {
+      type: "Fat",
+      value: nutritionixFoodObject.nf_total_fat ?? 0,
       unit: "g",
     },
+    {
+      type: "Saturated Fat",
+      value: nutritionixFoodObject.nf_saturated_fat ?? 0,
+      unit: "g",
+    },
+    {
+      type: "Carbohydrate",
+      value: nutritionixFoodObject.nf_total_carbohydrate ?? 0,
+      unit: "g",
+    },
+    {
+      type: "Dietary Fiber",
+      value: nutritionixFoodObject.nf_dietary_fiber ?? 0,
+      unit: "g",
+    },
+    {
+      type: "Sugar",
+      value: nutritionixFoodObject.nf_sugars ?? 0,
+      unit: "g",
+    },
+    {
+      type: "Protein",
+      value: nutritionixFoodObject.nf_protein ?? 0,
+      unit: "g",
+    },
+  ]
+  response.data = [
     {
       type: "Calories",
       value: Math.ceil(nutritionixFoodObject.nf_calories),
       unit: "kcal",
     },
     {
-      type: "Fat",
-      value: nutritionixFoodObject.nf_total_fat,
+      type: "Total",
+      value: Math.ceil(nutritionixFoodObject.serving_weight_grams),
       unit: "g",
     },
-    {
-      type: "Saturated Fat",
-      value: nutritionixFoodObject.nf_saturated_fat,
-      unit: "g",
-    },
-    {
-      type: "Cholesterol",
-      value: nutritionixFoodObject.nf_cholesterol,
-      unit: "mg",
-    },
-    {
-      type: "Sodium",
-      value: nutritionixFoodObject.nf_sodium,
-      unit: "mg",
-    },
-    {
-      type: "Carbohydrate",
-      value: nutritionixFoodObject.nf_total_carbohydrate,
-      unit: "g",
-    },
-    {
-      type: "Dietary Fiber",
-      value: nutritionixFoodObject.nf_dietary_fiber,
-      unit: "g",
-    },
-    {
-      type: "Sugar",
-      value: nutritionixFoodObject.nf_sugars,
-      unit: "g",
-    },
-    {
-      type: "Protein",
-      value: nutritionixFoodObject.nf_protein,
-      unit: "g",
-    },
-    {
-      type: "Potassium",
-      value: nutritionixFoodObject.nf_potassium,
-      unit: "mg",
-    },
-    {
-      type: "Phosphorous",
-      value: nutritionixFoodObject.nf_p,
-      unit: "mg",
-    }
-  )
-  response.data = data
+    ...gData.sort((a, b) => b.value - a.value),
+    ...mgData.sort((a, b) => b.value - a.value),
+  ]
   return response
 }
 module.exports = nutritionixDataMapper
