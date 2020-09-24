@@ -25,7 +25,7 @@ def wrap_transform(image, orig):
     gray = cv2.equalizeHist(gray)
     bigrayl = cv2.bilateralFilter(gray,7,20,20)
     edged = cv2.Canny(gray, 75, 200)
-    cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST,
+    cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,
                             cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
     cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:3]
