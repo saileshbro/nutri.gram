@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose")
+const moment = require("moment")
 
 const scannedItemSchema = new Schema(
   {
@@ -37,6 +38,7 @@ const scannedItemSchema = new Schema(
 scannedItemSchema.methods.toJSON = function () {
   const tip = this
   const onj = tip.toObject()
+  onj.createdAt = moment(onj.createdAt).format("ddd, d MMM YYYY")
   delete onj.__v
   delete onj.updatedAt
   return onj

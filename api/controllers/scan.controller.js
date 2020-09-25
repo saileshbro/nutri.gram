@@ -34,7 +34,7 @@ exports.saveScanResult = async (req, res) => {
   const { data, foodName, searchTerm } = req.body
   let calorieValue = 0
   const isExists = await ScannedItem.find({
-    $or: [
+    $and: [
       {
         userId: req.user._id,
         foodName,
@@ -63,11 +63,21 @@ exports.saveScanResult = async (req, res) => {
   req.user.incrementSaved()
   await scannedItem.save()
   await req.user.save()
-  return res.json()
+  return res.json({
+    message: "Saved successfully!",
+  })
 }
 exports.getScanHistory = async (req, res) => {
   const history = await ScannedItem.where({
     userId: req.user._id,
   })
   return res.json({ history })
+}
+exports.removeFromHistory = async (req, res) => {
+  const { _id } = req.body
+  await ScannedItem.deleteOne({
+    _id,
+    userId: req.user._id,
+  })
+  return res.json({ message: "Deleted successfully!" })
 }
