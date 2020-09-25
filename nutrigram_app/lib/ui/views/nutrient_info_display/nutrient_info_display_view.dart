@@ -99,7 +99,7 @@ class NutrientInfoDisplayView extends StatelessWidget {
             );
           } else {
             return DProgressBar(
-              percent: ratio < 0.01 ? (ratio * 100 * 15) : (ratio * 100),
+              percent: ratio * 100,
               title: e.type,
               color: e.color,
               value: "${e.value.toString()} ${e.unit}",
