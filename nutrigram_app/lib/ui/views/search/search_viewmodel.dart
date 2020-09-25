@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:nutrigram_app/app/router.gr.dart';
 import 'package:nutrigram_app/services/shared_preferences_service.dart';
 import 'package:stacked/stacked.dart';
@@ -51,7 +52,9 @@ class SearchViewModel extends BaseViewModel {
       arguments: NutrientInfoDisplayViewArguments(
         nutrients: nutrients,
         name: name,
-        dateTime: DateTime.now(),
+        searchTerm: _query,
+        showSaveButton: true,
+        date: DateFormat("ddd, d MMM YYYY").format(DateTime.now()),
       ),
     );
   }

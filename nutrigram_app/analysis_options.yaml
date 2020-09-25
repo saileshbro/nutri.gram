@@ -13,9 +13,6 @@ analyzer:
     prefer_constructors_over_static_methods: ignore
     sort_pub_dependencies: error
 
-  exclude:
-    - lib/app/locator.iconfig.dart
-    - lib/app/router.gr.dart
 linter:
   rules:
     parameter_assignments: true

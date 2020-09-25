@@ -26,8 +26,8 @@ class ProfileViewModel extends BaseViewModel {
     this._sharedPreferencesService,
   );
   String get totalScans => _sharedPreferencesService.totalScanned.toString();
-  String get totalSaved => "500";
-  String get totalCalories => "7000kcal";
+  String get totalSaved => _userDataService.user.totalSaved.toString();
+  String get totalCalories => _userDataService.user.totalCalories.toString();
 
   Future<void> logout() async {
     await _userDataService.clearData();

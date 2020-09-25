@@ -10,6 +10,7 @@ import 'package:nutrigram_app/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:nutrigram_app/services/edge_detection_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/ui/views/history/history_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/home/home_viewmodel.dart';
 import 'package:nutrigram_app/services/http_service.dart';
 import 'package:nutrigram_app/services/api/i_api_service.dart';
@@ -137,6 +138,12 @@ Future<GetIt> $initGetIt(
         get<IProfileRepository>(),
         get<UserDataService>(),
         get<MediaService>(),
+      ));
+  gh.lazySingleton<HistoryViewModel>(() => HistoryViewModel(
+        get<IScanRepository>(),
+        get<DialogService>(),
+        get<UserDataService>(),
+        get<NavigationService>(),
       ));
   gh.lazySingleton<HomeViewModel>(() => HomeViewModel(
         get<IHomeRepository>(),

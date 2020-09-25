@@ -110,7 +110,9 @@ class Router extends RouterBase {
           key: args.key,
           nutrients: args.nutrients,
           name: args.name,
-          dateTime: args.dateTime,
+          date: args.date,
+          searchTerm: args.searchTerm,
+          showSaveButton: args.showSaveButton,
         ),
         settings: data,
       );
@@ -156,12 +158,16 @@ class NutrientInfoDisplayViewArguments {
   final Key key;
   final List<Nutrient> nutrients;
   final String name;
-  final DateTime dateTime;
+  final String date;
+  final String searchTerm;
+  final bool showSaveButton;
   NutrientInfoDisplayViewArguments(
       {this.key,
       @required this.nutrients,
       this.name = "Package Name",
-      this.dateTime});
+      this.date,
+      this.searchTerm,
+      @required this.showSaveButton});
 }
 
 /// ScanPreviewView arguments holder class

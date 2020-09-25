@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // add all constants here
 const String kAppName = "nutri.gram";
-const String kBaseUrl = "https://nutrigram.herokuapp.com/";
+const String kBaseUrl = "http://192.168.1.105:8000/";
 
 /// Theme related
 const String kFontFamily = "WorkSans";

@@ -29,7 +29,7 @@ class NutrientInfoDisplayViewModel extends BaseViewModel {
 
   void _showError(String message) {
     _dialogService.showDialog(
-      title: "Login Failure",
+      title: "Error while saving",
       description: message,
     );
     setBusy(false);

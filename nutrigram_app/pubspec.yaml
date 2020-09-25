@@ -59,6 +59,7 @@ dependencies:
   simple_edge_detection:
     path: "../../flutter-simple-edge-detection"
   pie_chart: ^4.0.1
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
@@ -115,3 +116,4 @@ flutter:
           weight: 900
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

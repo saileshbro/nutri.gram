@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
+import 'package:nutrigram_app/datamodels/history.dart';
+import 'package:nutrigram_app/datamodels/history/history_response_model.dart';
 import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_profile_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_phone_request_model.dart';
@@ -104,6 +106,40 @@ class RApiService implements IApiService {
           .post(
               url: 'scans/save_scan_result',
               encodedJson: jsonEncode(model.toJson()))
+          .handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return true;
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<HistoryResponseModel> getScanHistory() {
+    try {
+      return _httpService
+          .get(
+        url: 'scans/get_scan_history',
+      )
+          .handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return HistoryResponseModel.fromJson(_);
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<bool> removeFromHistory(History history) {
+    try {
+      return _httpService
+          .post(
+              url: 'scans/remove_from_history',
+              encodedJson: jsonEncode({"_id": history.sId}))
           .handleError((err) {
         throw Failure(message: err.message ?? "Unusual Exception");
       }).map((_) {

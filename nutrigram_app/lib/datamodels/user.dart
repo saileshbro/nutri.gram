@@ -5,9 +5,9 @@ class User {
   String phoneChangeOtp;
   String otp;
   bool otpVerified;
-  int totalSaved;
+  num totalSaved;
   String imageUrl;
-  int totalCalories;
+  num totalCalories;
   String sId;
   String name;
   String phone;
@@ -34,8 +34,8 @@ class User {
     imageUrl = kBaseUrl + (json['imageUrl'] as String);
     otp = json['otp'] as String;
     otpVerified = json['otpVerified'] as bool;
-    totalSaved = json['totalSaved'] as int;
-    totalCalories = json['totalCalories'] as int;
+    totalSaved = json['totalSaved'] as num;
+    totalCalories = json['totalCalories'] as num;
     sId = json['_id'] as String;
     name = json['name'] as String;
     phone = json['phone'] as String;

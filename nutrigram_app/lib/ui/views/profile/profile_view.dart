@@ -183,7 +183,7 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
                   Column(
                     children: <Widget>[
                       Text(
-                        model.totalCalories,
+                        "${model.totalCalories} KCal",
                         style: Theme.of(context).textTheme.bodyText2.copyWith(
                               fontWeight: FontWeight.w600,
                             ),

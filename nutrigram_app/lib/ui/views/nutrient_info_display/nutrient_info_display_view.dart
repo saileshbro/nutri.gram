@@ -14,13 +14,17 @@ import 'package:nutrigram_app/common/extensions/string.dart';
 class NutrientInfoDisplayView extends StatelessWidget {
   final List<Nutrient> nutrients;
   final String name;
-  final DateTime dateTime;
+  final String searchTerm;
+  final String date;
+  final bool showSaveButton;
 
   const NutrientInfoDisplayView({
     Key key,
     @required this.nutrients,
     this.name = "Package Name",
-    this.dateTime,
+    this.date,
+    this.searchTerm,
+    @required this.showSaveButton,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -62,21 +66,34 @@ class NutrientInfoDisplayView extends StatelessWidget {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              name.allWordsCapitilize(),
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                            xsHeightSpan,
-                            Text(
-                              dateTime.toIso8601String(),
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                name.allWordsCapitilize(),
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                              xsHeightSpan,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    date,
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                  Text(
+                                    searchTerm ?? "",
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        if (model.isLoggedIn)
+                        if (showSaveButton && model.isLoggedIn) ...[
+                          mWidthSpan,
                           CustomIconButton(
                             color: kPrimaryColor,
                             gradientColor: Colors.blue,
@@ -85,10 +102,12 @@ class NutrientInfoDisplayView extends StatelessWidget {
                               ScanRequestModel(
                                 foodName: name,
                                 data: nutrients,
+                                searchTerm: searchTerm,
                               ),
                             ),
                             isBusy: model.isBusy,
                           )
+                        ]
                       ]),
                 ),
                 lHeightSpan,

@@ -13,12 +13,12 @@ class CustomIconButton extends StatelessWidget {
   final bool isBusy;
   const CustomIconButton({
     Key key,
-    @required this.gradientColor,
+    this.gradientColor,
     this.isBig = false,
     @required this.color,
     @required this.icon,
     @required this.onPressed,
-    this.iconSize = 18,
+    this.iconSize = 22,
     this.radius = 22,
     this.hasBoxShadow = true,
     this.isBusy = false,
@@ -37,15 +37,17 @@ class CustomIconButton extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: hasBoxShadow ? getBoxShadow(context, color) : null,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                gradientColor,
-                color,
-              ],
-              tileMode: TileMode.repeated,
-            ),
+            gradient: gradientColor != null
+                ? LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      gradientColor,
+                      color,
+                    ],
+                    tileMode: TileMode.repeated,
+                  )
+                : null,
             color: color,
           ),
           child: isBusy

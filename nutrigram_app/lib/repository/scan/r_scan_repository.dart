@@ -1,4 +1,6 @@
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/datamodels/history.dart';
+import 'package:nutrigram_app/datamodels/history/history_response_model.dart';
 import 'package:nutrigram_app/datamodels/scan/scan_request_model.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -14,6 +16,26 @@ class RScanRepository extends IScanRepository {
   Future<Either<Failure, bool>> saveScanedResult(ScanRequestModel model) async {
     try {
       final bool resp = await _apiService.saveScan(model);
+      return right(resp);
+    } on Failure catch (e) {
+      return left(e);
+    }
+  }
+
+  @override
+  Future<Either<Failure, HistoryResponseModel>> getScanHistory() async {
+    try {
+      final HistoryResponseModel resp = await _apiService.getScanHistory();
+      return right(resp);
+    } on Failure catch (e) {
+      return left(e);
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> removeFromHistory(History history) async {
+    try {
+      final bool resp = await _apiService.removeFromHistory(history);
       return right(resp);
     } on Failure catch (e) {
       return left(e);
