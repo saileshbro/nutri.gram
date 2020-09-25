@@ -1,6 +1,7 @@
 const { default: Axios } = require("axios")
 const FormData = require("form-data")
 const CustomError = require("../handlers/custom_error")
+const ScannedItem = require("../models/ScannedItem")
 /**
  * scans image fetches image content from ML server at :5000 port
  * @param {Request} req
@@ -24,4 +25,49 @@ exports.scanImage = async (req, res) => {
   }
   const { data } = resp.data
   return res.json({ data })
+}
+/**
+ * @param {Request} req
+ * @param {Response} res
+ */
+exports.saveScanResult = async (req, res) => {
+  const { data, foodName, searchTerm } = req.body
+  let calorieValue = 0
+  const isExists = await ScannedItem.find({
+    $or: [
+      {
+        userId: req.user._id,
+        foodName,
+      },
+      {
+        userId: req.user._id,
+        searchTerm,
+      },
+    ],
+  })
+  if (isExists.length > 0) {
+    throw new CustomError(400, "Already exists!")
+  }
+  data.forEach((e) => {
+    if (e.unit.toLowerCase() === "kcal") {
+      calorieValue = e.value
+    }
+  })
+  const scannedItem = new ScannedItem({
+    userId: req.user._id,
+    foodName,
+    data,
+    searchTerm,
+  })
+  req.user.addCalories(calorieValue)
+  req.user.incrementSaved()
+  await scannedItem.save()
+  await req.user.save()
+  return res.json()
+}
+exports.getScanHistory = async (req, res) => {
+  const history = await ScannedItem.where({
+    userId: req.user._id,
+  })
+  return res.json({ history })
 }
