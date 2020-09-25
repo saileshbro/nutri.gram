@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:injectable/injectable.dart';
@@ -6,6 +7,7 @@ import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_profile_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_phone_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
+import 'package:nutrigram_app/datamodels/scan/scan_request_model.dart';
 import 'package:nutrigram_app/datamodels/search/search_response_model.dart';
 import 'package:nutrigram_app/services/api/i_api_service.dart';
 
@@ -89,6 +91,23 @@ class RApiService implements IApiService {
         throw Failure(message: err.message ?? "Unusual Exception");
       }).map((_) {
         return SearchResponseModel.fromJson(_);
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<bool> saveScan(ScanRequestModel model) {
+    try {
+      return _httpService
+          .post(
+              url: 'scans/save_scan_result',
+              encodedJson: jsonEncode(model.toJson()))
+          .handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return true;
       }).first;
     } catch (e) {
       throw Failure(message: e.toString());

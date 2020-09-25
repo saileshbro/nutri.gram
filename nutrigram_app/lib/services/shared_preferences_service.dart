@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesService {
   final _logger = getLogger("SharedPreferencesService");
   static const String userKey = "USERKEY";
+  static const String totalScannedKey = "TOTALSCANNEDKEY";
   static const String onboardingKey = "ONBOARDINGKEY";
   static const String tokenKey = "TOKENKEY";
   final SharedPreferences _preferences;
@@ -23,8 +24,14 @@ class SharedPreferencesService {
     return User.fromJson(jsonDecode(userJson));
   }
 
+  int get totalScanned => _getFromDisk(totalScannedKey) as int ?? 0;
+
   Future<void> setUser(User userToSave) async {
     await _saveToDisk(userKey, json.encode(userToSave.toJson()));
+  }
+
+  Future<void> incremenntTotalScanned() async {
+    await _saveToDisk(totalScannedKey, 1 + totalScanned);
   }
 
   String get token {

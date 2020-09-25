@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/app/router.gr.dart';
+import 'package:nutrigram_app/services/shared_preferences_service.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nutrigram_app/datamodels/search/search_response_model.dart';
@@ -20,14 +21,16 @@ class SearchViewModel extends BaseViewModel {
   // ignore: avoid_setters_without_getters
   set query(String value) => _query = value;
   SearchResponseModel _responseModel;
+  final SharedPreferencesService _sharedPreferencesService;
   String get imageUrl => _responseModel?.imageUrl ?? "";
   List<Nutrient> get nutrients => _responseModel.data;
   String get name => _responseModel?.foodName ?? "";
   bool get hasSearchResult => _responseModel != null;
-  SearchViewModel(
-      this._searchRepository, this._dialogService, this._navigationService);
+  SearchViewModel(this._searchRepository, this._dialogService,
+      this._navigationService, this._sharedPreferencesService);
   Future<void> getSearchData() async {
     setBusy(true);
+    _sharedPreferencesService.incremenntTotalScanned();
     final Either<Failure, SearchResponseModel> resp =
         await _searchRepository.getSearchResults(_query);
     resp.fold((Failure l) => _showError(l.message),

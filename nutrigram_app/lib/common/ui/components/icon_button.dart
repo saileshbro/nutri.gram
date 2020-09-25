@@ -10,6 +10,7 @@ class CustomIconButton extends StatelessWidget {
   final double iconSize;
   final bool hasBoxShadow;
   final VoidCallback onPressed;
+  final bool isBusy;
   const CustomIconButton({
     Key key,
     @required this.gradientColor,
@@ -20,6 +21,7 @@ class CustomIconButton extends StatelessWidget {
     this.iconSize = 18,
     this.radius = 22,
     this.hasBoxShadow = true,
+    this.isBusy = false,
   }) : super(key: key);
 
   @override
@@ -46,11 +48,18 @@ class CustomIconButton extends StatelessWidget {
             ),
             color: color,
           ),
-          child: Icon(
-            icon,
-            size: iconSize,
-            color: Colors.white,
-          ),
+          child: isBusy
+              ? const Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                )
+              : Icon(
+                  icon,
+                  size: iconSize,
+                  color: Colors.white,
+                ),
         ),
       ),
     );

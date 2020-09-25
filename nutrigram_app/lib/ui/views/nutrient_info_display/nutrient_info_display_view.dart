@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/d_progress_bar.dart';
+import 'package:nutrigram_app/common/ui/components/icon_button.dart';
 import 'package:nutrigram_app/common/ui/components/nutrient_pie_chart.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/datamodels/nutrient.dart';
+import 'package:nutrigram_app/datamodels/scan/scan_request_model.dart';
 import 'package:nutrigram_app/ui/views/nutrient_info_display/nutrient_info_display_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:nutrigram_app/common/extensions/string.dart';
 
 class NutrientInfoDisplayView extends StatelessWidget {
   final List<Nutrient> nutrients;
@@ -21,7 +25,8 @@ class NutrientInfoDisplayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<NutrientInfoDisplayViewModel>.reactive(
-      viewModelBuilder: () => NutrientInfoDisplayViewModel(),
+      viewModelBuilder: () => locator<NutrientInfoDisplayViewModel>(),
+      disposeViewModel: false,
       builder: (
         BuildContext context,
         NutrientInfoDisplayViewModel model,
@@ -52,6 +57,41 @@ class NutrientInfoDisplayView extends StatelessWidget {
                       ],
                     )),
                 mHeightSpan,
+                Padding(
+                  padding: lXPadding,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name.allWordsCapitilize(),
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                            xsHeightSpan,
+                            Text(
+                              dateTime.toIso8601String(),
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
+                        ),
+                        if (model.isLoggedIn)
+                          CustomIconButton(
+                            color: kPrimaryColor,
+                            gradientColor: Colors.blue,
+                            icon: Icons.save,
+                            onPressed: () => model.saveScanData(
+                              ScanRequestModel(
+                                foodName: name,
+                                data: nutrients,
+                              ),
+                            ),
+                            isBusy: model.isBusy,
+                          )
+                      ]),
+                ),
+                lHeightSpan,
                 getProgressBars(),
               ],
             ),
