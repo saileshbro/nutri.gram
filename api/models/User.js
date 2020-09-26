@@ -106,6 +106,14 @@ userSchema.methods.addCalories = function (calories) {
   this.totalCalories += calories
 }
 /**
+ * added calories to the user, raises assertion error if negative or zero
+ * @param {number} calories
+ */
+userSchema.methods.subtractCalories = function (calories) {
+  assert.equal(calories && calories > 0, true, Error("Calories value cannot be negative"))
+  this.totalCalories -= calories
+}
+/**
  *
  * @param {String} phone
  * @param {String} password

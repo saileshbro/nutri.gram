@@ -74,10 +74,30 @@ exports.getScanHistory = async (req, res) => {
   return res.json({ history })
 }
 exports.removeFromHistory = async (req, res) => {
-  const { _id } = req.body
+  const { _id, calories } = req.body
+
   await ScannedItem.deleteOne({
     _id,
     userId: req.user._id,
   })
+  req.user.subtractCalories(calories)
+  await req.user.save()
   return res.json({ message: "Deleted successfully!" })
+}
+exports.getTotalScanned = async (req, res) => {
+  const items = await ScannedItem.where({ userId: req.user._id })
+  if (items.length === 0) return res.json({ data: [] })
+  const responseData = items[0].data
+  if (items.length > 1)
+    for (let index = 1; index < items.length; index++) {
+      items[index].data.forEach((elem) => {
+        responseData.forEach((final) => {
+          if (final.type === elem.type && final.unit === elem.unit) {
+            // eslint-disable-next-line no-param-reassign
+            final.value += elem.value
+          }
+        })
+      })
+    }
+  return res.json({ data: responseData })
 }
