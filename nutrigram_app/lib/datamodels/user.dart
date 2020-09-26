@@ -31,7 +31,9 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     passwordResetOtp = json['passwordResetOtp'] as String;
     phoneChangeOtp = json['phoneChangeOtp'] as String;
-    imageUrl = kBaseUrl + (json['imageUrl'] as String);
+    imageUrl = (json['imageUrl'] as String).contains(kBaseUrl)
+        ? (json['imageUrl'] as String)
+        : kBaseUrl + (json['imageUrl'] as String);
     otp = json['otp'] as String;
     otpVerified = json['otpVerified'] as bool;
     totalSaved = json['totalSaved'] as num;

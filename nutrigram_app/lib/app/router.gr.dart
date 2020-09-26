@@ -19,6 +19,7 @@ import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
 import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
 import 'package:nutrigram_app/ui/views/scan/scan_preview/scan_preview_view.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
+import 'package:nutrigram_app/ui/views/view_more_graph/view_more_graph_view.dart';
 
 class Routes {
   static const String startUpView = '/';
@@ -28,6 +29,7 @@ class Routes {
   static const String verificationView = '/verification-view';
   static const String changeImageView = '/change-image-view';
   static const String nutrientInfoDisplayView = '/nutrient-info-display-view';
+  static const String viewMoreGraphView = '/view-more-graph-view';
   static const String scanPreviewView = '/scan-preview-view';
   static const String dashboardView = '/dashboard-view';
   static const all = <String>{
@@ -38,6 +40,7 @@ class Routes {
     verificationView,
     changeImageView,
     nutrientInfoDisplayView,
+    viewMoreGraphView,
     scanPreviewView,
     dashboardView,
   };
@@ -54,6 +57,7 @@ class Router extends RouterBase {
     RouteDef(Routes.verificationView, page: VerificationView),
     RouteDef(Routes.changeImageView, page: ChangeImageView),
     RouteDef(Routes.nutrientInfoDisplayView, page: NutrientInfoDisplayView),
+    RouteDef(Routes.viewMoreGraphView, page: ViewMoreGraphView),
     RouteDef(Routes.scanPreviewView, page: ScanPreviewView),
     RouteDef(Routes.dashboardView, page: DashboardView),
   ];
@@ -117,6 +121,19 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    ViewMoreGraphView: (data) {
+      final args = data.getArgs<ViewMoreGraphViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ViewMoreGraphView(
+          key: args.key,
+          nutrients: args.nutrients,
+          name: args.name,
+          date: args.date,
+          searchTerm: args.searchTerm,
+        ),
+        settings: data,
+      );
+    },
     ScanPreviewView: (data) {
       final args = data.getArgs<ScanPreviewViewArguments>(
         orElse: () => ScanPreviewViewArguments(),
@@ -168,6 +185,21 @@ class NutrientInfoDisplayViewArguments {
       this.date,
       this.searchTerm,
       @required this.showSaveButton});
+}
+
+/// ViewMoreGraphView arguments holder class
+class ViewMoreGraphViewArguments {
+  final Key key;
+  final List<Nutrient> nutrients;
+  final String name;
+  final String date;
+  final String searchTerm;
+  ViewMoreGraphViewArguments(
+      {this.key,
+      @required this.nutrients,
+      this.name,
+      this.date,
+      this.searchTerm});
 }
 
 /// ScanPreviewView arguments holder class

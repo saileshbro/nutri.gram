@@ -24,38 +24,36 @@ class DProgressBar extends StatelessWidget {
             Text(title,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .button
                     .copyWith(fontWeight: FontWeight.bold)),
-            Text(value,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2
-                    .copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.subtitle1,
+            )
           ],
         ),
-        xsHeightSpan,
-        xsHeightSpan,
+        sHeightSpan,
         Container(
           height: 6,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: const Color(0xffe5e5e5).withOpacity(0.7),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(4),
           ),
           child: Row(
             children: <Widget>[
               Expanded(
-                flex: percent.toInt(),
+                flex: (percent + 3.5).ceil().clamp(0, 100),
                 child: Container(
                   height: 6,
                   decoration: BoxDecoration(
                     color: color,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
               ),
               Expanded(
-                flex: (100 - (percent + 1.5).ceil()).clamp(0, 100),
+                flex: (100 - (percent + 3.5).ceil()).clamp(0, 100),
                 child: const SizedBox.shrink(),
               ),
             ],

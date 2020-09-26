@@ -32,6 +32,7 @@ class HistoryViewModel extends BaseViewModel {
 
   Future<void> refresh() async {
     _historyItems = await _fetch();
+    notifyListeners();
   }
 
   void _showError(String message) {
@@ -57,12 +58,11 @@ class HistoryViewModel extends BaseViewModel {
   }
 
   void onHistoryCardPressed(History historyItem) {
-    _navigationService.navigateTo(Routes.nutrientInfoDisplayView,
-        arguments: NutrientInfoDisplayViewArguments(
+    _navigationService.navigateTo(Routes.viewMoreGraphView,
+        arguments: ViewMoreGraphViewArguments(
           nutrients: historyItem.data,
           date: historyItem.createdAt,
           name: historyItem.foodName,
-          showSaveButton: false,
           searchTerm: historyItem.searchTerm ?? "",
         ));
   }

@@ -142,26 +142,41 @@ class NutrientInfoDisplayView extends StatelessWidget {
               (e.unit.toLowerCase() == "g" ? e.value * 1000 : e.value) /
                   totalWeight;
           if (e.type.toLowerCase() == 'total') {
-            return DProgressBar(
-              percent: 100,
-              color: e.color,
-              title: e.type,
-              value: "${e.value.toString()} ${e.unit}",
+            return Column(
+              children: [
+                DProgressBar(
+                  percent: 100,
+                  color: e.color,
+                  title: e.type,
+                  value: "${e.value.toString()} ${e.unit}",
+                ),
+                xsHeightSpan,
+              ],
             );
           }
           if (e.unit.toLowerCase() == 'kcal') {
-            return DProgressBar(
-              percent: 100,
-              title: e.type,
-              color: e.color,
-              value: "${e.value.toString()} ${e.unit}",
+            return Column(
+              children: [
+                DProgressBar(
+                  percent: 100,
+                  title: e.type,
+                  color: e.color,
+                  value: "${e.value.toString()} ${e.unit}",
+                ),
+                xsHeightSpan
+              ],
             );
           } else {
-            return DProgressBar(
-              percent: ratio * 100,
-              title: e.type,
-              color: e.color,
-              value: "${e.value.toString()} ${e.unit}",
+            return Column(
+              children: [
+                DProgressBar(
+                  percent: ratio * 100,
+                  title: e.type,
+                  color: e.color,
+                  value: "${e.value.toString()} ${e.unit}",
+                ),
+                xsHeightSpan
+              ],
             );
           }
         }).toList(),

@@ -10,6 +10,7 @@ import 'package:nutrigram_app/services/api/i_api_service.dart';
 import 'package:nutrigram_app/services/media_service.dart';
 import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 @injectable
 class ChangeImageViewModel extends BaseViewModel {
@@ -17,8 +18,9 @@ class ChangeImageViewModel extends BaseViewModel {
   final IProfileRepository _profileRepository;
   final MediaService _mediaService;
   final UserDataService _userDataService;
+  final NavigationService _navigationService;
   ChangeImageViewModel(this._iApiService, this._profileRepository,
-      this._userDataService, this._mediaService);
+      this._userDataService, this._mediaService, this._navigationService);
   File get image => _image;
   final IApiService _iApiService;
 
@@ -40,6 +42,7 @@ class ChangeImageViewModel extends BaseViewModel {
 
       response.fold((Failure l) async {}, (ProfileResponseModel r) async {
         await _userDataService.saveUser(r.user);
+        _navigationService.back();
       });
       notifyListeners();
     }

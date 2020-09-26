@@ -37,7 +37,7 @@ const String upload = 'assets/icons/upload.png';
 
 /// Home view tiles related colors
 const Color notesColor = Color(0xFF3CC795);
-const Color homeCardColor = Color(0xffFFF9C4);
+const Color homeCardColor = Color(0xffffe4e1);
 const Color videosColor = Color(0xFFF96566);
 const Color practiceColor = Color(0xFF4D9CFC);
 const Color examsColor = Color(0xFF4D9CFC);

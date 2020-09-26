@@ -39,7 +39,31 @@ class HomeView extends StatelessWidget {
                       blueString: "what you eat!",
                     ),
                     mHeightSpan,
-                    CustomHomeCard(),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: model.isBusy ? kGapColor : Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Shimmer(
+                          enabled: model.isBusy,
+                          color: kGapColor,
+                          duration: const Duration(seconds: 2),
+                          child: Opacity(
+                            opacity: model.isBusy ? 0 : 1,
+                            child: CustomHomeCard(
+                              allScannedData: model.allScannedData,
+                              isLoggedin: model.userDataService.isLoggedIn,
+                              onGotoGraphPressed: model.goToGraph,
+                              onLoginPressed: model.goToLogin,
+                              onProfilePressed: model.goToProfile,
+                              onScanPressed: model.goToScan,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

@@ -9,7 +9,7 @@ class Nutrient {
 
   Nutrient.fromJson(Map<String, dynamic> json) {
     type = json['type'] as String;
-    value = (json['value'] ?? 0) as num;
+    value = ((json['value'] ?? 0) as num).ceil();
     unit = json['unit'] as String;
   }
 

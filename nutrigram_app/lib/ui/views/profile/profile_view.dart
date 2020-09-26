@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
+import 'package:nutrigram_app/common/ui/components/custom_home_card.dart';
 import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
 import 'package:nutrigram_app/common/ui/components/icon_button.dart';
 import 'package:nutrigram_app/common/ui/components/list_button.dart';
@@ -14,13 +15,23 @@ import 'package:nutrigram_app/ui/views/profile/update_profile_form/update_profil
 import 'package:stacked/stacked.dart';
 
 class ProfileView extends StatelessWidget {
+  final VoidCallback gotoHistoryPage;
+  final VoidCallback goToScanPage;
+
+  const ProfileView({Key key, this.gotoHistoryPage, this.goToScanPage})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => locator<ProfileViewModel>(),
       disposeViewModel: false,
       fireOnModelReadyOnce: true,
-      onModelReady: (model) => model.getMyProfile(),
+      onModelReady: (model) {
+        model.gotoHistoryPage = gotoHistoryPage;
+        model.goToScanPage = goToScanPage;
+
+        model.getMyProfile();
+      },
       builder: (BuildContext ctx, ProfileViewModel model, Widget child) =>
           MediaQuery.removePadding(
         removeTop: true,
@@ -56,15 +67,21 @@ class ProfileView extends StatelessWidget {
             Padding(
               padding: lXPadding,
               child: Column(
-                children: const [
-                  CustomNavBar(
+                children: [
+                  const CustomNavBar(
                     navBarItemTitle: "Your intake till now",
                     blackString: "Visualize ",
                     blueString: "your intake",
                     isSecondary: true,
                   ),
                   lHeightSpan,
-                  Center(child: Text("Graph Here")),
+                  CustomHomeCard(
+                    allScannedData: model.allScannedData,
+                    isLoggedin: model.isLoggedIn,
+                    onGotoGraphPressed: model.goToGraph,
+                    onLoginPressed: model.goToLogin,
+                    onScanPressed: model.goToScan,
+                  ),
                 ],
               ),
             ),
@@ -216,7 +233,7 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
         ListButton(
           icon: Icons.history,
           label: "See scan history",
-          onPressed: () {},
+          onPressed: model.goToHistory,
         ),
       ],
     );

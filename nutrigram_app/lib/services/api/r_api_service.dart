@@ -6,6 +6,8 @@ import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/datamodels/history.dart';
 import 'package:nutrigram_app/datamodels/history/history_response_model.dart';
 import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
+import 'package:nutrigram_app/datamodels/home/total_scan_data_response_model.dart';
+import 'package:nutrigram_app/datamodels/nutrient.dart';
 import 'package:nutrigram_app/datamodels/profile/update_profile_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_phone_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
@@ -139,11 +141,34 @@ class RApiService implements IApiService {
       return _httpService
           .post(
               url: 'scans/remove_from_history',
-              encodedJson: jsonEncode({"_id": history.sId}))
+              encodedJson: jsonEncode({
+                "_id": history.sId,
+                "calories": history.data
+                    .firstWhere((element) => element.unit == 'kcal',
+                        orElse: () => Nutrient(value: 0))
+                    .value
+              }))
           .handleError((err) {
         throw Failure(message: err.message ?? "Unusual Exception");
       }).map((_) {
         return true;
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<TotalScanDataResponseModel> getTotalScanData() {
+    try {
+      return _httpService
+          .get(
+        url: 'scans/get_total_scanned',
+      )
+          .handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return TotalScanDataResponseModel.fromJson(_);
       }).first;
     } catch (e) {
       throw Failure(message: e.toString());

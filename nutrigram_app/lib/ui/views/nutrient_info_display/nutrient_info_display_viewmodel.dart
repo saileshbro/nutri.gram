@@ -7,7 +7,7 @@ import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-@lazySingleton
+@injectable
 class NutrientInfoDisplayViewModel extends BaseViewModel {
   final UserDataService _userDataService;
   final IScanRepository _scanRepository;

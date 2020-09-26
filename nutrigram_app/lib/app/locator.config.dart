@@ -42,11 +42,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nutrigram_app/services/shared_preferences_service.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_viewmodel.dart';
 import 'package:nutrigram_app/services/third_party_services_module.dart';
+import 'package:nutrigram_app/services/total_scan_data_service.dart';
 import 'package:nutrigram_app/ui/views/profile/update_profile_form/update_profile_form_viewmodel.dart';
 import 'package:nutrigram_app/services/profile/update_profile_service.dart';
 import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/profile/verify_phone_change/verify_phone_change_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/view_more_graph/view_more_graph_viewmodel.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -80,9 +82,11 @@ Future<GetIt> $initGetIt(
       () => SharedPreferencesService(get<SharedPreferences>()));
   gh.lazySingleton<SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
+  gh.lazySingleton<TotalScanDataService>(() => TotalScanDataService());
   gh.lazySingleton<UpdateProfileService>(() => UpdateProfileService());
   gh.lazySingleton<UserDataService>(
       () => UserDataService(get<SharedPreferencesService>()));
+  gh.factory<ViewMoreGraphViewModel>(() => ViewMoreGraphViewModel());
   gh.lazySingleton<HttpService>(() => HttpService(get<UserDataService>()));
   gh.lazySingleton<IApiService>(() => RApiService(get<HttpService>()));
   gh.lazySingleton<IAuthenticationService>(
@@ -93,13 +97,12 @@ Future<GetIt> $initGetIt(
   gh.lazySingleton<IScanRepository>(() => RScanRepository(get<IApiService>()));
   gh.lazySingleton<ISearchRepository>(
       () => RSearchRepository(get<IApiService>()));
-  gh.lazySingleton<NutrientInfoDisplayViewModel>(
-      () => NutrientInfoDisplayViewModel(
-            get<UserDataService>(),
-            get<IScanRepository>(),
-            get<DialogService>(),
-            get<NavigationService>(),
-          ));
+  gh.factory<NutrientInfoDisplayViewModel>(() => NutrientInfoDisplayViewModel(
+        get<UserDataService>(),
+        get<IScanRepository>(),
+        get<DialogService>(),
+        get<NavigationService>(),
+      ));
   gh.lazySingleton<OnboardingViewModel>(() => OnboardingViewModel(
       get<NavigationService>(), get<SharedPreferencesService>()));
   gh.lazySingleton<ProfileViewModel>(() => ProfileViewModel(
@@ -107,6 +110,7 @@ Future<GetIt> $initGetIt(
         get<NavigationService>(),
         get<IProfileRepository>(),
         get<SharedPreferencesService>(),
+        get<TotalScanDataService>(),
       ));
   gh.lazySingleton<SearchViewModel>(() => SearchViewModel(
         get<ISearchRepository>(),
@@ -138,6 +142,7 @@ Future<GetIt> $initGetIt(
         get<IProfileRepository>(),
         get<UserDataService>(),
         get<MediaService>(),
+        get<NavigationService>(),
       ));
   gh.lazySingleton<HistoryViewModel>(() => HistoryViewModel(
         get<IScanRepository>(),
@@ -149,6 +154,7 @@ Future<GetIt> $initGetIt(
         get<IHomeRepository>(),
         get<UserDataService>(),
         get<NavigationService>(),
+        get<TotalScanDataService>(),
       ));
   gh.lazySingleton<IAuthenticationRepository>(
       () => RAuthenticationRepository(get<IAuthenticationService>()));

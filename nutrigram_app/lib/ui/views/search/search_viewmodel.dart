@@ -54,7 +54,7 @@ class SearchViewModel extends BaseViewModel {
         name: name,
         searchTerm: _query,
         showSaveButton: true,
-        date: DateFormat("ddd, d MMM YYYY").format(DateTime.now()),
+        date: DateFormat("EEE, d MMM yyyy").format(DateTime.now()),
       ),
     );
   }

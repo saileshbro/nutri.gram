@@ -9,6 +9,7 @@ import 'package:nutrigram_app/ui/views/onboarding/onboarding_view.dart';
 import 'package:nutrigram_app/ui/views/profile/change_image/change_image_view.dart';
 import 'package:nutrigram_app/ui/views/scan/scan_preview/scan_preview_view.dart';
 import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
+import 'package:nutrigram_app/ui/views/view_more_graph/view_more_graph_view.dart';
 
 @MaterialAutoRouter(
   routes: [
@@ -19,6 +20,7 @@ import 'package:nutrigram_app/ui/views/startup/startup_view.dart';
     MaterialRoute(page: VerificationView),
     MaterialRoute(page: ChangeImageView),
     MaterialRoute(page: NutrientInfoDisplayView),
+    MaterialRoute(page: ViewMoreGraphView),
     CustomRoute<bool>(
         page: ScanPreviewView, transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute<bool>(
