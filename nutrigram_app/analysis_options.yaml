@@ -12,7 +12,11 @@ analyzer:
     unnecessary_raw_strings: ignore
     prefer_constructors_over_static_methods: ignore
     sort_pub_dependencies: error
-
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.config.dart"
+    - "**/*.gr.dart"
+    - "**/*.freezed.dart"
 linter:
   rules:
     parameter_assignments: true

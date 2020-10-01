@@ -42,7 +42,7 @@ class OnboardingView extends StatelessWidget {
               body: Column(
                 children: <Widget>[
                   lHeightSpan,
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.65,
                     child: PageView.builder(
                       physics: const BouncingScrollPhysics(),

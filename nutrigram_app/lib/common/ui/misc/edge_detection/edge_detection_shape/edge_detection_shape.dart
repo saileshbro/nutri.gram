@@ -117,7 +117,7 @@ class _EdgeDetectionShapeState extends State<EdgeDetectionShape> {
       setState(() {});
     }
 
-    return Container(
+    return SizedBox(
       width: widget.renderedImageSize.width,
       height: widget.renderedImageSize.height,
       child: Stack(

@@ -20,7 +20,7 @@ class HistoryView extends StatelessWidget {
         HistoryViewModel model,
         Widget child,
       ) {
-        return Container(
+        return SizedBox(
           height:
               MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
           child: Column(
@@ -46,19 +46,19 @@ class HistoryView extends StatelessWidget {
 
   Widget getHistoryList(BuildContext context, HistoryViewModel model) {
     if (!model.isLoggedIn) {
-      return Container(
+      return SizedBox(
         height: MediaQuery.of(context).size.height * 0.4,
         child: const Center(child: Text("Login to see your saved scans here!")),
       );
     }
     if (model.isBusy) {
-      return Container(
+      return SizedBox(
         height: MediaQuery.of(context).size.height * 0.4,
         child: const Center(child: CircularProgressIndicator()),
       );
     }
     if (model.historyItems.isEmpty) {
-      return Container(
+      return SizedBox(
         height: MediaQuery.of(context).size.height * 0.4,
         child: const Center(child: Text("Scan History here!")),
       );

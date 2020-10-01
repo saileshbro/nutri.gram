@@ -47,13 +47,13 @@ class SearchView extends StatelessWidget {
 
   Widget getSearchUi(BuildContext context, SearchViewModel model) {
     if (model.isBusy) {
-      return Container(
+      return SizedBox(
         height: MediaQuery.of(context).size.height * 0.4,
         child: const Center(child: CircularProgressIndicator()),
       );
     }
     if (!model.hasSearchResult) {
-      return Container(
+      return SizedBox(
         height: MediaQuery.of(context).size.height * 0.4,
         child: const Center(child: Text("10g Butter\n1 slice cheese")),
       );
