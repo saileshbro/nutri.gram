@@ -13,6 +13,8 @@ class NutrientInfoDisplayViewModel extends BaseViewModel {
   final IScanRepository _scanRepository;
   final DialogService _dialogService;
   final NavigationService _navigationService;
+  bool isNameChanged = false;
+  String newName = "";
   NutrientInfoDisplayViewModel(this._userDataService, this._scanRepository,
       this._dialogService, this._navigationService);
   bool get isLoggedIn => _userDataService.isLoggedIn;

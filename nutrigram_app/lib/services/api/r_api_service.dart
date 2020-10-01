@@ -2,16 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/app/logger.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/datamodels/history.dart';
 import 'package:nutrigram_app/datamodels/history/history_response_model.dart';
 import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
 import 'package:nutrigram_app/datamodels/home/total_scan_data_response_model.dart';
 import 'package:nutrigram_app/datamodels/nutrient.dart';
+import 'package:nutrigram_app/datamodels/profile/update_avatar_response_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_profile_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_phone_request_model.dart';
 import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
 import 'package:nutrigram_app/datamodels/scan/scan_request_model.dart';
+import 'package:nutrigram_app/datamodels/scan/scan_response_model.dart';
 import 'package:nutrigram_app/datamodels/search/search_response_model.dart';
 import 'package:nutrigram_app/services/api/i_api_service.dart';
 
@@ -20,6 +23,7 @@ import 'package:nutrigram_app/services/http_service.dart';
 @LazySingleton(as: IApiService)
 class RApiService implements IApiService {
   final HttpService _httpService;
+  final _logger = getLogger("RApiService");
   RApiService(this._httpService);
   @override
   Future<HealthTipsResponseModel> getHealthTips() async {
@@ -65,11 +69,12 @@ class RApiService implements IApiService {
   }
 
   @override
-  Future<bool> updateAvatar(File image, String fieldName) async {
+  Future<UpdateAvatarResponseModel> updateAvatar(
+      File image, String fieldName) async {
     try {
-      await _httpService.uploadFile(
+      final _ = await _httpService.uploadFile(
           url: 'users/update_avatar', fieldName: fieldName, file: image);
-      return true;
+      return UpdateAvatarResponseModel.fromJson(_);
     } catch (e) {
       throw Failure(message: e.toString());
     }
@@ -171,6 +176,18 @@ class RApiService implements IApiService {
         return TotalScanDataResponseModel.fromJson(_);
       }).first;
     } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<ScanResponseModel> getScanResult(File image, String fieldName) async {
+    try {
+      final response = await _httpService.uploadFile(
+          url: 'scans/get_scan_result', fieldName: fieldName, file: image);
+      return ScanResponseModel.fromJson(response);
+    } catch (e) {
+      _logger.e(e.toString());
       throw Failure(message: e.toString());
     }
   }

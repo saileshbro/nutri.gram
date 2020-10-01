@@ -8,8 +8,12 @@ import 'package:flutter/material.dart';
 import 'edge_detection_shape/edge_detection_shape.dart';
 
 class ImagePreview extends StatefulWidget {
-  const ImagePreview({this.imagePath, this.edgeDetectionResult});
-
+  const ImagePreview({
+    this.imagePath,
+    this.edgeDetectionResult,
+    this.showEdges = true,
+  });
+  final bool showEdges;
   final String imagePath;
   final EdgeDetectionResult edgeDetectionResult;
 
@@ -29,12 +33,13 @@ class _ImagePreviewState extends State<ImagePreview> {
           const Center(child: Text('Loading ...')),
           Image.file(File(widget.imagePath),
               fit: BoxFit.contain, key: imageWidgetKey),
-          FutureBuilder<ui.Image>(
-              future: loadUiImage(widget.imagePath),
-              builder:
-                  (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
-                return _getEdgePaint(snapshot, context);
-              }),
+          if (widget.showEdges)
+            FutureBuilder<ui.Image>(
+                future: loadUiImage(widget.imagePath),
+                builder:
+                    (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
+                  return _getEdgePaint(snapshot, context);
+                }),
         ],
       ),
     );

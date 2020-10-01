@@ -1,8 +1,14 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:nutrigram_app/app/logger.dart';
+import 'package:nutrigram_app/app/router.gr.dart';
+import 'package:nutrigram_app/datamodels/failure.dart';
+import 'package:nutrigram_app/datamodels/scan/scan_response_model.dart';
+import 'package:nutrigram_app/repository/scan/i_scan_repository.dart';
 import 'package:nutrigram_app/services/edge_detection_service.dart';
 import 'package:simple_edge_detection/edge_detection.dart';
 import 'package:stacked/stacked.dart';
@@ -11,20 +17,43 @@ import 'package:stacked_services/stacked_services.dart';
 @injectable
 class ScanPreviewViewModel extends BaseViewModel {
   final NavigationService _navigationService;
+  final IScanRepository _scanRepository;
+  final DialogService _dialogService;
   final _logger = getLogger("ScanPreviewViewModel");
   final EdgeDetectionService _edgeDetectionService;
+  bool _showEdges = true;
+  bool get showEdges => _showEdges;
   EdgeDetectionResult _edgeDetectionResult;
   File _image;
   EdgeDetectionResult get edgeDetectionResult => _edgeDetectionResult;
-  ScanPreviewViewModel(this._navigationService, this._edgeDetectionService);
+  ScanPreviewViewModel(this._navigationService, this._edgeDetectionService,
+      this._scanRepository, this._dialogService);
 
   Future<void> getScanResults() async {
-    final val = await cropImage();
-    if (val) {
-      imageCache.clearLiveImages();
-      imageCache.clear();
-    }
-    // call to api with the image `_image`
+    _showEdges = false;
+    setBusy(true);
+    // await cropImage();
+    // imageCache.clearLiveImages();
+    // imageCache.clear();
+    final Either<Failure, ScanResponseModel> resp =
+        await _scanRepository.getScanData(_image);
+    resp.fold((l) {
+      _logger.e(l.message);
+      _showError(l.message);
+    }, (r) {
+      if (r.data.isEmpty) {
+        _showError("Cannot get scan result");
+      } else {
+        _navigationService.navigateTo(Routes.nutrientInfoDisplayView,
+            arguments: NutrientInfoDisplayViewArguments(
+              nutrients: r.data,
+              showSaveButton: true,
+              date: DateFormat("EEE, d MMM yyyy").format(DateTime.now()),
+              searchTerm: "",
+            ));
+      }
+    });
+    setBusy(false);
   }
 
   bool retakePicture() => _navigationService.back();
@@ -45,7 +74,16 @@ class ScanPreviewViewModel extends BaseViewModel {
     }
     final val =
         await _edgeDetectionService.processImage(_image, _edgeDetectionResult);
-    _image.length().then((value) => _logger.d("Image size after crop: $value"));
+    final int length = await _image.length();
+    _logger.d("Image size after crop: $length");
     return val;
+  }
+
+  void _showError(String message) {
+    _dialogService.showDialog(
+      title: "Scan Results",
+      description: message,
+    );
+    setBusy(false);
   }
 }

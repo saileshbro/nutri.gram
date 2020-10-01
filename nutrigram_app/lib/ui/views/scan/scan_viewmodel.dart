@@ -27,18 +27,24 @@ class ScanViewModel extends BaseViewModel {
     final File image = await _cameraService.takePicture();
     if (image != null) {
       _image = image;
-      _navigationService.navigateTo(Routes.scanPreviewView,
+      _cameraService?.dispose();
+      await _navigationService.navigateTo(Routes.scanPreviewView,
           arguments: ScanPreviewViewArguments(image: _image));
+      await _cameraService.initializeCameras();
+      notifyListeners();
     }
   }
 
   Future<void> pickPicture() async {
+    _cameraService?.dispose();
     final File image = await _mediaService.getImage(fromGallery: true);
     if (image != null) {
       _image = image;
-      _navigationService.navigateTo(Routes.scanPreviewView,
+      await _navigationService.navigateTo(Routes.scanPreviewView,
           arguments: ScanPreviewViewArguments(image: _image));
     }
+    await _cameraService.initializeCameras();
+    notifyListeners();
   }
 
   @override

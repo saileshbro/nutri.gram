@@ -37,6 +37,7 @@ class ScanPreviewView extends StatelessWidget {
                         gradientColor: kPrimaryColor,
                         color: kPrimaryColor,
                         icon: Icons.check,
+                        isBusy: model.isBusy,
                         onPressed: model.getScanResults,
                       ),
                     ),
@@ -58,6 +59,7 @@ class ScanPreviewView extends StatelessWidget {
             body: ImagePreview(
               imagePath: image.path,
               edgeDetectionResult: model.edgeDetectionResult,
+              showEdges: model.showEdges,
             ),
           );
         },

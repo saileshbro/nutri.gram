@@ -7,6 +7,7 @@ class DTextField extends StatelessWidget {
   final TextInputType textInputType;
   final int lines;
   final String label;
+  final bool autoFocus;
   final bool enabled;
   final FocusNode focusNode;
   final VoidCallback onEditingComplete;
@@ -31,6 +32,7 @@ class DTextField extends StatelessWidget {
     this.suffixIcon,
     this.textCapitalization = TextCapitalization.none,
     this.label,
+    this.autoFocus,
   });
 
   @override
@@ -45,6 +47,7 @@ class DTextField extends StatelessWidget {
           ),
         TextFormField(
           focusNode: focusNode,
+          autofocus: autoFocus,
           onEditingComplete: onEditingComplete,
           validator: validator,
           onChanged: onChanged,

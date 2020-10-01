@@ -25,7 +25,6 @@ import 'package:nutrigram_app/services/media_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:nutrigram_app/ui/views/nutrient_info_display/nutrient_info_display_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/onboarding/onboarding_viewmodel.dart';
-import 'package:nutrigram_app/services/permissions_service.dart';
 import 'package:nutrigram_app/ui/views/profile/profile_viewmodel.dart';
 import 'package:nutrigram_app/services/api/r_api_service.dart';
 import 'package:nutrigram_app/repository/authentication/r_authentication_repository.dart';
@@ -68,9 +67,6 @@ Future<GetIt> $initGetIt(
   gh.lazySingleton<MediaService>(() => MediaService());
   gh.lazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
-  gh.lazySingleton<PermissionsService>(() => PermissionsService());
-  gh.factory<ScanPreviewViewModel>(() => ScanPreviewViewModel(
-      get<NavigationService>(), get<EdgeDetectionService>()));
   gh.factory<ScanViewModel>(() => ScanViewModel(
         get<CameraService>(),
         get<NavigationService>(),
@@ -112,6 +108,12 @@ Future<GetIt> $initGetIt(
         get<SharedPreferencesService>(),
         get<TotalScanDataService>(),
       ));
+  gh.factory<ScanPreviewViewModel>(() => ScanPreviewViewModel(
+        get<NavigationService>(),
+        get<EdgeDetectionService>(),
+        get<IScanRepository>(),
+        get<DialogService>(),
+      ));
   gh.lazySingleton<SearchViewModel>(() => SearchViewModel(
         get<ISearchRepository>(),
         get<DialogService>(),
@@ -138,7 +140,6 @@ Future<GetIt> $initGetIt(
         get<UserDataService>(),
       ));
   gh.factory<ChangeImageViewModel>(() => ChangeImageViewModel(
-        get<IApiService>(),
         get<IProfileRepository>(),
         get<UserDataService>(),
         get<MediaService>(),

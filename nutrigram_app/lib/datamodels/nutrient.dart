@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:nutrigram_app/common/extensions/string.dart';
 
 class Nutrient {
   String type;
@@ -20,4 +21,7 @@ class Nutrient {
     data['unit'] = unit;
     return data;
   }
+
+  @override
+  String toString() => 'Nutrient(type: $type, value: $value, unit: $unit)';
 }
