@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_better_camera/camera.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
-import 'package:nutrigram_app/common/ui/components/icon_button.dart';
+import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
 import 'package:nutrigram_app/common/ui/misc/scan_overlay_shape.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';

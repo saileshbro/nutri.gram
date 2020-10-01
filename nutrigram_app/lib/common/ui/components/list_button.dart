@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/ui/components/icon_button.dart';
+import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 

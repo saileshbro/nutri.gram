@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/custom_home_card.dart';
 import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
-import 'package:nutrigram_app/common/ui/components/icon_button.dart';
+import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
 import 'package:nutrigram_app/common/ui/components/list_button.dart';
 import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
@@ -29,7 +29,6 @@ class ProfileView extends StatelessWidget {
       onModelReady: (model) {
         model.gotoHistoryPage = gotoHistoryPage;
         model.goToScanPage = goToScanPage;
-
         model.getMyProfile();
       },
       builder: (BuildContext ctx, ProfileViewModel model, Widget child) =>

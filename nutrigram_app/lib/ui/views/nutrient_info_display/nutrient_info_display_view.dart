@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/d_progress_bar.dart';
-import 'package:nutrigram_app/common/ui/components/icon_button.dart';
+import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
 import 'package:nutrigram_app/common/ui/components/nutrient_pie_chart.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
