@@ -12,13 +12,14 @@ import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
 import 'package:nutrigram_app/ui/views/profile/profile_viewmodel.dart';
 import 'package:nutrigram_app/ui/views/profile/update_profile_form/update_profile_form_view.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileView extends StatelessWidget {
   final VoidCallback gotoHistoryPage;
   final VoidCallback goToScanPage;
-
-  const ProfileView({Key key, this.gotoHistoryPage, this.goToScanPage})
+  final RefreshController refreshController = RefreshController();
+  ProfileView({Key key, this.gotoHistoryPage, this.goToScanPage})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -35,57 +36,65 @@ class ProfileView extends StatelessWidget {
           MediaQuery.removePadding(
         removeTop: true,
         context: ctx,
-        child: ListView(
+        child: SmartRefresher(
           physics: const BouncingScrollPhysics(),
-          key: const PageStorageKey("PROFILE-PAGE-STORAGE-KEY"),
-          children: [
-            llHeightSpan,
-            Padding(
-              padding: lXPadding,
-              child: Column(
-                children: <Widget>[
-                  CustomNavBar(
-                    navBarItemTitle: "Profile",
-                    blackString: "Update your ",
-                    blueString: "profile",
-                    isProfilePage: model.isLoggedIn && true,
-                    onActionPressed: model.isLoggedIn ? model.logout : null,
-                  ),
-                  llHeightSpan,
-                  if (model.isLoggedIn) _ProfileTop(),
-                ],
+          controller: refreshController,
+          onRefresh: () async {
+            await model.getMyProfile();
+            refreshController.refreshCompleted();
+          },
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            key: const PageStorageKey("PROFILE-PAGE-STORAGE-KEY"),
+            children: [
+              llHeightSpan,
+              Padding(
+                padding: lXPadding,
+                child: Column(
+                  children: <Widget>[
+                    CustomNavBar(
+                      navBarItemTitle: "Profile",
+                      blackString: "Update your ",
+                      blueString: "profile",
+                      isProfilePage: model.isLoggedIn && true,
+                      onActionPressed: model.isLoggedIn ? model.logout : null,
+                    ),
+                    llHeightSpan,
+                    if (model.isLoggedIn) _ProfileTop(),
+                  ],
+                ),
               ),
-            ),
-            lHeightSpan,
-            Container(
-              width: double.infinity,
-              color: kGapColor,
-              height: 10,
-            ),
-            sHeightSpan,
-            Padding(
-              padding: lXPadding,
-              child: Column(
-                children: [
-                  const CustomNavBar(
-                    navBarItemTitle: "Your intake till now",
-                    blackString: "Visualize ",
-                    blueString: "your intake",
-                    isSecondary: true,
-                  ),
-                  lHeightSpan,
-                  CustomHomeCard(
-                    allScannedData: model.allScannedData,
-                    isLoggedin: model.isLoggedIn,
-                    onGotoGraphPressed: model.goToGraph,
-                    onLoginPressed: model.goToLogin,
-                    onScanPressed: model.goToScan,
-                  ),
-                ],
+              lHeightSpan,
+              Container(
+                width: double.infinity,
+                color: kGapColor,
+                height: 10,
               ),
-            ),
-            lHeightSpan,
-          ],
+              sHeightSpan,
+              Padding(
+                padding: lXPadding,
+                child: Column(
+                  children: [
+                    const CustomNavBar(
+                      navBarItemTitle: "Your intake till now",
+                      blackString: "Visualize ",
+                      blueString: "your intake",
+                      isSecondary: true,
+                    ),
+                    lHeightSpan,
+                    CustomHomeCard(
+                      allScannedData: model.allScannedData,
+                      isLoggedin: model.isLoggedIn,
+                      onGotoGraphPressed: model.goToGraph,
+                      onLoginPressed: model.goToLogin,
+                      onScanPressed: model.goToScan,
+                    ),
+                  ],
+                ),
+              ),
+              lHeightSpan,
+            ],
+          ),
         ),
       ),
     );

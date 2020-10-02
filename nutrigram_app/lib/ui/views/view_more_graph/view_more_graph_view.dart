@@ -155,6 +155,7 @@ class ViewMoreGraphView extends StatelessWidget {
       context: context,
       removeTop: true,
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           llHeightSpan,
           const CustomNavBar(

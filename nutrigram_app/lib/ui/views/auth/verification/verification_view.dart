@@ -27,7 +27,8 @@ class VerificationView extends StatelessWidget {
                 onPressed: model.resendCode,
                 bannerText: didntReceive,
                 buttonLabel: resend,
-                loading: model.isBusy,
+                loading:
+                    model.busy(VerificationViewModel.resendVerificationBusy),
               ),
               body: ListView(
                 physics: const BouncingScrollPhysics(),
@@ -84,18 +85,16 @@ class VerificationView extends StatelessWidget {
                                 hintText: "0000",
                               ),
                               keyboardType: TextInputType.number,
-                              enabled: !model.isBusy,
-                              onSubmit: (pin) {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                              },
+                              enabled: !model
+                                  .busy(VerificationViewModel.verifyingBusy),
                             ),
                           ),
                         ),
                         xlHeightSpan,
                         DRaisedButton(
                           onPressed: model.verify,
-                          loading: model.isBusy,
+                          loading:
+                              model.busy(VerificationViewModel.verifyingBusy),
                           title: verify,
                         ),
                         mHeightSpan,
@@ -105,6 +104,7 @@ class VerificationView extends StatelessWidget {
                 ],
               ),
             ),
+        disposeViewModel: false,
         viewModelBuilder: () => locator<VerificationViewModel>());
   }
 }

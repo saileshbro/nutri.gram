@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/d_progress_bar.dart';
 import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
+import 'package:nutrigram_app/common/ui/components/d_text_field.dart';
 import 'package:nutrigram_app/common/ui/components/nutrient_pie_chart.dart';
+import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/datamodels/nutrient.dart';
@@ -41,25 +43,9 @@ class NutrientInfoDisplayView extends StatelessWidget {
             context: context,
             removeTop: true,
             child: ListView(
+              physics: const BouncingScrollPhysics(),
               children: [
-                Container(
-                    padding: sYPadding.add(const EdgeInsets.only(top: 8)),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: homeCardColor,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppBar(
-                          backgroundColor: homeCardColor,
-                          iconTheme: const IconThemeData(
-                            color: Colors.black,
-                          ),
-                        ),
-                        NutrientPieChart(nutrients: nutrients),
-                      ],
-                    )),
+                child,
                 mHeightSpan,
                 Padding(
                   padding: lXPadding,
@@ -70,9 +56,32 @@ class NutrientInfoDisplayView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                name.allWordsCapitilize(),
-                                style: Theme.of(context).textTheme.headline4,
+                              GestureDetector(
+                                onTap: () => model.isLoggedIn
+                                    ? showCustomBottomSheet(
+                                        context,
+                                        child: ChangeScanNameForm(
+                                          model: model,
+                                          value: model.isNameChanged
+                                              ? model.newName
+                                              : "",
+                                        ),
+                                      )
+                                    : null,
+                                child: Text(
+                                  (model.isNameChanged ? model.newName : name)
+                                      .allWordsCapitilize(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4
+                                      .copyWith(
+                                        decoration: !model.isNameChanged &&
+                                                model.isLoggedIn
+                                            ? TextDecoration.underline
+                                            : TextDecoration.none,
+                                        decorationColor: kPrimaryColor,
+                                      ),
+                                ),
                               ),
                               xsHeightSpan,
                               Row(
@@ -100,7 +109,9 @@ class NutrientInfoDisplayView extends StatelessWidget {
                             icon: Icons.save,
                             onPressed: () => model.saveScanData(
                               ScanRequestModel(
-                                foodName: name,
+                                foodName:
+                                    (model.isNameChanged ? model.newName : name)
+                                        .allWordsCapitilize(),
                                 data: nutrients,
                                 searchTerm: searchTerm,
                               ),
@@ -117,6 +128,25 @@ class NutrientInfoDisplayView extends StatelessWidget {
           ),
         );
       },
+      staticChild: Container(
+        padding: sYPadding.add(const EdgeInsets.only(top: 8)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: homeCardColor,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppBar(
+              backgroundColor: homeCardColor,
+              iconTheme: const IconThemeData(
+                color: Colors.black,
+              ),
+            ),
+            NutrientPieChart(nutrients: nutrients),
+          ],
+        ),
+      ),
     );
   }
 
@@ -180,6 +210,48 @@ class NutrientInfoDisplayView extends StatelessWidget {
             );
           }
         }).toList(),
+      ),
+    );
+  }
+}
+
+class ChangeScanNameForm extends StatelessWidget {
+  final NutrientInfoDisplayViewModel model;
+  final String value;
+  const ChangeScanNameForm({
+    Key key,
+    this.model,
+    this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: sXPagePadding.add(
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
+      child: Column(
+        children: [
+          Text(
+            "Change product name",
+            style: Theme.of(context).textTheme.button,
+          ),
+          mHeightSpan,
+          DTextField(
+            hintText: "Product Name",
+            autoFocus: true,
+            controller: TextEditingController(text: value),
+            label: "Product Name",
+            onChanged: (val) {
+              if (val.isNotEmpty) {
+                model.isNameChanged = true;
+                model.newName = val;
+              } else {
+                model.isNameChanged = false;
+              }
+              model.notifyListeners();
+            },
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/common/ui/components/history_card.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nutrigram_app/app/locator.dart';
@@ -8,6 +9,7 @@ import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/ui/views/history/history_viewmodel.dart';
 
 class HistoryView extends StatelessWidget {
+  final RefreshController refreshController = RefreshController();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HistoryViewModel>.reactive(
@@ -20,24 +22,32 @@ class HistoryView extends StatelessWidget {
         HistoryViewModel model,
         Widget child,
       ) {
-        return SizedBox(
-          height:
-              MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              llHeightSpan,
-              const Padding(
-                padding: lXPadding,
-                child: CustomNavBar(
-                  navBarItemTitle: "History",
-                  blackString: "Go through your ",
-                  blueString: "saved scans",
+        return SmartRefresher(
+          controller: refreshController,
+          physics: const BouncingScrollPhysics(),
+          onRefresh: () async {
+            await model.refresh();
+            refreshController.refreshCompleted();
+          },
+          child: SizedBox(
+            height:
+                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                llHeightSpan,
+                const Padding(
+                  padding: lXPadding,
+                  child: CustomNavBar(
+                    navBarItemTitle: "History",
+                    blackString: "Go through your ",
+                    blueString: "saved scans",
+                  ),
                 ),
-              ),
-              mHeightSpan,
-              getHistoryList(context, model),
-            ],
+                mHeightSpan,
+                getHistoryList(context, model),
+              ],
+            ),
           ),
         );
       },
@@ -64,22 +74,20 @@ class HistoryView extends StatelessWidget {
       );
     } else {
       return Expanded(
-        child: RefreshIndicator(
-          onRefresh: model.refresh,
-          child: ListView.separated(
-            padding: lXPadding.add(mYPadding),
-            itemCount: model.historyItems.length,
-            separatorBuilder: (BuildContext context, int index) => mHeightSpan,
-            itemBuilder: (BuildContext context, int index) {
-              return HistoryCard(
-                history: model.historyItems[index],
-                onDeletePressed: () =>
-                    model.onDeletePressed(model.historyItems[index]),
-                onPressed: () =>
-                    model.onHistoryCardPressed(model.historyItems[index]),
-              );
-            },
-          ),
+        child: ListView.separated(
+          physics: const BouncingScrollPhysics(),
+          padding: lXPadding.add(mYPadding),
+          itemCount: model.historyItems.length,
+          separatorBuilder: (BuildContext context, int index) => mHeightSpan,
+          itemBuilder: (BuildContext context, int index) {
+            return HistoryCard(
+              history: model.historyItems[index],
+              onDeletePressed: () =>
+                  model.onDeletePressed(model.historyItems[index]),
+              onPressed: () =>
+                  model.onHistoryCardPressed(model.historyItems[index]),
+            );
+          },
         ),
       );
     }

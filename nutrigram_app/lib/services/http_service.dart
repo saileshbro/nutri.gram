@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
@@ -143,26 +144,21 @@ class HttpService {
     }).map((_) => jsonDecode(_.body));
   }
 
-  Future<http.StreamedResponse> uploadFile(
+  Future uploadFile(
       {@required String url,
       @required File file,
       @required String fieldName}) async {
     try {
       _logger.d("UPLOAD FILE to $_baseUrl/$url");
-      final postUri = Uri.parse('$_baseUrl/$url');
-      final http.MultipartRequest request =
-          http.MultipartRequest('POST', postUri);
-
-      request.headers.addEntries([
-        MapEntry(
-            HttpHeaders.authorizationHeader, "Bearer ${_userDataService.token}")
-      ]);
-
-      final http.MultipartFile multipartFile =
-          await http.MultipartFile.fromPath(fieldName, file.path);
-
-      request.files.add(multipartFile);
-      return request.send();
+      final dio.Dio client = dio.Dio();
+      client.options.baseUrl = _baseUrl;
+      client.options.headers = _defaultHeader;
+      final dio.MultipartFile fileUpload =
+          await dio.MultipartFile.fromFile(file.path);
+      final dio.FormData formData = dio.FormData();
+      formData.files.add(MapEntry(fieldName, fileUpload));
+      final dio.Response response = await client.post("/$url", data: formData);
+      return response.data;
     } catch (e) {
       _logger.wtf(e.toString());
       throw Failure(

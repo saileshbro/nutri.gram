@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/bottom_banner.dart';
 import 'package:nutrigram_app/common/ui/components/d_raised_button.dart';
@@ -9,6 +8,7 @@ import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/constants/strings.dart';
 import 'package:nutrigram_app/ui/views/auth/login/login_viewmodel.dart';
+import 'package:nutrigram_app/ui/views/auth/login/otp_request/otp_request_view.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginView extends StatelessWidget {
@@ -104,7 +104,7 @@ class LoginView extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   showCustomBottomSheet(context,
-                                      child: GetOTPBottomSheet());
+                                      child: OtpRequestView());
                                 },
                                 child: Padding(
                                   padding:
@@ -145,177 +145,5 @@ class LoginView extends StatelessWidget {
             ),
         disposeViewModel: false,
         viewModelBuilder: () => locator<LoginViewModel>());
-  }
-}
-
-class ResetPasswordBottomSheet extends StatefulWidget {
-  final String phone;
-
-  const ResetPasswordBottomSheet({Key key, @required this.phone})
-      : super(key: key);
-
-  @override
-  _ResetPasswordBottomSheetState createState() =>
-      _ResetPasswordBottomSheetState();
-}
-
-class _ResetPasswordBottomSheetState extends State<ResetPasswordBottomSheet> {
-  TextEditingController phoneNumbercontroller,
-      codeController,
-      passwordController;
-  FocusNode phoneNumberFocusNode, otpFocusNode, passwordFocusNode;
-  bool obscureText = true;
-
-  @override
-  void initState() {
-    phoneNumbercontroller = TextEditingController(
-      text: widget.phone,
-    );
-    codeController = TextEditingController();
-    passwordController = TextEditingController();
-    phoneNumberFocusNode = FocusNode();
-    otpFocusNode = FocusNode();
-    passwordFocusNode = FocusNode();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: sXPagePadding.add(
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            forgotPassword,
-            style: Theme.of(context).textTheme.button,
-          ),
-          sHeightSpan,
-          Text(
-            forgotPasswordMsg,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.caption,
-          ),
-          sHeightSpan,
-          TextFormField(
-            focusNode: phoneNumberFocusNode,
-            controller: phoneNumbercontroller,
-            keyboardType: TextInputType.number,
-            onEditingComplete: () {
-              FocusScope.of(context).requestFocus(otpFocusNode);
-            },
-            style: Theme.of(context).textTheme.caption,
-            decoration: InputDecoration(
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .caption
-                  .apply(color: kDisabledLightThemeColor),
-              prefixIcon: const Icon(
-                Icons.phone_android,
-              ),
-              hintText: phoneNumber,
-            ),
-          ),
-          mHeightSpan,
-          TextFormField(
-            focusNode: otpFocusNode,
-            controller: codeController,
-            keyboardType: TextInputType.number,
-            onEditingComplete: () {
-              FocusScope.of(context).requestFocus(passwordFocusNode);
-            },
-            style: Theme.of(context).textTheme.caption,
-            decoration: InputDecoration(
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .caption
-                  .apply(color: kDisabledLightThemeColor),
-              prefixIcon: const Icon(
-                Feather.edit,
-              ),
-              hintText: otpCode,
-            ),
-          ),
-          mHeightSpan,
-          TextFormField(
-            obscureText: obscureText,
-            focusNode: passwordFocusNode,
-            controller: passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            onEditingComplete: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-            },
-            style: Theme.of(context).textTheme.caption,
-            decoration: InputDecoration(
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .caption
-                  .apply(color: kDisabledLightThemeColor),
-              prefixIcon: const Icon(
-                Icons.lock_open,
-              ),
-              hintText: newPassword,
-              suffixIcon: Material(
-                type: MaterialType.transparency,
-                shape: const CircleBorder(),
-                child: InkWell(
-                  customBorder: const CircleBorder(),
-                  onTap: () {
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
-                  },
-                  child: Icon(
-                      obscureText ? Icons.visibility : Icons.visibility_off),
-                ),
-              ),
-            ),
-          ),
-          mHeightSpan,
-          DRaisedButton(
-            title: changePassword,
-            onPressed: () {},
-            loading: false,
-          ),
-          mHeightSpan,
-        ],
-      ),
-    );
-  }
-}
-
-class GetOTPBottomSheet extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: sXPagePadding.add(
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
-      child: Column(
-        children: <Widget>[
-          Text(
-            forgotPassword,
-            style: Theme.of(context).textTheme.button,
-          ),
-          mHeightSpan,
-          DTextField(
-            controller: _controller,
-            textInputType: TextInputType.number,
-            prefixIcon: const Icon(
-              Icons.phone_android,
-            ),
-            hintText: phoneNumber,
-          ),
-          mHeightSpan,
-          DRaisedButton(
-            title: requestNewPassword,
-            onPressed: () {},
-            loading: false,
-          ),
-        ],
-      ),
-    );
   }
 }

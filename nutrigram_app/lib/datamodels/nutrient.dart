@@ -20,4 +20,7 @@ class Nutrient {
     data['unit'] = unit;
     return data;
   }
+
+  @override
+  String toString() => 'Nutrient(type: $type, value: $value, unit: $unit)';
 }

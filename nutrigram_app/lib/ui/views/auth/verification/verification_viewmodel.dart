@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nutrigram_app/app/router.gr.dart';
 import 'package:nutrigram_app/datamodels/authentication/verification/verification_request_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/verification/verification_response_model.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
@@ -15,6 +14,8 @@ class VerificationViewModel extends BaseViewModel {
   final DialogService _dialogService;
   final UserDataService _userDataService;
   final NavigationService _navigationService;
+  static const String verifyingBusy = "verifyingBusy";
+  static const String resendVerificationBusy = "resendVerificationBusy";
   String otp;
   String phoneNumber;
 
@@ -22,11 +23,11 @@ class VerificationViewModel extends BaseViewModel {
       this._userDataService, this._navigationService);
 
   Future<void> resendCode() async {
-    // resend code
+    setBusyForObject(resendVerificationBusy, true);
   }
 
   Future<void> verify() async {
-    setBusy(true);
+    setBusyForObject(verifyingBusy, true);
     final Either<Failure, VerificationResponseModel> result =
         await _authenticationRepository.verify(
             verificationRequestModel:
@@ -34,10 +35,10 @@ class VerificationViewModel extends BaseViewModel {
     result.fold(
       (Failure failute) => _showError(failute.message),
       (VerificationResponseModel model) async {
-        setBusy(false);
+        setBusyForObject(verifyingBusy, false);
         if (model.user.otpVerified) {
           await _userDataService.saveData(model.token, model.user);
-          _navigationService.clearStackAndShow(Routes.dashboardView);
+          _navigationService.popRepeated(2);
         }
       },
     );
