@@ -61,3 +61,4 @@ typings/
 .next
 public/uploads/images/*.png
 public/uploads/images/*.jpg
+public/uploads/images/*.jpeg

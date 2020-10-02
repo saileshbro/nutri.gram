@@ -14,7 +14,7 @@ exports.scanImage = async (req, res) => {
   const bufferObject = Buffer.from(req.file.buffer)
   const file = new FormData()
   file.append("image", bufferObject, `image.${req.file.mimetype.split("/")[1]}`)
-  const fullUrl = `${req.protocol}://${req.host}`
+  const fullUrl = `${req.protocol}://${req.hostname}`
   console.log(fullUrl)
 
   const resp = await Axios.post(`${fullUrl}:5000/upload`, file, { headers: file.getHeaders() }).catch(() => {
@@ -24,7 +24,10 @@ exports.scanImage = async (req, res) => {
     throw new CustomError(500, "Error while fetching data from image scanning server!")
   }
   const { data } = resp.data
-  return res.json({ data })
+  const respData = data.map((d) => {
+    return { ...d, type: d.type.replace(/\b\w/g, (c) => c.toUpperCase()) }
+  })
+  return res.json({ data: respData })
 }
 /**
  * @param {Request} req
@@ -75,12 +78,13 @@ exports.getScanHistory = async (req, res) => {
 }
 exports.removeFromHistory = async (req, res) => {
   const { _id, calories } = req.body
-
+  console.log(calories)
   await ScannedItem.deleteOne({
     _id,
     userId: req.user._id,
   })
   req.user.subtractCalories(calories)
+  req.user.decrementSaved()
   await req.user.save()
   return res.json({ message: "Deleted successfully!" })
 }
