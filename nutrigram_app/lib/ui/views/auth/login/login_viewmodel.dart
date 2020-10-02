@@ -13,11 +13,11 @@ import 'package:stacked_services/stacked_services.dart';
 
 @lazySingleton
 class LoginViewModel extends BaseViewModel {
+  static const getOtpBusy = "getPasswordRequestBusyObj";
   final IAuthenticationRepository _authenticationRepository;
   final UserDataService _userDataService;
   final NavigationService _navigationService;
   final DialogService _dialogService;
-
   String _phoneNo;
   String _password;
   String get phoneNo => _phoneNo;
@@ -31,8 +31,12 @@ class LoginViewModel extends BaseViewModel {
     _password = val;
   }
 
-  LoginViewModel(this._authenticationRepository, this._userDataService,
-      this._navigationService, this._dialogService);
+  LoginViewModel(
+    this._authenticationRepository,
+    this._userDataService,
+    this._navigationService,
+    this._dialogService,
+  );
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
   bool get isPasswordVisible => _obscurePassword;
@@ -53,7 +57,7 @@ class LoginViewModel extends BaseViewModel {
         setBusy(false);
         if (model.user.otpVerified) {
           await _userDataService.saveData(model.token, model.user);
-          _navigationService.navigateTo(Routes.dashboardView);
+          _navigationService.back();
         } else {
           await _showMessage("Verification code is ${model.user.otp}");
           _navigationService.navigateTo(

@@ -1,5 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/datamodels/home/total_scan_data_response_model.dart';
+import 'package:nutrigram_app/repository/home/i_home_repository.dart';
+import 'package:nutrigram_app/services/total_scan_data_service.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nutrigram_app/datamodels/history.dart';
@@ -20,10 +23,17 @@ class HistoryViewModel extends BaseViewModel {
   final IScanRepository _scanRepository;
   final DialogService _dialogService;
   final NavigationService _navigationService;
+  final TotalScanDataService _totalScanDataService;
   final UserDataService _userDataService;
+  final IHomeRepository _homeRepository;
   bool get isLoggedIn => _userDataService.isLoggedIn;
-  HistoryViewModel(this._scanRepository, this._dialogService,
-      this._userDataService, this._navigationService);
+  HistoryViewModel(
+      this._scanRepository,
+      this._dialogService,
+      this._userDataService,
+      this._navigationService,
+      this._homeRepository,
+      this._totalScanDataService);
   Future<void> init() async {
     setBusy(true);
     _historyItems = await _fetch();
@@ -68,11 +78,23 @@ class HistoryViewModel extends BaseViewModel {
   }
 
   Future<List<History>> _fetch() async {
+    await getTotalScanData();
     final Either<Failure, HistoryResponseModel> resp =
         await _scanRepository.getScanHistory();
     return resp.fold((Failure l) {
       _showError(l.message);
       return [];
     }, (r) => r.history);
+  }
+
+  Future<void> getTotalScanData() async {
+    if (!_userDataService.isLoggedIn) return;
+    final Either<Failure, TotalScanDataResponseModel> response =
+        await _homeRepository.getTotalScanData();
+    response.fold((Failure f) => setError(f.message),
+        (TotalScanDataResponseModel r) {
+      _totalScanDataService.totalScanData = r.data;
+      notifyListeners();
+    });
   }
 }

@@ -32,7 +32,7 @@ class DTextField extends StatelessWidget {
     this.suffixIcon,
     this.textCapitalization = TextCapitalization.none,
     this.label,
-    this.autoFocus,
+    this.autoFocus = false,
   });
 
   @override

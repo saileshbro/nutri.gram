@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:nutrigram_app/common/extensions/string.dart';
 
 class Nutrient {
   String type;

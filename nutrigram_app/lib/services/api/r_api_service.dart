@@ -149,7 +149,8 @@ class RApiService implements IApiService {
               encodedJson: jsonEncode({
                 "_id": history.sId,
                 "calories": history.data
-                    .firstWhere((element) => element.unit == 'kcal',
+                    .firstWhere(
+                        (element) => element.unit.toLowerCase() == 'kcal',
                         orElse: () => Nutrient(value: 0))
                     .value
               }))

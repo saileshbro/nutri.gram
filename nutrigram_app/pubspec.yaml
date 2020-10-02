@@ -62,6 +62,7 @@ dependencies:
   intl: ^0.16.1
   charts_flutter: ^0.9.0
   dio: ^3.0.10
+  pull_to_refresh: ^1.6.2
 
 dev_dependencies:
   flutter_test:
@@ -118,3 +119,4 @@ flutter:
           weight: 900
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

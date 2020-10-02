@@ -50,23 +50,28 @@ class HomeViewModel extends BaseViewModel {
   List<HealthTip> get healthTipList => _healthTipList;
   Future<void> init() async {
     setBusy(true);
+    await refresh();
+    setBusy(false);
+  }
 
+  Future<void> refresh() async {
     await getTotalScanData();
     final Either<Failure, HealthTipsResponseModel> response =
         await _homeRepository.getHealthTips();
     response.fold((Failure f) => setError(f.message),
         (HealthTipsResponseModel r) => _healthTipList.addAll(r.tips));
-    setBusy(false);
   }
 
   void goToScan() {
     _onScanPressed();
   }
 
-  void goToLogin() {
+  Future goToLogin() async {
     if (!userDataService.isLoggedIn) {
-      _navigationService.navigateTo(Routes.loginView);
+      await _navigationService.navigateTo(Routes.loginView);
+      await getTotalScanData();
     }
+    return null;
   }
 
   Future<void> getTotalScanData() async {

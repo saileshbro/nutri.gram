@@ -43,6 +43,7 @@ class NutrientInfoDisplayView extends StatelessWidget {
             context: context,
             removeTop: true,
             child: ListView(
+              physics: const BouncingScrollPhysics(),
               children: [
                 child,
                 mHeightSpan,
@@ -56,20 +57,30 @@ class NutrientInfoDisplayView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
-                                onTap: () => showCustomBottomSheet(
-                                  context,
-                                  child: ChangeScanNameForm(
-                                    model: model,
-                                    value: (model.isNameChanged
-                                            ? model.newName
-                                            : name)
-                                        .allWordsCapitilize(),
-                                  ),
-                                ),
+                                onTap: () => model.isLoggedIn
+                                    ? showCustomBottomSheet(
+                                        context,
+                                        child: ChangeScanNameForm(
+                                          model: model,
+                                          value: model.isNameChanged
+                                              ? model.newName
+                                              : "",
+                                        ),
+                                      )
+                                    : null,
                                 child: Text(
                                   (model.isNameChanged ? model.newName : name)
                                       .allWordsCapitilize(),
-                                  style: Theme.of(context).textTheme.headline4,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4
+                                      .copyWith(
+                                        decoration: !model.isNameChanged &&
+                                                model.isLoggedIn
+                                            ? TextDecoration.underline
+                                            : TextDecoration.none,
+                                        decorationColor: kPrimaryColor,
+                                      ),
                                 ),
                               ),
                               xsHeightSpan,

@@ -4,8 +4,10 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:nutrigram_app/app/router.gr.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
+import 'package:nutrigram_app/datamodels/home/total_scan_data_response_model.dart';
 import 'package:nutrigram_app/datamodels/nutrient.dart';
 import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
+import 'package:nutrigram_app/repository/home/i_home_repository.dart';
 import 'package:nutrigram_app/repository/profile/i_profile_repository.dart';
 import 'package:nutrigram_app/services/shared_preferences_service.dart';
 import 'package:nutrigram_app/services/total_scan_data_service.dart';
@@ -19,7 +21,7 @@ class ProfileViewModel extends BaseViewModel {
   final NavigationService _navigationService;
   final SharedPreferencesService _sharedPreferencesService;
   final TotalScanDataService _totalScanDataService;
-
+  final IHomeRepository _homeRepository;
   // ignore: avoid_setters_without_getters
   set goToScanPage(VoidCallback gotoHistoryPage) {
     _onGotoScanPressed = gotoHistoryPage;
@@ -40,6 +42,7 @@ class ProfileViewModel extends BaseViewModel {
     this._profileRepository,
     this._sharedPreferencesService,
     this._totalScanDataService,
+    this._homeRepository,
   );
   String get totalScans => _sharedPreferencesService.totalScanned.toString();
   String get totalSaved => _userDataService.user.totalSaved.toString();
@@ -66,14 +69,25 @@ class ProfileViewModel extends BaseViewModel {
     if (!isLoggedIn) {
       return;
     }
+    await getTotalScanData();
     final Either<Failure, ProfileResponseModel> response =
         await _profileRepository.getMyProfile();
-
     response.fold((Failure l) {}, (ProfileResponseModel r) async {
       await _userDataService.saveUser(r.user);
       notifyListeners();
     });
     notifyListeners();
+  }
+
+  Future<void> getTotalScanData() async {
+    if (!_userDataService.isLoggedIn) return;
+    final Either<Failure, TotalScanDataResponseModel> response =
+        await _homeRepository.getTotalScanData();
+    response.fold((Failure f) => setError(f.message),
+        (TotalScanDataResponseModel r) {
+      _totalScanDataService.totalScanData = r.data;
+      notifyListeners();
+    });
   }
 
   void goToHistory() => _onGotoHistoryPressed?.call();
@@ -90,9 +104,10 @@ class ProfileViewModel extends BaseViewModel {
     );
   }
 
-  void goToLogin() {
+  Future<void> goToLogin() async {
     if (!_userDataService.isLoggedIn) {
-      _navigationService.navigateTo(Routes.loginView);
+      await _navigationService.navigateTo(Routes.loginView);
+      await getTotalScanData();
     }
   }
 }

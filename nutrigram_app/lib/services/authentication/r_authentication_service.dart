@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nutrigram_app/datamodels/authentication/login/login_response_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/login/login_request_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/password_reset/otp_request_response_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/password_reset/password_reset_response_model.dart';
+import 'package:nutrigram_app/datamodels/authentication/password_reset/password_reset_request_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/register/register_response_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/register/register_request_model.dart';
 import 'package:nutrigram_app/datamodels/authentication/verification/verification_response_model.dart';
@@ -56,6 +61,41 @@ class RAuthenticationService implements IAuthenticationService {
         throw Failure(message: err.message ?? "Unusual Exception");
       }).map((_) {
         return VerificationResponseModel.fromJson(_);
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<OtpRequestResponseModel> getPasswordResetOTP({String phoneNo}) {
+    try {
+      return _httpService
+          .post(
+              url: '/users/forgot_password/get_otp',
+              encodedJson: jsonEncode({"phone": phoneNo}))
+          .handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return OtpRequestResponseModel.fromJson(_);
+      }).first;
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<PassswordResetResponseModel> resetPasswordWithOtp(
+      PassswordResetRequestModel model) {
+    try {
+      return _httpService
+          .post(
+              url: '/users/forgot_password/reset_password',
+              encodedJson: model.toJson())
+          .handleError((err) {
+        throw Failure(message: err.message ?? "Unusual Exception");
+      }).map((_) {
+        return PassswordResetResponseModel.fromJson(_);
       }).first;
     } catch (e) {
       throw Failure(message: e.toString());
