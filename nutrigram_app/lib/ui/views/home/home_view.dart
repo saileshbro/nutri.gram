@@ -27,6 +27,7 @@ class HomeView extends StatelessWidget {
           context: context,
           removeTop: true,
           child: SmartRefresher(
+            physics: const BouncingScrollPhysics(),
             controller: refreshController,
             onRefresh: () async {
               await model.refresh();
