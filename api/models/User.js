@@ -98,19 +98,26 @@ userSchema.methods.incrementSaved = function () {
   user.totalSaved += 1
 }
 /**
+ * Decrements the saved count for the user
+ */
+userSchema.methods.decrementSaved = function () {
+  const user = this
+  user.totalSaved -= 1
+}
+/**
  * added calories to the user, raises assertion error if negative or zero
  * @param {number} calories
  */
-userSchema.methods.addCalories = function (calories) {
-  assert.equal(calories && calories > 0, true, Error("Calories value cannot be negative"))
+userSchema.methods.addCalories = function (calories = 0) {
+  assert.equal(calories && calories >= 0, true, Error("Calories value cannot be negative"))
   this.totalCalories += calories
 }
 /**
  * added calories to the user, raises assertion error if negative or zero
  * @param {number} calories
  */
-userSchema.methods.subtractCalories = function (calories) {
-  assert.equal(calories && calories > 0, true, Error("Calories value cannot be negative"))
+userSchema.methods.subtractCalories = function (calories = 0) {
+  assert.equal(calories && calories >= 0, true, Error("Calories value cannot be negative"))
   this.totalCalories -= calories
 }
 /**
