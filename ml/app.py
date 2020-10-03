@@ -14,6 +14,7 @@ from textDetection import load_and_resize, detectTexts,readText,matchText
 app = Flask(__name__)
 
 tessdata_path = './tessdata'
+# tessdata_path = './tessdata'
 
 @app.route('/')
 def index():
@@ -22,6 +23,7 @@ def index():
 @app.route('/upload',methods=["POST"])
 def upload_image():
     if request.method == "POST":
+        print(request.files)
         f = request.files['image']
         path = './uploads/'+f.filename
         f.save(path)

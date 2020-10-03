@@ -10,7 +10,11 @@ import re
 from fuzzywuzzy import fuzz
 
 from os import path
+import os
 
+# tessdata_path = path.abspath('./tessdata')
+# tessdata_path = os.environ['TESSDATA_PREFIX']
+# if(not tessdata_path ):
 tessdata_path = path.abspath('./tessdata')
 H = W = None
 rW = rH = None
@@ -164,6 +168,22 @@ def detectTexts(orig):
         newKey =  matchTextV2(key,dbTexts).lower()
         newValues = matchText(value,dbTexts)
         try:
+            if('.' in newValues):
+                index = newValues.index('.')
+        
+                if(index != 0 and index != -1):
+                    newValues[index-1] = newValues[index-1]+'.'+newValues[index+1]
+                    newValues.pop(index)
+                    newValues.pop(index)
+            if(',' in newValues):
+                index = newValues.index(',')
+                if(index != 0 and index != -1):
+                    newValues[index-1] = newValues[index-1]+'.'+newValues[index+1]
+                    newValues.pop(index)
+                    newValues.pop(index)
+        except:
+            pass
+        try:
             keyval = dict(
                 type=newKey,
                 unit=newValues[1],
@@ -205,7 +225,8 @@ def findKeyword(texts):
             patterns = re.split(pattern,text)
             print(patterns, type(patterns))
             if(len(patterns)>1):
-                keywords[patterns[0]] = patterns[1:]
+                p = map(lambda x: x.strip(),patterns[1:])
+                keywords[patterns[0]] = list(p)
 
     return keywords
 
@@ -231,7 +252,6 @@ def matchText(readTexts,dbTexts):
         # print(text)
         print("TEXT:",text)
         newText = re.sub(r'^[0-9]+','',text,5)
-
         if(len(newText)==0): continue
 
         if(newText != text):
@@ -264,10 +284,9 @@ def matchTextV2(text,dbTexts):
     newText = re.sub(r'^[0-9]+','',text,5)
 
     if(len(newText)==0): return text
-
     if(newText != text):
         return text
-    # print(text)
+    print("KEYWORD TEXT:",text)
     for j,tag in enumerate(dbTexts):
         ratio = fuzz.ratio(text,tag)
         # print(text,tag,ratio)
@@ -276,10 +295,13 @@ def matchTextV2(text,dbTexts):
             maxj = j
     if(maxRatio > matchRatio):
         text = dbTexts[maxj]
+    if('ENERGY' in text):
+        text = 'ENERGY'
+    
     return text
 
 dbTexts = [
-        'Carbohydrate', 'Calories', 'Protein', 'Fat', 'Carbs', 'KCal', 'g', 'gm']
+        'Carbohydrate', 'Calories', 'Protein', 'Fat','Total Fat', 'Energy','Saturated Fat','Trans Fat','Carbs','Sugar','Potassium','Sodium','Sucrose','Fucrose','Ash', 'KCal', 'g', 'gm','mg','J','KJ']
 
 if __name__ == "__main__":
     image, orig = load_and_resize(640,480,path='./images/threshold_cropped.jpg')
