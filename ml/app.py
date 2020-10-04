@@ -14,6 +14,7 @@ from textDetection import load_and_resize, detectTexts,readText,matchText
 app = Flask(__name__)
 
 tessdata_path = './tessdata'
+# tessdata_path = './tessdata'
 
 @app.route('/')
 def index():
@@ -22,6 +23,7 @@ def index():
 @app.route('/upload',methods=["POST"])
 def upload_image():
     if request.method == "POST":
+        print(request.files)
         f = request.files['image']
         path = './uploads/'+f.filename
         f.save(path)
@@ -37,20 +39,32 @@ def upload_image():
                 return dict(
                     status='success',
                     data=keyval,
-                    msg='success'
+                    msg='success',
+                    code='200'
                 )
             else:
                 keyval = detectTexts(resized)
                 print(keyval)
-                return dict(
-                    status='success',
-                    data=keyval,
-                    msg='success'
-                )
+                if(bool(keyval)):
+                    return dict(
+                        status='success',
+                        data=keyval,
+                        msg='success',
+                        code='200'
+                    )
+                else:
+                    return dict(
+                        status='failed',
+                        data=keyval,
+                        msg='failed',
+                        code='400'
+                    )
             
         else:
             return dict(
                 status='failed',
-                msg="Image not found"
+                msg="Image not found",
+                code='400',
+                data={}
             )
              
