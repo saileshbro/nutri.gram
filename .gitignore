@@ -109,3 +109,4 @@ __pycache__/
 
 tessdata/
 *.traineddata
+ml/uploads/*
