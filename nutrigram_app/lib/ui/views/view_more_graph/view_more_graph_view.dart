@@ -113,33 +113,43 @@ class ViewMoreGraphView extends StatelessWidget {
         ),
         mHeightSpan,
         Expanded(
-          child: Padding(
-            padding: lXPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CustomTabBar(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: lXPadding,
+                child: CustomTabBar(
                   items: const ["Pie chart", "Bar graph"],
                   defaultIndex: model.graphTabIndex,
                   onChanged: model.onGraphIndexChanged,
                 ),
-                if (model.graphTabIndex == 0) ...[
-                  lHeightSpan,
-                  NutrientPieChart(
-                    nutrients: nutrients,
-                    showLegend: true,
-                    radius: MediaQuery.of(context).size.width * 0.8,
-                  )
-                ] else ...[
-                  lHeightSpan,
-                  Expanded(
+              ),
+              if (model.graphTabIndex == 0) ...[
+                lHeightSpan,
+                Expanded(
+                  child: ListView(
+                    padding: lXPadding,
+                    children: [
+                      NutrientPieChart(
+                        nutrients: nutrients,
+                        showLegend: true,
+                        radius: MediaQuery.of(context).size.width * 0.8,
+                      ),
+                    ],
+                  ),
+                )
+              ] else ...[
+                lHeightSpan,
+                Expanded(
+                  child: Padding(
+                    padding: lXPadding,
                     child: NutrientBarGraph(
                       nutrients: nutrients,
                     ),
-                  )
-                ]
-              ],
-            ),
+                  ),
+                )
+              ]
+            ],
           ),
         )
       ],
