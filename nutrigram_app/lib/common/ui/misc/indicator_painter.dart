@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'indicator_effect.dart';
+import 'package:nutrigram_app/common/ui/misc/indicator_effect.dart';
 
 abstract class IndicatorPainter extends CustomPainter {
   /// The raw offset from the [PageController].page

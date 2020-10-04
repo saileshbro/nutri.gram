@@ -200,7 +200,7 @@ class NutrientInfoDisplayView extends StatelessWidget {
             return Column(
               children: [
                 DProgressBar(
-                  percent: ratio * 100,
+                  percent: (ratio * 100).toDouble(),
                   title: e.type,
                   color: e.color,
                   value: "${e.value.toString()} ${e.unit}",

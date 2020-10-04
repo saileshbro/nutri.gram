@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'animated_touch_bubble_part.dart';
+import 'package:nutrigram_app/common/ui/misc/edge_detection/edge_detection_shape/animated_touch_bubble_part.dart';
 
 class TouchBubble extends StatefulWidget {
   const TouchBubble({

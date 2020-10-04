@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:nutrigram_app/common/extensions/string.dart';
-import 'package:nutrigram_app/constants/constants.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
+import 'package:nutrigram_app/constants/constants.dart';
 
 class NutrientSearchCard extends StatelessWidget {
   final Function onPressed;

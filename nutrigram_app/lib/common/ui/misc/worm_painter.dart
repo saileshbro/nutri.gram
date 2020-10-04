@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'indicator_painter.dart';
+import 'package:nutrigram_app/common/ui/misc/indicator_painter.dart';
 
 class WormPainter extends IndicatorPainter {
   final WormEffect effect;

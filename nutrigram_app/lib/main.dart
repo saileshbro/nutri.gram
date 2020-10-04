@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:logger/logger.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/app/router.gr.dart';

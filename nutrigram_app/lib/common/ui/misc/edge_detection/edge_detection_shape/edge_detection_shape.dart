@@ -4,9 +4,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:simple_edge_detection/edge_detection.dart';
 
-import 'edge_painter.dart';
-import 'magnifier.dart';
-import 'touch_bubble.dart';
+import 'package:nutrigram_app/common/ui/misc/edge_detection/edge_detection_shape/edge_painter.dart';
+import 'package:nutrigram_app/common/ui/misc/edge_detection/edge_detection_shape/magnifier.dart';
+import 'package:nutrigram_app/common/ui/misc/edge_detection/edge_detection_shape/touch_bubble.dart';
 
 class EdgeDetectionShape extends StatefulWidget {
   const EdgeDetectionShape(
@@ -127,7 +127,7 @@ class _EdgeDetectionShapeState extends State<EdgeDetectionShape> {
             top: points[0].dy - (edgeDraggerSize / 2),
             child: TouchBubble(
                 size: edgeDraggerSize,
-                onDrag: (position) {
+                onDrag: (Offset position) {
                   setState(() {
                     currentDragPosition = Offset(points[0].dx, points[0].dy);
                     final Offset newTopLeft = _getNewPositionAfterDrag(
