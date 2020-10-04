@@ -45,7 +45,6 @@ class CustomIconButton extends StatelessWidget {
                       gradientColor,
                       color,
                     ],
-                    tileMode: TileMode.repeated,
                   )
                 : null,
             color: color,

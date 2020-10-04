@@ -1,20 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nutrigram_app/datamodels/home/total_scan_data_response_model.dart';
-import 'package:nutrigram_app/repository/home/i_home_repository.dart';
-import 'package:nutrigram_app/services/total_scan_data_service.dart';
 import 'package:stacked/stacked.dart';
-
-import 'package:nutrigram_app/datamodels/history.dart';
-import 'package:nutrigram_app/datamodels/history/history_response_model.dart';
-
-import 'package:nutrigram_app/repository/scan/i_scan_repository.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import 'package:nutrigram_app/app/router.gr.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
-
-import '../../../app/router.gr.dart';
-import '../../../services/user_data_service.dart';
+import 'package:nutrigram_app/datamodels/history.dart';
+import 'package:nutrigram_app/datamodels/history/history_response_model.dart';
+import 'package:nutrigram_app/datamodels/home/total_scan_data_response_model.dart';
+import 'package:nutrigram_app/repository/home/i_home_repository.dart';
+import 'package:nutrigram_app/repository/scan/i_scan_repository.dart';
+import 'package:nutrigram_app/services/total_scan_data_service.dart';
+import 'package:nutrigram_app/services/user_data_service.dart';
 
 @lazySingleton
 class HistoryViewModel extends BaseViewModel {

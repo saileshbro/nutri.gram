@@ -38,41 +38,31 @@ class DashboardView extends StatelessWidget {
                 icon: Icon(
                   Icons.home,
                 ),
-                title: Text(
-                  "Home",
-                ),
+                label: "Home",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.history,
                 ),
-                title: Text(
-                  "History",
-                ),
+                label: "History",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.photo_camera,
                 ),
-                title: Text(
-                  "Scan",
-                ),
+                label: "Scan",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.search,
                 ),
-                title: Text(
-                  "Search",
-                ),
+                label: "Search",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,
                 ),
-                title: Text(
-                  "Profile",
-                ),
+                label: "Profile",
               ),
             ],
           ),

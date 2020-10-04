@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/datamodels/nutrient.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+import 'package:nutrigram_app/datamodels/nutrient.dart';
 
 class NutrientPieChart extends StatelessWidget {
   final List<Nutrient> nutrients;

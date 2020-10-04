@@ -56,17 +56,13 @@ class ViewMoreGraphView extends StatelessWidget {
                   icon: Icon(
                     Icons.assignment,
                   ),
-                  title: Text(
-                    "Nutrients",
-                  ),
+                  label: "Nutrients",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.poll,
                   ),
-                  title: Text(
-                    "Graph",
-                  ),
+                  label: "Graph",
                 ),
               ],
             ),
@@ -257,7 +253,7 @@ class ViewMoreGraphView extends StatelessWidget {
             return Column(
               children: [
                 DProgressBar(
-                  percent: ratio * 100,
+                  percent: (ratio * 100).toDouble(),
                   title: e.type,
                   color: e.color,
                   value: "${e.value.toString()} ${e.unit}",

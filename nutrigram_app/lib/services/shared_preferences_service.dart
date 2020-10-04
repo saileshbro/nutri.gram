@@ -21,7 +21,8 @@ class SharedPreferencesService {
     if (userJson == null) {
       return null;
     }
-    return User.fromJson(jsonDecode(userJson));
+    return User.fromJson(
+        jsonDecode(userJson as String) as Map<String, dynamic>);
   }
 
   int get totalScanned => _getFromDisk(totalScannedKey) as int ?? 0;

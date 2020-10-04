@@ -1,5 +1,5 @@
-import '../constants/constants.dart';
-import 'nutrient.dart';
+import 'package:nutrigram_app/constants/constants.dart';
+import 'package:nutrigram_app/datamodels/nutrient.dart';
 
 class History {
   String searchTerm;

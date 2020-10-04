@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:nutrigram_app/common/ui/misc/indicator_painter.dart';
 
 abstract class IndicatorEffect {

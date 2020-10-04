@@ -11,7 +11,7 @@ import 'package:nutrigram_app/repository/search/i_search_repository.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../../datamodels/nutrient.dart';
+import 'package:nutrigram_app/datamodels/nutrient.dart';
 
 @lazySingleton
 class SearchViewModel extends BaseViewModel {

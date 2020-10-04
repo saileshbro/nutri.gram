@@ -43,7 +43,7 @@ class DProgressBar extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                flex: (percent + 3.5).ceil().clamp(0, 100),
+                flex: (percent + 3.5).ceil().clamp(0, 100).toInt(),
                 child: Container(
                   height: 6,
                   decoration: BoxDecoration(
@@ -53,7 +53,7 @@ class DProgressBar extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: (100 - (percent + 3.5).ceil()).clamp(0, 100),
+                flex: (100 - (percent + 3.5).ceil()).clamp(0, 100).toInt(),
                 child: const SizedBox.shrink(),
               ),
             ],

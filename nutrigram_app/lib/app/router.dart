@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/auto_route_annotations.dart';
+
 import 'package:nutrigram_app/ui/views/auth/login/login_view.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_view.dart';
 import 'package:nutrigram_app/ui/views/auth/verification/verification_view.dart';
