@@ -55,3 +55,5 @@ cp -R opencv2.framework nutri.gram/ios
 |  ![Screen 23](./screenshots/23.png)  |  ![Screen 24](./screenshots/24.png)  | ![Screen 25](./screenshots/25.png) | ![Screen 26](./screenshots/26.png) |
 |  ![Screen 27](./screenshots/27.png)  |  ![Screen 28](./screenshots/28.png)  | ![Screen 29](./screenshots/29.png) | ![Screen 30](./screenshots/30.png) |
 |  ![Screen 31](./screenshots/31.png)  |  ![Screen 32](./screenshots/32.png)  | ![Screen 33](./screenshots/33.png) |
+
+This project uses [this](https://github.com/flutter-clutter/flutter-simple-edge-detection) repo as a reference for building edge detection in Flutter.
