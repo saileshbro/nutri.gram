@@ -2,6 +2,47 @@
 
 Nutrition is the main source of life and although it has been our secondary instinct to check for nutritional value in the food we eat, the effect any diet has in our body and health is consequential. From the fact which connotes the value of nutrition in our diet, springs the idea of nutri.gram. nutri.gram is a mobile application that scans the food label present in the packaged food items and draws a significant conclusion from that data regarding its edibleness for a person, the nutritional worth it adds to our diet, how much calorific value it provides per serving and much more. This application is targeted to anyone who wants to get insight into what they are feeding into their body and how understanding the nutritional value will be of tremendous aid to their overall health.
 
+## Download OpenCV libraries
+
+- Download OpenCV library for Android and iOS from [here](https://opencv.org/releases)
+- Copy the files to the respective folders
+
+```bash
+For Android
+cp -R sdk/native/jni/include nutri.gram
+cp sdk/native/libs/* nutri.gram/android/src/main/jniLibs/*
+
+For iOS
+cp -R opencv2.framework nutri.gram/ios
+```
+
+## Flask server
+
+- Download [this](https://github.com/tesseract-ocr/tessdata_best/blob/master/eng.traineddata) and put it in directory `ml/tessdata/`
+- Download [this](https://github.com/oyyd/frozen_east_text_detection.pb/blob/master/frozen_east_text_detection.pb) and put it in directory `ml/models/`
+- `cd ml`
+- Run `pip install requirements.txt`
+- Download following files and put in respective path
+- Execute `flask run`
+
+## Node Server
+
+- `cp .env.sample .env`
+- add credentials in `.env`
+- cd `api`
+- `npm install` to get packages
+- `npm run dev` to start dev server
+
+## Flutter
+
+- cd `nutrigram_app`
+- `flutter packages get` to get the packages
+- Connect your device with USB debugging on or start an emulator
+- `flutter run` to start debugging
+- `flutter run --release` to build release build
+
+> You may need to configure connection between api and flutter app make sure you are using your machine's ip address in `constants.dart`
+
 ## Screenshots
 
 |                                      |                                      |                                    |                                    |
