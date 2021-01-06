@@ -9,11 +9,11 @@ Nutrition is the main source of life and although it has been our secondary inst
 
 ```bash
 For Android
-cp -R sdk/native/jni/include nutri.gram
-cp sdk/native/libs/* nutri.gram/android/src/main/jniLibs/*
+cp -R sdk/native/jni/include flutter-simple-edge-detection
+cp sdk/native/libs/* flutter-simple-edge-detection/android/src/main/jniLibs/*
 
 For iOS
-cp -R opencv2.framework nutri.gram/ios
+cp -R opencv2.framework flutter-simple-edge-detection/ios
 ```
 
 ## Flask server
@@ -21,6 +21,7 @@ cp -R opencv2.framework nutri.gram/ios
 - Download [this](https://github.com/tesseract-ocr/tessdata_best/blob/master/eng.traineddata) and put it in directory `ml/tessdata/`
 - Download [this](https://github.com/oyyd/frozen_east_text_detection.pb/blob/master/frozen_east_text_detection.pb) and put it in directory `ml/models/`
 - `cd ml`
+- Run `python -m venv venv` and `source activate venv/bin/activate` in bash, or `venv\Scripts\activate.bat` in windows cmd.
 - Run `pip install requirements.txt`
 - Download following files and put in respective path
 - Execute `flask run`

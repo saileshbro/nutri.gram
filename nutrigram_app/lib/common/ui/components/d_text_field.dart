@@ -44,7 +44,7 @@ class DTextField extends StatelessWidget {
         if (label != null)
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(label, style: Theme.of(context).textTheme.caption),
+            child: Text(label, style: Theme.of(context).textTheme.subtitle1),
           ),
         TextFormField(
           focusNode: focusNode,
