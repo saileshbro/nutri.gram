@@ -3,7 +3,7 @@ Flask==1.1.2
 fuzzywuzzy==0.18.0
 imutils==0.5.3
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 numpy==1.19.1
 opencv-contrib-python==4.2.0.34
