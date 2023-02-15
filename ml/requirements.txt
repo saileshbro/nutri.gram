@@ -10,5 +10,5 @@ opencv-contrib-python==4.2.0.34
 Pillow==9.3.0
 python-Levenshtein==0.12.1
 tesserocr==2.5.1
-Werkzeug==1.0.1
+Werkzeug==2.2.3
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
