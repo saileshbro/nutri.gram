@@ -6,7 +6,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
 numpy==1.22.2
-opencv-contrib-python==4.2.0.34
+opencv-contrib-python==4.8.1.78.34
 Pillow==10.0.1
 python-Levenshtein==0.12.1
 tesserocr==2.5.1
