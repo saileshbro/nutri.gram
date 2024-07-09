@@ -12,3 +12,4 @@ python-Levenshtein==0.12.1
 tesserocr==2.5.1
 Werkzeug==3.0.1
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
