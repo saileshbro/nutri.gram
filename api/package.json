@@ -9,10 +9,10 @@
   "dependencies": {
     "axios": "^1.7.4",
     "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
+    "cookie-parser": "^1.4.7",
     "debug": "^4.3.6",
     "dotenv": "^10.0.0",
-    "express": "~4.19.2",
+    "express": "~4.21.1",
     "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
