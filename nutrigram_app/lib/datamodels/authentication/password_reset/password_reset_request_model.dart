@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-class PassswordResetRequestModel {
-  String phone;
-  String newPassword;
-  String otp;
-  PassswordResetRequestModel({
+class PasswordResetRequestModel {
+  final String? phone;
+  final String? newPassword;
+  final String? otp;
+
+  PasswordResetRequestModel({
     this.phone,
     this.newPassword,
     this.otp,
@@ -19,4 +20,15 @@ class PassswordResetRequestModel {
   }
 
   String toJson() => json.encode(toMap());
+
+  // From JSON constructor
+  factory PasswordResetRequestModel.fromJson(String source) {
+    final Map<String, dynamic> jsonMap =
+        json.decode(source) as Map<String, dynamic>;
+    return PasswordResetRequestModel(
+      phone: jsonMap['phone'] as String?,
+      newPassword: jsonMap['newPassword'] as String?,
+      otp: jsonMap['otp'] as String?,
+    );
+  }
 }

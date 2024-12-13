@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
@@ -8,11 +7,12 @@ import 'package:nutrigram_app/datamodels/home/health_tip_response_model.dart';
 
 class HealthTipsCard extends StatelessWidget {
   final HealthTip healthTip;
-  final Function onBottomSheetClosed;
-  final Function onPressed;
+  final VoidCallback? onBottomSheetClosed;
+  final VoidCallback? onPressed;
+
   const HealthTipsCard({
-    Key key,
-    @required this.healthTip,
+    Key? key,
+    required this.healthTip,
     this.onBottomSheetClosed,
     this.onPressed,
   }) : super(key: key);
@@ -21,7 +21,7 @@ class HealthTipsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onPressed();
+        if (onPressed != null) onPressed!();
         showCustomBottomSheet(
           context,
           child: _HealthTipsExpanded(healthTip: healthTip),
@@ -43,7 +43,6 @@ class HealthTipsCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0)
@@ -55,37 +54,37 @@ class HealthTipsCard extends StatelessWidget {
                   height: 160,
                   fit: BoxFit.cover,
                   width: double.infinity,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) =>
+                      const Icon(Icons.error, color: Colors.red),
                 ),
               ),
             ),
             sHeightSpan,
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(left: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      healthTip.title,
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    healthTip.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
-                    const Text(
-                      "Read more",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: kPrimaryColor,
-                      ),
+                  ),
+                  const Text(
+                    "Read more",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: kPrimaryColor,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             sHeightSpan,
@@ -99,18 +98,21 @@ class HealthTipsCard extends StatelessWidget {
 class _HealthTipsExpanded extends StatelessWidget {
   final HealthTip healthTip;
 
-  const _HealthTipsExpanded({Key key, this.healthTip}) : super(key: key);
+  const _HealthTipsExpanded({Key? key, required this.healthTip})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: mXPadding,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             healthTip.title,
-            textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.titleMedium,
             maxLines: 2,
-            style: Theme.of(context).textTheme.subtitle1,
+            overflow: TextOverflow.ellipsis,
           ),
           mHeightSpan,
           Container(
@@ -131,17 +133,19 @@ class _HealthTipsExpanded extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
                 imageUrl: healthTip.imageUrl,
-                // height: 160,
                 fit: BoxFit.cover,
                 width: MediaQuery.of(context).size.width,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.error, color: Colors.red),
               ),
             ),
           ),
           lHeightSpan,
           Text(
             healthTip.description,
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
       ),

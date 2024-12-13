@@ -21,12 +21,13 @@ class NutrientInfoDisplayViewModel extends BaseViewModel {
   bool isNameChanged = false;
   String newName = "";
   NutrientInfoDisplayViewModel(
-      this._userDataService,
-      this._scanRepository,
-      this._dialogService,
-      this._navigationService,
-      this._homeRepository,
-      this._totalScanDataService);
+    this._userDataService,
+    this._scanRepository,
+    this._dialogService,
+    this._navigationService,
+    this._homeRepository,
+    this._totalScanDataService,
+  );
   bool get isLoggedIn => _userDataService.isLoggedIn;
   Future<void> saveScanData(ScanRequestModel model) async {
     setBusy(true);

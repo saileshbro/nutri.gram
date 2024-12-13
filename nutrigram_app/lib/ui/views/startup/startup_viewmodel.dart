@@ -16,30 +16,39 @@ class StartUpViewModel extends BaseViewModel {
   final SharedPreferencesService _sharedPreferencesService;
   final IProfileRepository _profileRepository;
   final UserDataService _userDataService;
-  StartUpViewModel(this._navigationService, this._sharedPreferencesService,
-      this._userDataService, this._profileRepository);
+
+  StartUpViewModel(
+    this._navigationService,
+    this._sharedPreferencesService,
+    this._userDataService,
+    this._profileRepository,
+  );
+
   Future<void> handleStartupViewLogic() async {
     if (!_sharedPreferencesService.onboardingVisited) {
-      SchedulerBinding.instance.addPostFrameCallback((timestamp) {
-        _navigationService.clearStackAndShow(Routes.onboardingView);
+      // Navigate to Onboarding
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _navigationService.clearStackAndShow(const OnboardingView());
       });
     } else {
       if (_userDataService.isLoggedIn) {
         await _getMyProfile();
       }
-      SchedulerBinding.instance.addPostFrameCallback((timestamp) {
-        _navigationService.clearStackAndShow(Routes.dashboardView);
+      // Navigate to Dashboard
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _navigationService.clearStackAndShow(const DashboardView());
       });
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   Future<void> _getMyProfile() async {
     final Either<Failure, ProfileResponseModel> response =
         await _profileRepository.getMyProfile();
-    response.fold((Failure l) {}, (ProfileResponseModel r) async {
-      await _userDataService.saveUser(r.user);
+    response.fold((Failure failure) {
+      // Handle failure
+    }, (ProfileResponseModel profile) async {
+      await _userDataService.saveUser(profile.user);
     });
-    return;
   }
 }

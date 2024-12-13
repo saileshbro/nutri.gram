@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/common/ui/components/d_raised_button.dart';
 import 'package:nutrigram_app/common/ui/components/nutrient_bar_graph.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
@@ -9,20 +8,22 @@ import 'package:nutrigram_app/datamodels/nutrient.dart';
 
 class CustomHomeCard extends StatelessWidget {
   final bool isLoggedin;
-  final VoidCallback onLoginPressed;
-  final VoidCallback onScanPressed;
-  final VoidCallback onGotoGraphPressed;
-  final VoidCallback onProfilePressed;
+  final VoidCallback? onLoginPressed;
+  final VoidCallback? onScanPressed;
+  final VoidCallback? onGotoGraphPressed;
+  final VoidCallback? onProfilePressed;
   final List<Nutrient> allScannedData;
+
   const CustomHomeCard({
-    Key key,
-    this.isLoggedin,
+    Key? key,
+    required this.isLoggedin,
     this.onLoginPressed,
     this.onScanPressed,
-    this.allScannedData,
     this.onGotoGraphPressed,
     this.onProfilePressed,
+    this.allScannedData = const [],
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,7 +35,7 @@ class CustomHomeCard extends StatelessWidget {
             color: allScannedData.isNotEmpty ? Colors.white : homeCardColor,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: !allScannedData.isNotEmpty
+          child: allScannedData.isEmpty
               ? Stack(
                   children: [
                     Container(
@@ -53,78 +54,9 @@ class CustomHomeCard extends StatelessWidget {
                               : CrossAxisAlignment.end,
                           children: [
                             if (!isLoggedin)
-                              RichText(
-                                text: const TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Create an account",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: kFontFamily,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ".",
-                                      style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: kFontFamily,
-                                        fontSize: 30,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            RichText(
-                              text: const TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Save Scan",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: kFontFamily,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ".",
-                                    style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: kFontFamily,
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            RichText(
-                              text: const TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Visualize Intake",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: kFontFamily,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ".",
-                                    style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: kFontFamily,
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                              _buildRichText("Create an account"),
+                            _buildRichText("Save Scan"),
+                            _buildRichText("Visualize Intake"),
                             lHeightSpan,
                             DRaisedButton(
                               title: isLoggedin ? scan : login,
@@ -139,24 +71,17 @@ class CustomHomeCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (isLoggedin)
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: Image.asset(
-                          homeIllustrationRight,
-                          height: 200,
-                        ),
-                      )
-                    else
-                      Positioned(
-                        left: 0,
-                        bottom: 0,
-                        child: Image.asset(
-                          homeIllustrationLeft,
-                          height: 200,
-                        ),
-                      )
+                    Positioned(
+                      right: isLoggedin ? 0 : null,
+                      left: !isLoggedin ? 0 : null,
+                      bottom: 0,
+                      child: Image.asset(
+                        isLoggedin
+                            ? homeIllustrationRight
+                            : homeIllustrationLeft,
+                        height: 200,
+                      ),
+                    ),
                   ],
                 )
               : NutrientBarGraph(
@@ -165,47 +90,80 @@ class CustomHomeCard extends StatelessWidget {
                 ),
         ),
         sHeightSpan,
-        Container(
-          child: isLoggedin
-              ? allScannedData.isNotEmpty
-                  ? GestureDetector(
-                      onTap: onGotoGraphPressed,
-                      child: const Text(
-                        "View More",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: kPrimaryColor,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    )
-                  : GestureDetector(
-                      onTap: onProfilePressed,
-                      child: const Text(
-                        "Update profile",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: kPrimaryColor,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    )
-              : GestureDetector(
-                  onTap: onScanPressed,
-                  child: const Text(
-                    "Scan right away",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: kPrimaryColor,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-        ),
+        _buildFooter(),
       ],
     );
+  }
+
+  Widget _buildRichText(String text) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: text,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: kFontFamily,
+              fontSize: 18,
+            ),
+          ),
+          const TextSpan(
+            text: ".",
+            style: TextStyle(
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
+              fontFamily: kFontFamily,
+              fontSize: 30,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFooter() {
+    if (isLoggedin) {
+      if (allScannedData.isNotEmpty) {
+        return GestureDetector(
+          onTap: onGotoGraphPressed,
+          child: const Text(
+            "View More",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        );
+      } else {
+        return GestureDetector(
+          onTap: onProfilePressed,
+          child: const Text(
+            "Update profile",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        );
+      }
+    } else {
+      return GestureDetector(
+        onTap: onScanPressed,
+        child: const Text(
+          "Scan right away",
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: kPrimaryColor,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      );
+    }
   }
 }

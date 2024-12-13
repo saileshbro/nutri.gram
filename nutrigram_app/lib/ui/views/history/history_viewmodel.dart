@@ -1,8 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
-
 import 'package:nutrigram_app/app/router.gr.dart';
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/datamodels/history.dart';
@@ -12,6 +9,8 @@ import 'package:nutrigram_app/repository/home/i_home_repository.dart';
 import 'package:nutrigram_app/repository/scan/i_scan_repository.dart';
 import 'package:nutrigram_app/services/total_scan_data_service.dart';
 import 'package:nutrigram_app/services/user_data_service.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 @lazySingleton
 class HistoryViewModel extends BaseViewModel {
@@ -25,12 +24,13 @@ class HistoryViewModel extends BaseViewModel {
   final IHomeRepository _homeRepository;
   bool get isLoggedIn => _userDataService.isLoggedIn;
   HistoryViewModel(
-      this._scanRepository,
-      this._dialogService,
-      this._userDataService,
-      this._navigationService,
-      this._homeRepository,
-      this._totalScanDataService);
+    this._scanRepository,
+    this._dialogService,
+    this._userDataService,
+    this._navigationService,
+    this._homeRepository,
+    this._totalScanDataService,
+  );
   Future<void> init() async {
     setBusy(true);
     _historyItems = await _fetch();
@@ -65,23 +65,28 @@ class HistoryViewModel extends BaseViewModel {
   }
 
   void onHistoryCardPressed(History historyItem) {
-    _navigationService.navigateTo(Routes.viewMoreGraphView,
-        arguments: ViewMoreGraphViewArguments(
-          nutrients: historyItem.data,
-          date: historyItem.createdAt,
-          name: historyItem.foodName,
-          searchTerm: historyItem.searchTerm ?? "",
-        ));
+    _navigationService.navigateTo(
+      Routes.viewMoreGraphView,
+      arguments: ViewMoreGraphViewArguments(
+        nutrients: historyItem.data,
+        date: historyItem.createdAt,
+        name: historyItem.foodName,
+        searchTerm: historyItem.searchTerm ?? "",
+      ),
+    );
   }
 
   Future<List<History>> _fetch() async {
     await getTotalScanData();
     final Either<Failure, HistoryResponseModel> resp =
         await _scanRepository.getScanHistory();
-    return resp.fold((Failure l) {
-      _showError(l.message);
-      return [];
-    }, (r) => r.history);
+    return resp.fold(
+      (Failure l) {
+        _showError(l.message);
+        return [];
+      },
+      (r) => r.history,
+    );
   }
 
   Future<void> getTotalScanData() async {

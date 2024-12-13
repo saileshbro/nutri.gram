@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 
 class CustomIconButton extends StatelessWidget {
-  final Color gradientColor;
+  final Color? gradientColor;
   final Color color;
   final IconData icon;
   final bool isBig;
@@ -11,25 +11,25 @@ class CustomIconButton extends StatelessWidget {
   final bool hasBoxShadow;
   final VoidCallback onPressed;
   final bool isBusy;
+
   const CustomIconButton({
-    Key key,
     this.gradientColor,
     this.isBig = false,
-    @required this.color,
-    @required this.icon,
-    @required this.onPressed,
-    this.iconSize = 22,
-    this.radius = 22,
+    required this.color,
+    required this.icon,
+    required this.onPressed,
+    this.iconSize = 22.0,
+    this.radius = 22.0,
     this.hasBoxShadow = true,
     this.isBusy = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       shape: const CircleBorder(),
       child: InkWell(
-        onTap: onPressed,
+        onTap: isBusy ? null : onPressed,
         customBorder: const CircleBorder(),
         child: Container(
           height: radius * 2,
@@ -42,12 +42,12 @@ class CustomIconButton extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      gradientColor,
+                      gradientColor!,
                       color,
                     ],
                   )
                 : null,
-            color: color,
+            color: gradientColor == null ? color : null,
           ),
           child: isBusy
               ? const Padding(

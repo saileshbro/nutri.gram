@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
-import 'package:nutrigram_app/common/ui/components/d_progress_bar.dart';
+import 'package:nutrigram_app/common/extensions/string.dart';
 import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
+import 'package:nutrigram_app/common/ui/components/d_progress_bar.dart';
 import 'package:nutrigram_app/common/ui/components/d_text_field.dart';
 import 'package:nutrigram_app/common/ui/components/nutrient_pie_chart.dart';
 import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
@@ -11,8 +13,8 @@ import 'package:nutrigram_app/datamodels/nutrient.dart';
 import 'package:nutrigram_app/datamodels/scan/scan_request_model.dart';
 import 'package:nutrigram_app/ui/views/nutrient_info_display/nutrient_info_display_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:nutrigram_app/common/extensions/string.dart';
 
+@RoutePage()
 class NutrientInfoDisplayView extends StatelessWidget {
   final List<Nutrient> nutrients;
   final String name;
@@ -50,76 +52,76 @@ class NutrientInfoDisplayView extends StatelessWidget {
                 Padding(
                   padding: lXPadding,
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GestureDetector(
-                                onTap: () => model.isLoggedIn
-                                    ? showCustomBottomSheet(
-                                        context,
-                                        child: ChangeScanNameForm(
-                                          model: model,
-                                          value: model.isNameChanged
-                                              ? model.newName
-                                              : "",
-                                        ),
-                                      )
-                                    : null,
-                                child: Text(
-                                  (model.isNameChanged ? model.newName : name)
-                                      .allWordsCapitilize(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4
-                                      .copyWith(
-                                        decoration: !model.isNameChanged &&
-                                                model.isLoggedIn
-                                            ? TextDecoration.underline
-                                            : TextDecoration.none,
-                                        decorationColor: kPrimaryColor,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () => model.isLoggedIn
+                                  ? showCustomBottomSheet(
+                                      context,
+                                      child: ChangeScanNameForm(
+                                        model: model,
+                                        value: model.isNameChanged
+                                            ? model.newName
+                                            : "",
                                       ),
-                                ),
-                              ),
-                              xsHeightSpan,
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    date,
-                                    style: Theme.of(context).textTheme.caption,
-                                  ),
-                                  Text(
-                                    searchTerm ?? "",
-                                    style: Theme.of(context).textTheme.caption,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (showSaveButton && model.isLoggedIn) ...[
-                          mWidthSpan,
-                          CustomIconButton(
-                            color: kPrimaryColor,
-                            gradientColor: Colors.blue,
-                            icon: Icons.save,
-                            onPressed: () => model.saveScanData(
-                              ScanRequestModel(
-                                foodName:
-                                    (model.isNameChanged ? model.newName : name)
-                                        .allWordsCapitilize(),
-                                data: nutrients,
-                                searchTerm: searchTerm,
+                                    )
+                                  : null,
+                              child: Text(
+                                (model.isNameChanged ? model.newName : name)
+                                    .allWordsCapitilize(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    .copyWith(
+                                      decoration: !model.isNameChanged &&
+                                              model.isLoggedIn
+                                          ? TextDecoration.underline
+                                          : TextDecoration.none,
+                                      decorationColor: kPrimaryColor,
+                                    ),
                               ),
                             ),
-                            isBusy: model.isBusy,
-                          )
-                        ]
-                      ]),
+                            xsHeightSpan,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  date,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                Text(
+                                  searchTerm ?? "",
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (showSaveButton && model.isLoggedIn) ...[
+                        mWidthSpan,
+                        CustomIconButton(
+                          color: kPrimaryColor,
+                          gradientColor: Colors.blue,
+                          icon: Icons.save,
+                          onPressed: () => model.saveScanData(
+                            ScanRequestModel(
+                              foodName:
+                                  (model.isNameChanged ? model.newName : name)
+                                      .allWordsCapitilize(),
+                              data: nutrients,
+                              searchTerm: searchTerm,
+                            ),
+                          ),
+                          isBusy: model.isBusy,
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
                 lHeightSpan,
                 getProgressBars(),
@@ -178,7 +180,7 @@ class NutrientInfoDisplayView extends StatelessWidget {
                   percent: 100,
                   color: e.color,
                   title: e.type,
-                  value: "${e.value.toString()} ${e.unit}",
+                  value: "${e.value} ${e.unit}",
                 ),
                 xsHeightSpan,
               ],
@@ -191,9 +193,9 @@ class NutrientInfoDisplayView extends StatelessWidget {
                   percent: 100,
                   title: e.type,
                   color: e.color,
-                  value: "${e.value.toString()} ${e.unit}",
+                  value: "${e.value} ${e.unit}",
                 ),
-                xsHeightSpan
+                xsHeightSpan,
               ],
             );
           } else {
@@ -203,9 +205,9 @@ class NutrientInfoDisplayView extends StatelessWidget {
                   percent: (ratio * 100).toDouble(),
                   title: e.type,
                   color: e.color,
-                  value: "${e.value.toString()} ${e.unit}",
+                  value: "${e.value} ${e.unit}",
                 ),
-                xsHeightSpan
+                xsHeightSpan,
               ],
             );
           }
@@ -228,12 +230,13 @@ class ChangeScanNameForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: sXPagePadding.add(
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
+        EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      ),
       child: Column(
         children: [
           Text(
             "Change product name",
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.labelLarge,
           ),
           mHeightSpan,
           DTextField(

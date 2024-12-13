@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/common/extensions/string.dart';
 import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
@@ -8,11 +7,12 @@ import 'package:nutrigram_app/datamodels/history.dart';
 
 class HistoryCard extends StatelessWidget {
   final History history;
-  final VoidCallback onDeletePressed;
-  final Function onPressed;
+  final VoidCallback? onDeletePressed;
+  final VoidCallback? onPressed;
+
   const HistoryCard({
-    Key key,
-    @required this.history,
+    Key? key,
+    required this.history,
     this.onDeletePressed,
     this.onPressed,
   }) : super(key: key);
@@ -30,7 +30,7 @@ class HistoryCard extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 8,
               color: kPrimaryColor.withOpacity(0.27),
-            )
+            ),
           ],
           color: Colors.white,
         ),
@@ -43,7 +43,9 @@ class HistoryCard extends StatelessWidget {
                 children: [
                   Text(
                     history.foodName.allWordsCapitilize(),
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.titleLarge,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   mHeightSpan,
                   Row(
@@ -51,11 +53,11 @@ class HistoryCard extends StatelessWidget {
                     children: [
                       Text(
                         history.createdAt,
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
                         history.searchTerm,
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:nutrigram_app/app/locator.dart';
-import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
 import 'package:nutrigram_app/common/ui/components/custom_home_card.dart';
+import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
 import 'package:nutrigram_app/common/ui/components/health_tips_card.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      fireOnModelReadyOnce: true,
+      fireOnViewModelReadyOnce: true,
       builder: (BuildContext context, HomeViewModel model, Widget child) =>
           Scaffold(
         body: MediaQuery.removePadding(
@@ -38,11 +38,11 @@ class HomeView extends StatelessWidget {
               key: const PageStorageKey("HROME-PAGE-STORAGE-KEY"),
               children: [
                 llHeightSpan,
-                Padding(
+                const Padding(
                   padding: lXPadding,
                   child: Column(
                     children: [
-                      const CustomNavBar(
+                      CustomNavBar(
                         navBarItemTitle: "Welcome",
                         blackString: "Be conscious about ",
                         blueString: "what you eat!",
@@ -58,7 +58,7 @@ class HomeView extends StatelessWidget {
                           child: Shimmer(
                             enabled: model.isBusy,
                             color: kGapColor,
-                            duration: const Duration(seconds: 2),
+                            duration: Duration(seconds: 2),
                             child: Opacity(
                               opacity: model.isBusy ? 0 : 1,
                               child: CustomHomeCard(
@@ -72,7 +72,7 @@ class HomeView extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -110,7 +110,8 @@ class HomeView extends StatelessWidget {
                         )
                       : Swiper(
                           key: const PageStorageKey(
-                              "HOME-PAGE-TIPS-STORAGE-KEY"),
+                            "HOME-PAGE-TIPS-STORAGE-KEY",
+                          ),
                           itemCount: model.healthTipList.length,
                           viewportFraction: 0.85,
                           scale: 0.95,

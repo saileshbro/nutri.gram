@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/bottom_banner.dart';
@@ -9,6 +10,7 @@ import 'package:nutrigram_app/constants/strings.dart';
 import 'package:nutrigram_app/ui/views/auth/register/register_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+@RoutePage()
 class RegisterView extends StatefulWidget {
   @override
   _RegisterViewState createState() => _RegisterViewState();
@@ -46,7 +48,7 @@ class _RegisterViewState extends State<RegisterView> {
                 mHeightSpan,
                 Text(
                   register,
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 lHeightSpan,
                 Form(
@@ -54,18 +56,19 @@ class _RegisterViewState extends State<RegisterView> {
                   child: Column(
                     children: <Widget>[
                       DTextField(
-                          textCapitalization: TextCapitalization.words,
-                          focusNode: nameFocusNode,
-                          onEditingComplete: () {
-                            FocusScope.of(context).requestFocus(phoneFocusNode);
-                          },
-                          validator: model.validateName,
-                          onChanged: (val) => model.name = val,
-                          hintText: fullName,
-                          prefixIcon: const Icon(
-                            Icons.perm_identity,
-                          ),
-                          enabled: !model.isBusy),
+                        textCapitalization: TextCapitalization.words,
+                        focusNode: nameFocusNode,
+                        onEditingComplete: () {
+                          FocusScope.of(context).requestFocus(phoneFocusNode);
+                        },
+                        validator: model.validateName,
+                        onChanged: (val) => model.name = val,
+                        hintText: fullName,
+                        prefixIcon: const Icon(
+                          Icons.perm_identity,
+                        ),
+                        enabled: !model.isBusy,
+                      ),
                       mHeightSpan,
                       DTextField(
                         focusNode: phoneFocusNode,
@@ -101,9 +104,11 @@ class _RegisterViewState extends State<RegisterView> {
                           child: InkWell(
                             customBorder: const CircleBorder(),
                             onTap: model.changePasswordVisibility,
-                            child: Icon(model.isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off),
+                            child: Icon(
+                              model.isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
                           ),
                         ),
                         hintText: password,
@@ -121,7 +126,7 @@ class _RegisterViewState extends State<RegisterView> {
                           loading: model.isBusy,
                           title: register,
                           onPressed: () {
-                            if (model.formKey.currentState.validate()) {
+                            if (model.formKey.currentState!.validate()) {
                               model.register();
                             }
                           },

@@ -3,14 +3,15 @@ import 'dart:convert';
 class LoginRequestModel {
   final String phone;
   final String password;
+
   LoginRequestModel({
-    this.phone,
-    this.password,
+    required this.phone,
+    required this.password,
   });
 
   LoginRequestModel copyWith({
-    String phone,
-    String password,
+    String? phone,
+    String? password,
   }) {
     return LoginRequestModel(
       phone: phone ?? this.phone,
@@ -26,7 +27,6 @@ class LoginRequestModel {
   }
 
   factory LoginRequestModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
     return LoginRequestModel(
       phone: map['phone'],
       password: map['password'],

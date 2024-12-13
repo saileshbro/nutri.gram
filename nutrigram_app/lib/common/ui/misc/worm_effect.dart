@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/common/ui/misc/indicator_effect.dart';
 import 'package:nutrigram_app/common/ui/misc/indicator_painter.dart';
 import 'package:nutrigram_app/common/ui/misc/worm_painter.dart';
@@ -9,13 +8,12 @@ class CustomWormEffect extends IndicatorEffect {
     double dotWidth = 16.0,
     double dotHeight = 16.0,
     double spacing = 8.0,
-    double radius = 16,
+    double radius = 16.0,
     Color dotColor = Colors.grey,
     Color activeDotColor = Colors.indigo,
     double strokeWidth = 1.0,
     PaintingStyle paintStyle = PaintingStyle.fill,
-  })  : assert(activeDotColor != null),
-        super(
+  }) : super(
           dotWidth: dotWidth,
           dotHeight: dotHeight,
           spacing: spacing,
@@ -27,8 +25,16 @@ class CustomWormEffect extends IndicatorEffect {
         );
 
   @override
-  IndicatorPainter buildPainter({int count, double offset, bool isRTL}) {
+  IndicatorPainter buildPainter({
+    required int count,
+    required double offset,
+    bool isRTL = false, // Match parent optionality
+  }) {
     return WormPainter(
-        count: count, offset: offset, effect: this, isRTL: isRTL);
+      count: count,
+      offset: offset,
+      effect: this,
+      isRTL: isRTL,
+    );
   }
 }

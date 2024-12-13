@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -32,10 +33,12 @@ class HttpService {
   ///
   Stream get({@required String url}) {
     _logger.d("GET request to $_baseUrl/$url");
-    return Stream.fromFuture(http.get(
-      '$_baseUrl/$url',
-      headers: _defaultHeader,
-    )).flatMap((_) {
+    return Stream.fromFuture(
+      http.get(
+        '$_baseUrl/$url',
+        headers: _defaultHeader,
+      ),
+    ).flatMap((_) {
       if (_.statusCode >= 400) {
         _logger.e(jsonDecode(_.body)["error"]);
         throw Failure(
@@ -56,11 +59,13 @@ class HttpService {
   ///
   Stream post({@required String url, @required String encodedJson}) {
     _logger.d("POST request to $_baseUrl/$url");
-    return Stream.fromFuture(http.post(
-      '$_baseUrl/$url',
-      headers: _defaultHeader,
-      body: encodedJson,
-    )).flatMap((data) {
+    return Stream.fromFuture(
+      http.post(
+        '$_baseUrl/$url',
+        headers: _defaultHeader,
+        body: encodedJson,
+      ),
+    ).flatMap((data) {
       if (data.statusCode >= 400) {
         _logger.e(jsonDecode(data.body)["error"]);
         throw Failure(
@@ -82,9 +87,13 @@ class HttpService {
   ///
   Stream put({@required String url, @required String encodedJson}) {
     _logger.d("PUT request to $_baseUrl/$url");
-    return Stream.fromFuture(http.put('$_baseUrl/$url',
-            headers: _defaultHeader, body: encodedJson))
-        .flatMap((_) {
+    return Stream.fromFuture(
+      http.put(
+        '$_baseUrl/$url',
+        headers: _defaultHeader,
+        body: encodedJson,
+      ),
+    ).flatMap((_) {
       if (_.statusCode >= 400) {
         _logger.e(jsonDecode(_.body)["error"]);
         throw Failure(
@@ -106,9 +115,13 @@ class HttpService {
   ///
   Stream patch({@required String url, @required String encodedJson}) {
     _logger.d("PATCH request to $_baseUrl/$url");
-    return Stream.fromFuture(http.patch('$_baseUrl/$url',
-            headers: _defaultHeader, body: encodedJson))
-        .flatMap((_) {
+    return Stream.fromFuture(
+      http.patch(
+        '$_baseUrl/$url',
+        headers: _defaultHeader,
+        body: encodedJson,
+      ),
+    ).flatMap((_) {
       if (_.statusCode >= 400) {
         _logger.e(jsonDecode(_.body)["error"]);
         throw Failure(
@@ -130,8 +143,8 @@ class HttpService {
   Stream delete({@required String url}) {
     _logger.d("DELETE request to $_baseUrl/$url");
     return Stream.fromFuture(
-            http.delete('$_baseUrl/$url', headers: _defaultHeader))
-        .flatMap((_) {
+      http.delete('$_baseUrl/$url', headers: _defaultHeader),
+    ).flatMap((_) {
       if (_.statusCode >= 400) {
         _logger.e(jsonDecode(_.body)["error"]);
         throw Failure(
@@ -144,10 +157,11 @@ class HttpService {
     }).map((_) => jsonDecode(_.body));
   }
 
-  Future uploadFile(
-      {@required String url,
-      @required File file,
-      @required String fieldName}) async {
+  Future uploadFile({
+    @required String url,
+    @required File file,
+    @required String fieldName,
+  }) async {
     try {
       _logger.d("UPLOAD FILE to $_baseUrl/$url");
       final dio.Dio client = dio.Dio();

@@ -19,8 +19,12 @@ class VerificationViewModel extends BaseViewModel {
   String otp;
   String phoneNumber;
 
-  VerificationViewModel(this._authenticationRepository, this._dialogService,
-      this._userDataService, this._navigationService);
+  VerificationViewModel(
+    this._authenticationRepository,
+    this._dialogService,
+    this._userDataService,
+    this._navigationService,
+  );
 
   Future<void> resendCode() async {
     setBusyForObject(resendVerificationBusy, true);
@@ -30,8 +34,9 @@ class VerificationViewModel extends BaseViewModel {
     setBusyForObject(verifyingBusy, true);
     final Either<Failure, VerificationResponseModel> result =
         await _authenticationRepository.verify(
-            verificationRequestModel:
-                VerificationRequestModel(otp: otp, phone: phoneNumber));
+      verificationRequestModel:
+          VerificationRequestModel(otp: otp, phone: phoneNumber),
+    );
     result.fold(
       (Failure failute) => _showError(failute.message),
       (VerificationResponseModel model) async {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
@@ -9,8 +8,12 @@ class ListButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
 
-  const ListButton({Key key, this.label, this.icon, this.onPressed})
-      : super(key: key);
+  const ListButton({
+    Key? key,
+    required this.label,
+    required this.icon,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +45,20 @@ class ListButton extends StatelessWidget {
                       gradientColor: Colors.blue,
                       icon: icon,
                       hasBoxShadow: false,
-                      onPressed: null,
+                      onPressed:
+                          null, // Icon is decorative; no need for interaction
                     ),
                     sWidthSpan,
                     Text(
                       label,
-                      style: Theme.of(context).textTheme.button,
-                    )
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
                   ],
                 ),
-                const Icon(Icons.arrow_forward_ios)
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  color: kPrimaryColor,
+                ),
               ],
             ),
           ),

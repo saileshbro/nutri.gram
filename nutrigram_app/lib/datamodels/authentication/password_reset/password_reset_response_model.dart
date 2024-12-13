@@ -1,23 +1,31 @@
 import 'package:nutrigram_app/datamodels/user.dart';
 
-class PassswordResetResponseModel {
-  String message;
-  User user;
-  String token;
+class PasswordResetResponseModel {
+  final String? message;
+  final User? user;
+  final String? token;
 
-  PassswordResetResponseModel({this.message, this.user, this.token});
+  PasswordResetResponseModel({
+    this.message,
+    this.user,
+    this.token,
+  });
 
-  PassswordResetResponseModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'] as String;
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-    token = json['token'] as String;
+  // Factory constructor to create an instance from a JSON map
+  factory PasswordResetResponseModel.fromJson(Map<String, dynamic> json) {
+    return PasswordResetResponseModel(
+      message: json['message'] as String?,
+      user: json['user'] != null ? User.fromJson(json['user']) : null,
+      token: json['token'] as String?,
+    );
   }
 
+  // Method to convert the object into a JSON map
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
     if (user != null) {
-      data['user'] = user.toJson();
+      data['user'] = user?.toJson();
     }
     data['token'] = token;
     return data;

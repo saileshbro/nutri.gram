@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/bottom_banner.dart';
@@ -9,6 +10,7 @@ import 'package:nutrigram_app/ui/views/auth/verification/verification_viewmodel.
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:stacked/stacked.dart';
 
+@RoutePage()
 class VerificationView extends StatelessWidget {
   final String phoneNumber;
 
@@ -17,94 +19,93 @@ class VerificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-        onModelReady: (VerificationViewModel model) =>
-            model.phoneNumber = phoneNumber,
-        builder: (BuildContext context, VerificationViewModel model,
-                Widget child) =>
-            Scaffold(
-              appBar: AppBar(),
-              bottomNavigationBar: BottomBanner(
-                onPressed: model.resendCode,
-                bannerText: didntReceive,
-                buttonLabel: resend,
-                loading:
-                    model.busy(VerificationViewModel.resendVerificationBusy),
+      onViewModelReady: (VerificationViewModel model) =>
+          model.phoneNumber = phoneNumber,
+      builder: (
+        BuildContext context,
+        VerificationViewModel model,
+        Widget child,
+      ) =>
+          Scaffold(
+        appBar: AppBar(),
+        bottomNavigationBar: BottomBanner(
+          onPressed: model.resendCode,
+          bannerText: didntReceive,
+          buttonLabel: resend,
+          loading: model.busy(VerificationViewModel.resendVerificationBusy),
+        ),
+        body: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: sXPagePadding,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: mXPagePadding,
+                  child: Image.asset(
+                    verificationIllustration,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                ),
+              ],
+            ),
+            mHeightSpan,
+            Text(
+              verification,
+              style: Theme.of(context).textTheme.headlineMedium,
+              textAlign: TextAlign.center,
+            ),
+            mHeightSpan,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 75.0),
+              child: Text(
+                enterTheVerification,
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
               ),
-              body: ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: sXPagePadding,
+            ),
+            lHeightSpan,
+            Form(
+              child: Column(
                 children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: mXPagePadding,
-                        child: Image.asset(
-                          verificationIllustration,
-                          width: MediaQuery.of(context).size.width,
-                        ),
+                  Theme(
+                    data: ThemeData(
+                      inputDecorationTheme: InputDecorationTheme(
+                        filled: true,
+                        fillColor: Theme.of(context).scaffoldBackgroundColor,
                       ),
-                    ],
-                  ),
-                  mHeightSpan,
-                  Text(
-                    verification,
-                    style: Theme.of(context).textTheme.headline4,
-                    textAlign: TextAlign.center,
-                  ),
-                  mHeightSpan,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 75.0),
-                    child: Text(
-                      enterTheVerification,
-                      style: Theme.of(context).textTheme.subtitle1,
-                      textAlign: TextAlign.center,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 80),
+                      child: PinInputTextField(
+                        pinLength: 4,
+                        onChanged: (String value) => model.otp = value,
+                        decoration: UnderlineDecoration(
+                          colorBuilder: const FixedColorBuilder(kPrimaryColor),
+                          textStyle: Theme.of(context).textTheme.displaySmall,
+                          hintText: "0000",
+                        ),
+                        keyboardType: TextInputType.number,
+                        enabled:
+                            !model.busy(VerificationViewModel.verifyingBusy),
+                      ),
                     ),
                   ),
-                  lHeightSpan,
-                  Form(
-                    child: Column(
-                      children: <Widget>[
-                        Theme(
-                          data: ThemeData(
-                            inputDecorationTheme: InputDecorationTheme(
-                              filled: true,
-                              fillColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 80),
-                            child: PinInputTextField(
-                              pinLength: 4,
-                              onChanged: (String value) => model.otp = value,
-                              decoration: UnderlineDecoration(
-                                colorBuilder:
-                                    const FixedColorBuilder(kPrimaryColor),
-                                textStyle:
-                                    Theme.of(context).textTheme.headline3,
-                                hintText: "0000",
-                              ),
-                              keyboardType: TextInputType.number,
-                              enabled: !model
-                                  .busy(VerificationViewModel.verifyingBusy),
-                            ),
-                          ),
-                        ),
-                        xlHeightSpan,
-                        DRaisedButton(
-                          onPressed: model.verify,
-                          loading:
-                              model.busy(VerificationViewModel.verifyingBusy),
-                          title: verify,
-                        ),
-                        mHeightSpan,
-                      ],
-                    ),
-                  )
+                  xlHeightSpan,
+                  DRaisedButton(
+                    onPressed: model.verify,
+                    loading: model.busy(VerificationViewModel.verifyingBusy),
+                    title: verify,
+                  ),
+                  mHeightSpan,
                 ],
               ),
             ),
-        disposeViewModel: false,
-        viewModelBuilder: () => locator<VerificationViewModel>());
+          ],
+        ),
+      ),
+      disposeViewModel: false,
+      viewModelBuilder: () => locator<VerificationViewModel>(),
+    );
   }
 }

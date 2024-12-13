@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nutrigram_app/common/helpers/validators.dart' as validators;
 import 'package:nutrigram_app/datamodels/failure.dart';
 import 'package:nutrigram_app/datamodels/profile/profile_response_model.dart';
 import 'package:nutrigram_app/datamodels/profile/update_phone_request_model.dart';
@@ -8,7 +9,6 @@ import 'package:nutrigram_app/services/profile/update_profile_service.dart';
 import 'package:nutrigram_app/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:nutrigram_app/common/helpers/validators.dart' as validators;
 
 @injectable
 class VerifyPhoneViewModel extends BaseViewModel {
@@ -24,6 +24,7 @@ class VerifyPhoneViewModel extends BaseViewModel {
     this._navigationService,
     this._updateProfileService,
     this._userDataService,
+    this._otp,
   );
   String _otp;
 
@@ -32,8 +33,12 @@ class VerifyPhoneViewModel extends BaseViewModel {
   Future<void> updatePhone() async {
     setBusy(true);
     final Either<Failure, ProfileResponseModel> response =
-        await _profileRepository.updatePhone(UpdatePhoneRequestModel(
-            otp: _otp, phone: _updateProfileService.tempPhone));
+        await _profileRepository.updatePhone(
+      UpdatePhoneRequestModel(
+        otp: _otp,
+        phone: _updateProfileService.tempPhone,
+      ),
+    );
     response.fold((Failure l) async {
       await _showError(l.message);
     }, (ProfileResponseModel r) async {

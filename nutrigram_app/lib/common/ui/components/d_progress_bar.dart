@@ -6,13 +6,13 @@ class DProgressBar extends StatelessWidget {
   final String value;
   final double percent;
   final Color color;
+
   const DProgressBar({
-    Key key,
-    this.title,
-    this.value,
-    this.percent = 0,
-    this.color,
-  }) : super(key: key);
+    required this.title,
+    required this.value,
+    this.percent = 0.0,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +21,16 @@ class DProgressBar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(title,
-                style: Theme.of(context)
-                    .textTheme
-                    .button
-                    .copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
             Text(
               value,
-              style: Theme.of(context).textTheme.subtitle1,
-            )
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ],
         ),
         sHeightSpan,
@@ -43,7 +44,7 @@ class DProgressBar extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                flex: (percent + 3.5).ceil().clamp(0, 100).toInt(),
+                flex: (percent * 100).ceil().clamp(0, 100),
                 child: Container(
                   height: 6,
                   decoration: BoxDecoration(
@@ -53,7 +54,7 @@ class DProgressBar extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: (100 - (percent + 3.5).ceil()).clamp(0, 100).toInt(),
+                flex: (100 - (percent * 100).ceil()).clamp(0, 100),
                 child: const SizedBox.shrink(),
               ),
             ],

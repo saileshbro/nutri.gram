@@ -1,5 +1,5 @@
 String validatePassword(String value) {
-  if (value == null || value.length < 8) {
+  if (value.length < 8) {
     return "Password must be at-least 8 chars long.";
   }
 
@@ -9,7 +9,7 @@ String validatePassword(String value) {
   if (!RegExp(r'([0-9])').hasMatch(value)) {
     return "Password must have one number.";
   }
-  return null;
+  return '';
 }
 
 String validatePhone(String value) {
@@ -18,7 +18,7 @@ String validatePhone(String value) {
     if (value.length < 10) {
       return "Invalid phone number";
     }
-    return null;
+    return '';
   } catch (e) {
     return "Invalid phone number";
   }
@@ -28,7 +28,7 @@ String validateName(String value) {
   if (value.isEmpty) {
     return "Invalid name";
   }
-  return null;
+  return '';
 }
 
 String validateOtp(String value) {
@@ -37,7 +37,7 @@ String validateOtp(String value) {
     if (value.length < 4) {
       return "Invalid OTP";
     }
-    return null;
+    return '';
   } catch (e) {
     return "Invalid OTP";
   }

@@ -1,101 +1,70 @@
 name: nutrigram_app
-description: Nutrition is the main source of life and although it has been our
-  secondary instinct to check for nutritional value in the food we eat, the
-  effect any diet has in our body and health is consequential. From the fact
-  which connotes the value of nutrition in our diet, springs the idea of
-  nutri.gram. nutri.gram is a mobile application that scans the food label
-  present in the packaged food items and draws a significant conclusion from
-  that data regarding its edibleness for a person, the nutritional worth it adds
-  to our diet, how much calorific value it provides per serving and much more.
-  This application is targeted to anyone who wants to get insight into what they
-  are feeding into their body and how understanding the nutritional value will
-  be of tremendous aid to their overall health.
+description: >
+  Nutrition is the main source of life and although it has been our secondary
+  instinct to check for nutritional value in the food we eat, the effect any
+  diet has on our body and health is consequential. From the fact which connotes
+  the value of nutrition in our diet, springs the idea of nutri.gram. nutri.gram
+  is a mobile application that scans the food label present in the packaged food
+  items and draws significant conclusions from that data regarding its edibleness
+  for a person, the nutritional worth it adds to our diet, how much calorific value
+  it provides per serving, and much more.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.9.0 <3.0.0"
+  sdk: '>=2.12.0 <=3.5.0'
 
 dependencies:
+  animations: ^2.0.6
+  auto_route: ^9.2.2
+  cached_network_image: ^3.3.0
+  dartz: ^0.10.1
+  dio: ^5.0.6
+  edge_detection:
+    git:
+      url: https://github.com/saileshbro/edge_detection.git
+  fl_chart: ^0.69.2
   flutter:
     sdk: flutter
-  stacked: ^1.7.6
-  stacked_services: ^0.5.4+4
-  get_it: ^4.0.0
-  injectable: ^1.0.4
-  auto_route: ^0.6.7
-  shared_preferences: ^0.5.12
-  flutter_icons: ^1.1.0
-  pin_input_text_field: ^3.1.1
-  smooth_page_indicator: ^0.2.0
-  http: ^0.12.2
-  rxdart: ^0.24.1
-  dartz: ^0.9.1
-  cached_network_image: ^2.3.2+1
-  flutter_swiper: ^1.1.6
-  animations: ^1.1.2
-  shimmer_animation: ^0.1.1+1
-  flutter_hooks: ^0.12.0
-  stacked_hooks: ^0.1.3
-  image_picker: ^0.6.7+11
-  image_cropper: ^1.3.1
-  flutter_better_camera: ^0.6.1
-  path_provider: ^1.6.18
-  logger: ^0.9.4
-  simple_edge_detection:
-    path: "../../flutter-simple-edge-detection"
-  pie_chart: ^4.0.1
-  intl: ^0.16.1
-  charts_flutter: ^0.9.0
-  dio: ^3.0.10
-  pull_to_refresh: ^1.6.2
+  flutter_better_camera: ^1.0.3
+  flutter_hooks: ^0.20.5
+  flutter_swiper_null_safety: ^1.0.2
+  get_it: ^7.1.4
+  http: ^1.2.2
+  image_cropper: ^8.0.2
+  image_picker: ^1.0.4
+  injectable: ^2.5.0
+  intl: ^0.20.1
+  logger: ^2.5.0
+  path_provider: ^2.0.15
+  pie_chart: ^5.4.0
+  pin_input_text_field: ^4.5.2
+  pull_to_refresh: ^2.0.0
+  rxdart: ^0.28.0
+  shared_preferences: ^2.2.2
+  shimmer_animation: ^2.0.0
+  smooth_page_indicator: ^1.1.0
+  stacked: ^3.4.3
+  stacked_hooks: ^0.2.4
+  stacked_services: ^1.6.0
 
 dev_dependencies:
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.0
   flutter_test:
     sdk: flutter
-  lint: ^1.3.0
-  injectable_generator: ^1.0.4
-  build_runner:
-  auto_route_generator: ^0.6.8
+  injectable_generator: ^2.6.2
+  lint: ^2.3.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-# The following section is specific to Flutter.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/illustrations/
     - assets/icons/
     - assets/overlay/
 
-  #   - images/a_dot_ham.jpeg
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
   fonts:
     - family: WorkSans
       fonts:
@@ -117,5 +86,3 @@ flutter:
           weight: 800
         - asset: fonts/WorkSans-Black.ttf
           weight: 900
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages

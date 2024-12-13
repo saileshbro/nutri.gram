@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import 'package:nutrigram_app/common/ui/misc/indicator_painter.dart';
+import 'package:nutrigram_app/common/ui/misc/worm_effect.dart';
 
 class WormPainter extends IndicatorPainter {
-  final WormEffect effect;
+  final CustomWormEffect effect;
 
   WormPainter({
-    @required this.effect,
-    @required int count,
-    @required double offset,
-    @required bool isRTL,
+    required this.effect,
+    required int count,
+    required double offset,
+    required bool isRTL,
   }) : super(offset, count, effect, isRTL: isRTL);
 
   @override
   void paint(Canvas canvas, Size size) {
-    // paint still dots
+    // Paint static dots
     super.paint(canvas, size);
-    final activeDotPaint = Paint()..color = effect.activeDotColor;
-    final dotOffset = offset - offset.toInt();
-    final worm = _calcBounds(offset.floor(), dotOffset * 2);
-    canvas.drawRRect(worm, activeDotPaint);
+
+    // Paint active worm
+    final activeDotPaint = Paint()
+      ..color = effect.activeDotColor
+      ..style = PaintingStyle.fill;
+
+    final currentIndex = offset.floor();
+    final dotOffset = offset - currentIndex;
+
+    final wormBounds = _calculateWormBounds(currentIndex, dotOffset);
+    canvas.drawRRect(wormBounds, activeDotPaint);
   }
 
-  RRect _calcBounds(num i, double dotOffset) {
-    final xPos = i * distance;
-    final yPos = (effect.dotHeight) / 2;
-    double left = xPos as double;
-    double right = xPos +
-        effect.dotWidth +
-        (dotOffset * (effect.dotWidth + effect.spacing)) as double;
-    if (dotOffset > 1) {
-      right = xPos + effect.dotWidth + (1 * (effect.dotWidth + effect.spacing))
-          as double;
-      left = xPos + ((effect.spacing + effect.dotWidth) * (dotOffset - 1))
-          as double;
-    }
+  RRect _calculateWormBounds(int index, double dotOffset) {
+    final xPos = index * distance;
+    final yPos = effect.dotHeight / 2;
+
+    // Dynamically adjust worm bounds
+    final left = xPos + dotOffset * effect.spacing;
+    final right = left + effect.dotWidth + (dotOffset * effect.spacing);
+
     return RRect.fromLTRBR(
       left,
       yPos - effect.dotHeight / 2,

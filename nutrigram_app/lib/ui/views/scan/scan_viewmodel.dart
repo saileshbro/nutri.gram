@@ -10,46 +10,63 @@ import 'package:stacked_services/stacked_services.dart';
 
 @injectable
 class ScanViewModel extends BaseViewModel {
-  File _image;
+  File? _image; // Make image nullable
   final CameraService _cameraService;
   final NavigationService _navigationService;
   final MediaService _mediaService;
+
   CameraController get controller => _cameraService.controller;
+
   ScanViewModel(
-      this._cameraService, this._navigationService, this._mediaService);
+    this._cameraService,
+    this._navigationService,
+    this._mediaService,
+  );
+
   Future<void> init() async {
     setBusy(true);
-    await _cameraService.initializeCameras();
+    try {
+      await _cameraService.initializeCameras();
+    } catch (e) {
+      print('Error initializing cameras: $e');
+    }
     setBusy(false);
   }
 
   Future<void> takePicture() async {
-    final File image = await _cameraService.takePicture();
-    if (image != null) {
+    try {
+      final File image = await _cameraService.takePicture();
       _image = image;
-      _cameraService?.dispose();
-      await _navigationService.navigateTo(Routes.scanPreviewView,
-          arguments: ScanPreviewViewArguments(image: _image));
-      await _cameraService.initializeCameras();
       notifyListeners();
+      await _navigationService.navigateTo(
+        ScanPreviewView(image: _image!),
+      );
+    } catch (e) {
+      print('Error taking picture: $e');
+    } finally {
+      await _cameraService.initializeCameras();
     }
   }
 
   Future<void> pickPicture() async {
-    _cameraService?.dispose();
-    final File image = await _mediaService.getImage(fromGallery: true);
-    if (image != null) {
+    _cameraService.dispose();
+    try {
+      final File image = await _mediaService.getImage(fromGallery: true);
       _image = image;
-      await _navigationService.navigateTo(Routes.scanPreviewView,
-          arguments: ScanPreviewViewArguments(image: _image));
+      notifyListeners();
+      await _navigationService.navigateTo(
+        ScanPreviewView(image: _image!),
+      );
+    } catch (e) {
+      print('Error picking picture: $e');
+    } finally {
+      await _cameraService.initializeCameras();
     }
-    await _cameraService.initializeCameras();
-    notifyListeners();
   }
 
   @override
   void dispose() {
-    _cameraService?.dispose();
+    _cameraService.dispose();
     super.dispose();
   }
 }

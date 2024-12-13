@@ -20,8 +20,11 @@ class VerifyPhoneChangeView extends StatelessWidget {
         Widget child,
       ) {
         return Padding(
-          padding: sXPagePadding.add(EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom)),
+          padding: sXPagePadding.add(
+            EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+          ),
           child: Column(
             children: [
               _VerifyPhoneChangeForm(formKey),
@@ -49,7 +52,9 @@ class _VerifyPhoneChangeForm extends HookViewModelWidget<VerifyPhoneViewModel> {
 
   @override
   Widget buildViewModelWidget(
-      BuildContext context, VerifyPhoneViewModel model) {
+    BuildContext context,
+    VerifyPhoneViewModel model,
+  ) {
     return Form(
       key: formKey,
       child: Column(
@@ -57,7 +62,7 @@ class _VerifyPhoneChangeForm extends HookViewModelWidget<VerifyPhoneViewModel> {
           Text(
             "OTP Code has been sent to your phone, use it and update your profile",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           mHeightSpan,
           DTextField(

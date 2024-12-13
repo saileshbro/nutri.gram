@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 
@@ -12,9 +11,9 @@ class DRaisedButton extends StatelessWidget {
 
   const DRaisedButton({
     this.isSmall = false,
-    @required this.title,
-    @required this.loading,
-    @required this.onPressed,
+    required this.title,
+    required this.loading,
+    required this.onPressed,
     this.hasBoxShadow = true,
   });
 
@@ -28,14 +27,15 @@ class DRaisedButton extends StatelessWidget {
           width: isSmall ? 120 : MediaQuery.of(context).size.width,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: kPrimaryColor,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow:
-                  hasBoxShadow ? getBoxShadow(context, kPrimaryColor) : null),
+            color: kPrimaryColor,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow:
+                hasBoxShadow ? getBoxShadow(context, kPrimaryColor) : null,
+          ),
           child: !loading
               ? Text(
                   title,
-                  style: Theme.of(context).textTheme.button.copyWith(
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: kScaffoldBackgroundColor,
                       ),
                 )

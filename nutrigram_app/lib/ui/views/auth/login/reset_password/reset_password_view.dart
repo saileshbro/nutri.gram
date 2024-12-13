@@ -31,20 +31,23 @@ class ResetPasswordView extends HookWidget {
         Widget child,
       ) {
         return Padding(
-          padding: sXPagePadding.add(EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom)),
+          padding: sXPagePadding.add(
+            EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
                 forgotPassword,
-                style: Theme.of(context).textTheme.button,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               sHeightSpan,
               Text(
                 forgotPasswordMsg,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               sHeightSpan,
               TextFormField(
@@ -55,11 +58,11 @@ class ResetPasswordView extends HookWidget {
                 onEditingComplete: () {
                   FocusScope.of(context).requestFocus(otpFocusNode);
                 },
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
                 decoration: InputDecoration(
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .caption
+                      .bodySmall
                       .apply(color: kDisabledLightThemeColor),
                   prefixIcon: const Icon(
                     Icons.phone_android,
@@ -76,11 +79,11 @@ class ResetPasswordView extends HookWidget {
                 onEditingComplete: () {
                   FocusScope.of(context).requestFocus(passwordFocusNode);
                 },
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
                 decoration: InputDecoration(
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .caption
+                      .bodySmall
                       .apply(color: kDisabledLightThemeColor),
                   prefixIcon: const Icon(
                     Feather.edit,
@@ -98,11 +101,11 @@ class ResetPasswordView extends HookWidget {
                 onEditingComplete: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
                 decoration: InputDecoration(
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .caption
+                      .bodySmall
                       .apply(color: kDisabledLightThemeColor),
                   prefixIcon: const Icon(
                     Icons.lock_open,
@@ -114,9 +117,11 @@ class ResetPasswordView extends HookWidget {
                     child: InkWell(
                       customBorder: const CircleBorder(),
                       onTap: model.hidePassword,
-                      child: Icon(model.isPasswordHidden
-                          ? Icons.visibility
-                          : Icons.visibility_off),
+                      child: Icon(
+                        model.isPasswordHidden
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
                     ),
                   ),
                 ),

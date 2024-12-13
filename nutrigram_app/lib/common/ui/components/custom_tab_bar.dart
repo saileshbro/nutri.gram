@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/constants/constants.dart';
 
 class CustomTabBar extends StatelessWidget {
   final List<String> items;
   final int defaultIndex;
-  final Function(int) onChanged;
+  final ValueChanged<int>? onChanged;
 
   const CustomTabBar({
-    Key key,
-    @required this.items,
+    required this.items,
     this.defaultIndex = 0,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +33,8 @@ class CustomTabBar extends StatelessWidget {
           unselectedLabelColor: Colors.black,
           labelStyle: Theme.of(context)
               .textTheme
-              .button
-              .copyWith(fontWeight: FontWeight.bold),
+              .labelLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
           tabs: items.map((item) => Tab(child: Text(item))).toList(),
         ),
       ),

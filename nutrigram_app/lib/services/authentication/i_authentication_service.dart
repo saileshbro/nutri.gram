@@ -11,12 +11,16 @@ import 'package:nutrigram_app/datamodels/authentication/verification/verificatio
 
 abstract class IAuthenticationService {
   Future<LoginResponseModel> login({@required LoginRequestModel model});
-  Future<RegisterResponseModel> register(
-      {@required RegisterRequestModel model});
-  Future<VerificationResponseModel> verify(
-      {@required VerificationRequestModel model});
-  Future<OtpRequestResponseModel> getPasswordResetOTP(
-      {@required String phoneNo});
+  Future<RegisterResponseModel> register({
+    @required RegisterRequestModel model,
+  });
+  Future<VerificationResponseModel> verify({
+    @required VerificationRequestModel model,
+  });
+  Future<OtpRequestResponseModel> getPasswordResetOTP({
+    @required String phoneNo,
+  });
   Future<PassswordResetResponseModel> resetPasswordWithOtp(
-      PassswordResetRequestModel model);
+    PassswordResetRequestModel model,
+  );
 }

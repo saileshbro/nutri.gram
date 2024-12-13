@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/custom_home_card.dart';
-import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
 import 'package:nutrigram_app/common/ui/components/custom_icon_button.dart';
+import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
 import 'package:nutrigram_app/common/ui/components/list_button.dart';
 import 'package:nutrigram_app/common/ui/functions/show_custom_bottomsheet.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
@@ -71,11 +70,11 @@ class ProfileView extends StatelessWidget {
                 height: 10,
               ),
               sHeightSpan,
-              Padding(
+              const Padding(
                 padding: lXPadding,
                 child: Column(
                   children: [
-                    const CustomNavBar(
+                    CustomNavBar(
                       navBarItemTitle: "Your intake till now",
                       blackString: "Visualize ",
                       blueString: "your intake",
@@ -117,8 +116,9 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
                     children: <Widget>[
                       Container(
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: getBoxShadow(context, kPrimaryColor)),
+                          shape: BoxShape.circle,
+                          boxShadow: getBoxShadow(context, kPrimaryColor),
+                        ),
                         child: CircleAvatar(
                           backgroundImage: CachedNetworkImageProvider(
                             model.imageUrl,
@@ -133,7 +133,7 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
                         children: <Widget>[
                           Text(
                             model.namme,
-                            style: Theme.of(context).textTheme.button,
+                            style: Theme.of(context).textTheme.labelLarge,
                           ),
                           xsHeightSpan,
                           RichText(
@@ -141,18 +141,18 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
                               children: [
                                 TextSpan(
                                   text: phoneNum,
-                                  style: Theme.of(context).textTheme.caption,
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 TextSpan(
                                   text: model.phone,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption
+                                      .bodySmall
                                       .copyWith(color: kPrimaryColor),
                                 ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],
@@ -164,7 +164,7 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
                     iconSize: 25,
                     radius: 27,
                     onPressed: model.goToImagePicker,
-                  )
+                  ),
                 ],
               ),
               llHeightSpan,
@@ -175,55 +175,55 @@ class _ProfileTop extends ViewModelWidget<ProfileViewModel> {
                     children: <Widget>[
                       Text(
                         model.totalScans,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                       ),
                       sHeightSpan,
                       Text(
                         "Total Scans",
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                               color: kPrimaryLightTextColor,
                             ),
-                      )
+                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
                       Text(
                         model.totalSaved,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                       ),
                       sHeightSpan,
                       Text(
                         "Saved",
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                               color: kPrimaryLightTextColor,
                             ),
-                      )
+                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
                       Text(
                         "${model.totalCalories} KCal",
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                       ),
                       sHeightSpan,
                       Text(
                         "Total Calories",
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                               color: kPrimaryLightTextColor,
                             ),
-                      )
+                      ),
                     ],
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

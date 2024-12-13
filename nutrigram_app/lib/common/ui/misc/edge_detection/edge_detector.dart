@@ -1,79 +1,105 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:simple_edge_detection/edge_detection.dart';
+import 'package:edge_detection/edge_detection.dart';
 
 class EdgeDetector {
+  /// Starts an isolate for edge detection.
   static Future<void> startEdgeDetectionIsolate(
-      EdgeDetectionInput edgeDetectionInput) async {
-    final EdgeDetectionResult result =
-        await EdgeDetection.detectEdges(edgeDetectionInput.inputPath);
-    edgeDetectionInput.sendPort.send(result);
+    EdgeDetectionInput input,
+  ) async {
+    final result = await EdgeDetection.detectEdge(input.inputPath);
+    input.sendPort.send(result);
   }
 
-  static Future<void> processImageIsolate(
-      ProcessImageInput processImageInput) async {
-    EdgeDetection.processImage(
-        processImageInput.inputPath, processImageInput.edgeDetectionResult);
-    processImageInput.sendPort.send(true);
+  /// Starts an isolate to process an image.
+  static Future<void> processImageIsolate(ProcessImageInput input) async {
+    await EdgeDetection.processImage(
+      input.inputPath,
+      input.edgeDetectionResult,
+    );
+    input.sendPort.send(true);
   }
 
+  /// Detects edges in an image using an isolate.
   Future<EdgeDetectionResult> detectEdges(String filePath) async {
     final port = ReceivePort();
-
-    _spawnIsolate<EdgeDetectionInput>(startEdgeDetectionIsolate,
-        EdgeDetectionInput(inputPath: filePath, sendPort: port.sendPort), port);
-
-    final val = await _subscribeToPort<EdgeDetectionResult>(port);
-    return val;
+    _spawnIsolate<EdgeDetectionInput>(
+      startEdgeDetectionIsolate,
+      EdgeDetectionInput(inputPath: filePath, sendPort: port.sendPort),
+      port,
+    );
+    return await _subscribeToPort<EdgeDetectionResult>(port);
   }
 
+  /// Processes an image using the detected edges via an isolate.
   Future<bool> processImage(
-      String filePath, EdgeDetectionResult edgeDetectionResult) async {
+    String filePath,
+    EdgeDetectionResult edgeDetectionResult,
+  ) async {
     final port = ReceivePort();
-
     _spawnIsolate<ProcessImageInput>(
-        processImageIsolate,
-        ProcessImageInput(
-            inputPath: filePath,
-            edgeDetectionResult: edgeDetectionResult,
-            sendPort: port.sendPort),
-        port);
-
-    final val = await _subscribeToPort<bool>(port);
-    return val;
+      processImageIsolate,
+      ProcessImageInput(
+        inputPath: filePath,
+        edgeDetectionResult: edgeDetectionResult,
+        sendPort: port.sendPort,
+      ),
+      port,
+    );
+    return await _subscribeToPort<bool>(port);
   }
 
-  void _spawnIsolate<T>(Function function, dynamic input, ReceivePort port) {
-    Isolate.spawn<T>(function, input,
-        onError: port.sendPort, onExit: port.sendPort);
+  /// Spawns an isolate with proper error and exit handling.
+  void _spawnIsolate<T>(
+    FutureOr<void> Function(T) entryPoint,
+    T input,
+    ReceivePort port,
+  ) {
+    Isolate.spawn<T>(
+      entryPoint,
+      input,
+      onError: port.sendPort,
+      onExit: port.sendPort,
+    );
   }
 
+  /// Listens to a [ReceivePort] and retrieves the first message sent through it.
   Future<T> _subscribeToPort<T>(ReceivePort port) async {
-    StreamSubscription sub;
-
     final completer = Completer<T>();
+    late final StreamSubscription sub;
 
     sub = port.listen((result) async {
-      await sub?.cancel();
-      completer.complete(await result);
+      await sub.cancel(); // Safely cancel subscription
+      if (!completer.isCompleted) {
+        completer.complete(result as T);
+      }
     });
 
     return completer.future;
   }
 }
 
+/// Input for the edge detection isolate.
 class EdgeDetectionInput {
-  EdgeDetectionInput({this.inputPath, this.sendPort});
+  const EdgeDetectionInput({
+    required this.inputPath,
+    required this.sendPort,
+  });
 
-  String inputPath;
-  SendPort sendPort;
+  final String inputPath;
+  final SendPort sendPort;
 }
 
+/// Input for the image processing isolate.
 class ProcessImageInput {
-  ProcessImageInput({this.inputPath, this.edgeDetectionResult, this.sendPort});
+  const ProcessImageInput({
+    required this.inputPath,
+    required this.edgeDetectionResult,
+    required this.sendPort,
+  });
 
-  String inputPath;
-  EdgeDetectionResult edgeDetectionResult;
-  SendPort sendPort;
+  final String inputPath;
+  final EdgeDetectionResult edgeDetectionResult;
+  final SendPort sendPort;
 }

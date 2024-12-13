@@ -1,13 +1,12 @@
 class OtpRequestResponseModel {
-  String message;
-  String otp;
+  final String? message;
+  final String? otp;
 
   OtpRequestResponseModel({this.message, this.otp});
 
-  OtpRequestResponseModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'] as String;
-    otp = json['otp'] as String;
-  }
+  OtpRequestResponseModel.fromJson(Map<String, dynamic> json)
+      : message = json['message'] as String?,
+        otp = json['otp'] as String?;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

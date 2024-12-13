@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:nutrigram_app/app/locator.dart';
@@ -8,6 +9,7 @@ import 'package:nutrigram_app/ui/views/onboarding/onboarding_viewmodel.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 
+@RoutePage()
 class OnboardingView extends StatelessWidget {
   final PageController _pageController = PageController();
   final List<_OnboardingModel> onboardingItems = [

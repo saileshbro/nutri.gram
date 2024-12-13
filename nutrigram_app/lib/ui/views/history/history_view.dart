@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nutrigram_app/common/ui/components/history_card.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:stacked/stacked.dart';
-
 import 'package:nutrigram_app/app/locator.dart';
 import 'package:nutrigram_app/common/ui/components/custom_nav_bar.dart';
+import 'package:nutrigram_app/common/ui/components/history_card.dart';
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/ui/views/history/history_viewmodel.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:stacked/stacked.dart';
 
 class HistoryView extends StatelessWidget {
   final RefreshController refreshController = RefreshController();
@@ -14,9 +13,9 @@ class HistoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HistoryViewModel>.reactive(
       viewModelBuilder: () => locator<HistoryViewModel>(),
-      onModelReady: (model) => model.init(),
+      onViewModelReady: (model) => model.init(),
       disposeViewModel: false,
-      fireOnModelReadyOnce: true,
+      fireOnViewModelReadyOnce: true,
       builder: (
         BuildContext context,
         HistoryViewModel model,
@@ -32,11 +31,11 @@ class HistoryView extends StatelessWidget {
           child: SizedBox(
             height:
                 MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
-            child: Column(
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 llHeightSpan,
-                const Padding(
+                Padding(
                   padding: lXPadding,
                   child: CustomNavBar(
                     navBarItemTitle: "History",

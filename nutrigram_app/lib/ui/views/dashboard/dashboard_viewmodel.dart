@@ -9,7 +9,7 @@ class DashboardViewModel extends IndexTrackingViewModel {
   DashboardViewModel(this._cameraService);
   @override
   void setIndex(int value) {
-    if (value != 2 && _cameraService.controller != null) {
+    if (value != 2) {
       _cameraService.dispose();
     }
     super.setIndex(value);

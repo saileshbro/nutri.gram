@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:nutrigram_app/common/ui/ui_helpers.dart';
 import 'package:nutrigram_app/constants/constants.dart';
 
@@ -10,15 +9,14 @@ class BottomBanner extends StatelessWidget {
   final Color backgroundColor;
   final bool loading;
   BottomBanner({
-    @required this.onPressed,
+    required this.onPressed,
     this.backgroundColor = Colors.white,
-    this.bannerText,
-    this.buttonLabel,
+    required this.bannerText,
+    required this.buttonLabel,
     this.loading = false,
-  }) : assert(bannerText != null ||
-            bannerText.isNotEmpty ||
-            buttonLabel != null ||
-            buttonLabel.isNotEmpty);
+  }) : assert(
+          bannerText.isNotEmpty || buttonLabel.isNotEmpty,
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class BottomBanner extends StatelessWidget {
           else ...[
             Text(
               bannerText,
-              style: Theme.of(context).textTheme.button,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
             RawMaterialButton(
               constraints: const BoxConstraints(),
@@ -53,11 +51,11 @@ class BottomBanner extends StatelessWidget {
                 buttonLabel,
                 style: Theme.of(context)
                     .textTheme
-                    .button
-                    .copyWith(color: kPrimaryColor),
+                    .labelLarge
+                    ?.copyWith(color: kPrimaryColor),
               ),
-            )
-          ]
+            ),
+          ],
         ],
       ),
     );
