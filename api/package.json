@@ -16,7 +16,7 @@
     "form-data": "^4.0.3",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
-    "mongoose": "^8.15.1",
+    "mongoose": "^8.16.0",
     "morgan": "^1.10.0",
     "multer": "^2.0.1",
     "nutritionix-api": "^1.0.4",
